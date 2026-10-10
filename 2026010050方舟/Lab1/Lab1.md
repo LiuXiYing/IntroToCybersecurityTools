@@ -114,8 +114,3 @@
 **2026 年 10 月 16 日 24:00（即 2026 年 10 月 17 日 00:00，北京时间）**
 
 以 GitHub 记录的最后一次向 PR 推送代码的时间为准。不晚于上述时刻创建 PR 并完成最后一次推送不算超时；超过该时刻新建 PR，或向已有 PR 推送任何修改，均算作超时。审核未通过的同学请务必在截止前完成修改。
-
-
-[def]: "D:\itct\IntroToCybersecurityTools\2026010050方舟\Lab1\imgs\imgstypingclub_calendar.png"
-[def2]: "D:\itct\IntroToCybersecurityTools\2026010050方舟\Lab1\imgs\imgstypingclub_calendar.png"
-[def3]: "D:\itct\IntroToCybersecurityTools\2026010050方舟\Lab1\imgs\imgstypingclub_calendar.png"
