@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学生网络安全常识</title>
+<style>
+  :root{
+    --bg:#f4f7fb;
+    --card:#ffffff;
+    --ink:#1b2531;
+    --muted:#5b6b7f;
+    --line:#e2e9f2;
+    --brand:#1f6feb;
+    --brand-dark:#0f4bb3;
+    --accent:#12b886;
+    --warn:#e8850c;
+    --danger:#e03131;
+    --shadow:0 10px 30px rgba(20,40,80,.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--brand);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- 顶栏 ---------- */
+  header.bar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.5px;}
+  .logo svg{width:26px;height:26px;}
+  nav.tabs{display:flex;gap:6px;flex-wrap:wrap;}
+  nav.tabs a{
+    font-size:14px;color:var(--muted);padding:6px 12px;border-radius:8px;font-weight:600;
+  }
+  nav.tabs a:hover{background:#eef4ff;color:var(--brand);text-decoration:none;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;color:#fff;
+    background:linear-gradient(135deg,#0f4bb3 0%,#1f6feb 48%,#12b886 100%);
+  }
+  .hero .wrap{padding:64px 20px 72px;position:relative;z-index:2;}
+  .hero h1{margin:0 0 14px;font-size:38px;line-height:1.25;letter-spacing:1px;}
+  .hero p.sub{margin:0;max-width:640px;font-size:16px;color:rgba(255,255,255,.92);}
+  .hero .chips{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{
+    background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);
+    color:#fff;font-size:13px;padding:6px 14px;border-radius:999px;font-weight:600;
+  }
+  .hero .grid-bg{
+    position:absolute;inset:0;z-index:1;opacity:.35;
+    background-image:linear-gradient(rgba(255,255,255,.25) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.25) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(circle at 80% 20%,#000,transparent 70%);
+    -webkit-mask-image:radial-gradient(circle at 80% 20%,#000,transparent 70%);
+  }
+
+  /* ---------- 通用区块 ---------- */
+  section{padding:56px 0;}
+  section .wrap > .eyebrow{
+    color:var(--brand);font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;
+  }
+  section h2{margin:6px 0 8px;font-size:26px;}
+  section .lead{color:var(--muted);margin:0 0 28px;max-width:760px;}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:24px;box-shadow:var(--shadow);transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(20,40,80,.12);}
+  .card .ic{
+    width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:#eef4ff;color:var(--brand);margin-bottom:14px;
+  }
+  .card h3{margin:0 0 8px;font-size:18px;}
+  .card p{margin:0;color:var(--muted);font-size:14.5px;}
+  .card ul{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:14.5px;}
+  .card ul li{margin:6px 0;}
+
+  /* ---------- 密码强度工具 ---------- */
+  .tool{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:26px;box-shadow:var(--shadow);
+  }
+  .tool label{display:block;font-weight:700;margin-bottom:8px;font-size:15px;}
+  .tool .row{display:flex;gap:10px;flex-wrap:wrap;}
+  .tool input[type=text]{
+    flex:1;min-width:240px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;
+    font-size:15px;font-family:inherit;outline:none;background:#fbfdff;
+  }
+  .tool input[type=text]:focus{border-color:var(--brand);box-shadow:0 0 0 3px #dbe9ff;}
+  .tool button{
+    padding:12px 18px;border:none;border-radius:10px;background:var(--brand);color:#fff;
+    font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+  }
+  .tool button:hover{background:var(--brand-dark);}
+  .meter{margin-top:16px;height:10px;border-radius:999px;background:#eef1f6;overflow:hidden;}
+  .meter > i{display:block;height:100%;width:0;background:var(--danger);transition:width .25s ease,background .25s ease;}
+  .tool .verdict{margin-top:10px;font-weight:700;font-size:14.5px;color:var(--muted);}
+  .tool .checks{margin-top:12px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px 18px;font-size:14px;color:var(--muted);}
+  .tool .checks span::before{content:"○ ";color:#b6c2d1;}
+  .tool .checks span.ok{color:var(--accent);}
+  .tool .checks span.ok::before{content:"● ";color:var(--accent);}
+
+  /* ---------- 钓鱼识别 ---------- */
+  .phish-list{display:grid;gap:14px;}
+  .phish{
+    display:flex;gap:14px;background:var(--card);border:1px solid var(--line);
+    border-left:5px solid var(--warn);border-radius:12px;padding:16px 18px;box-shadow:var(--shadow);
+  }
+  .phish.bad{border-left-color:var(--danger);}
+  .phish.good{border-left-color:var(--accent);}
+  .phish .tag{
+    flex:0 0 auto;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;height:fit-content;
+    background:#fff3e0;color:var(--warn);
+  }
+  .phish.bad .tag{background:#ffe8e8;color:var(--danger);}
+  .phish.good .tag{background:#e6faf2;color:var(--accent);}
+  .phish .body{flex:1;}
+  .phish .body strong{display:block;margin-bottom:4px;}
+  .phish .body p{margin:0;color:var(--muted);font-size:14.5px;}
+
+  /* ---------- 个人信息保护：表格 ---------- */
+  .table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px;}
+  th,td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:#f7faff;color:var(--ink);font-weight:700;}
+  tbody tr:last-child td{border-bottom:none;}
+  td .risk{color:var(--danger);font-weight:700;}
+  td .safe{color:var(--accent);font-weight:700;}
+
+  /* ---------- 口诀 ---------- */
+  .motto{
+    background:linear-gradient(135deg,#0f4bb3,#12b886);color:#fff;border-radius:18px;
+    padding:34px 30px;box-shadow:var(--shadow);
+  }
+  .motto h2{color:#fff;margin-top:0;}
+  .motto ol{margin:0;padding-left:22px;font-size:16px;}
+  .motto ol li{margin:8px 0;}
+
+  /* ---------- 页脚 ---------- */
+  footer{background:#0d1b2a;color:#c7d3e3;padding:30px 0;}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;font-size:14px;}
+  footer a{color:#8fb8ff;}
+
+  @media (max-width:860px){
+    .cards{grid-template-columns:1fr;}
+    .tool .checks{grid-template-columns:1fr;}
+    .hero h1{font-size:30px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="logo">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2 4 5v6c0 5 3.4 9.2 8 11 4.6-1.8 8-6 8-11V5l-8-3Z" fill="#1f6feb"/>
+        <path d="m8.5 12 2.3 2.3L16 9.8" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>网络安全小课堂</span>
+    </div>
+    <nav class="tabs">
+      <a href="#password">密码安全</a>
+      <a href="#phishing">识别钓鱼</a>
+      <a href="#privacy">信息保护</a>
+      <a href="#motto">安全口诀</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" aria-label="页面介绍">
+  <div class="grid-bg"></div>
+  <div class="wrap">
+    <h1>大学生网络安全常识</h1>
+    <p class="sub">
+      校园网、公共 Wi-Fi、社团群聊、兼职招聘……大学生每天都要在网络上处理大量信息。
+      这篇小页面用三分钟讲清三件事：把密码管好、把钓鱼消息认出来、把个人信息守住。
+    </p>
+    <div class="chips">
+      <span class="chip">密码安全</span>
+      <span class="chip">识别钓鱼消息</span>
+      <span class="chip">个人信息保护</span>
+    </div>
+  </div>
+</section>
+
+<!-- 密码安全 -->
+<section id="password">
+  <div class="wrap">
+    <div class="eyebrow">01 / Password</div>
+    <h2>密码安全：一道门，一把独一无二的钥匙</h2>
+    <p class="lead">
+      大多数账号被盗，不是因为黑客技术有多高，而是因为同一个密码在多个网站重复使用，
+      一旦某个论坛或小网站数据泄露，坏人就会拿着这组账号密码去“撞库”登录你的邮箱、支付和校园系统。
+    </p>
+
+    <div class="cards" style="margin-bottom:28px;">
+      <article class="card">
+        <div class="ic" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h3>一账号一密码</h3>
+        <p>不给任何两个网站使用相同的密码。邮箱、支付、校园门户属于“高价值账号”，必须单独设置。</p>
+      </article>
+      <article class="card">
+        <div class="ic" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 18 18 5M5 5l13 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h3>拒绝弱口令</h3>
+        <p>不要用生日、学号、手机号、<code>123456</code>、<code>abc123</code> 这类信息。建议“长口令 + 特殊符号”。</p>
+      </article>
+      <article class="card">
+        <div class="ic" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <h3>开启两步验证</h3>
+        <p>邮箱、云盘、社交账号尽量开启短信或验证器 App 二次验证，即使密码泄露也多一道锁。</p>
+      </article>
+    </div>
+
+    <div class="tool">
+      <label for="pw">试试看：输入一个密码，检测它有多强（仅在本机浏览器计算，不会上传）</label>
+      <div class="row">
+        <input id="pw" type="text" placeholder="在此输入一个密码试试，例如 MyFood@2026!Campus" autocomplete="off">
+        <button type="button" id="pwShow">显示 / 隐藏</button>
+      </div>
+      <div class="meter" aria-hidden="true"><i id="pwBar"></i></div>
+      <div class="verdict" id="pwVerdict">等待输入……</div>
+      <div class="checks">
+        <span data-k="len">长度 ≥ 12 位</span>
+        <span data-k="lower">含小写字母</span>
+        <span data-k="upper">含大写字母</span>
+        <span data-k="digit">含数字</span>
+        <span data-k="symbol">含特殊符号</span>
+        <span data-k="novuln">不含常见弱词</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 识别钓鱼消息 -->
+<section id="phishing" style="background:#eef3fa;">
+  <div class="wrap">
+    <div class="eyebrow">02 / Phishing</div>
+    <h2>识别钓鱼消息：骗子在等你“顺手点一下”</h2>
+    <p class="lead">
+      钓鱼（Phishing）是伪装成可信来源，诱导你点击链接、填写账号或转账的手段。
+      它常见于短信、QQ/微信群、邮件和“兼职招聘”。下面三条是校园里最常见的三种套路。
+    </p>
+
+    <div class="phish-list">
+      <div class="phish bad">
+        <span class="tag">可疑</span>
+        <div class="body">
+          <strong>“你的校园卡/网费即将停用，点击链接立即认证”</strong>
+          <p>制造紧张感是钓鱼的标配。正规通知一般不会用短链接催你马上点。核实办法：自己打开学校官网或 App，而不是点消息里的链接。</p>
+        </div>
+      </div>
+      <div class="phish bad">
+        <span class="tag">可疑</span>
+        <div class="body">
+          <strong>“兼职刷单：动动手指日入数百，先垫付马上返现”</strong>
+          <p>凡是先让你垫钱、承诺高额返利的“兼职”，几乎都是诈骗。真实返现不会要求你先转账。</p>
+        </div>
+      </div>
+      <div class="phish">
+        <span class="tag">要当心</span>
+        <div class="body">
+          <strong>“教务处：请核对学籍信息，附件为名单.xlsx”</strong>
+          <p>面向学生的木马常藏在附件里（如 <code>.xlsx</code>、<code>.exe</code>、<code>.scr</code>）。陌生附件先别打开，向辅导员/老师当面或电话确认。</p>
+        </div>
+      </div>
+      <div class="phish good">
+        <span class="tag">正确做法</span>
+        <div class="body">
+          <strong>看域名、看发件人、看链接真实指向</strong>
+          <p>把鼠标悬停在链接上看真实地址：<code>www.xxx-edu.cn</code> 与 <code>www.xxx.edu.cn.cn</code> 完全不同。域名主体对不上，一律当钓鱼处理。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 个人信息保护 -->
+<section id="privacy">
+  <div class="wrap">
+    <div class="eyebrow">03 / Privacy</div>
+    <h2>个人信息保护：能少给就少给，能给假的就别给真的</h2>
+    <p class="lead">
+      姓名、身份证号、手机号、家庭住址、银行卡是“敏感四件套”。它们一旦组合泄露，
+      就可能被用于办理贷款、注册账号、精准诈骗。下面这张表帮你快速判断哪些信息不该随手给。
+    </p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>信息类型</th><th>常见索要场景</th><th>风险</th><th>建议</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>身份证号 + 正反面照片</td><td>代办校园卡、兼职入职</td>
+            <td class="risk">高：可被冒用注册、贷款</td>
+            <td class="safe">只给官方渠道，照片加水印“仅供办理XX使用”</td>
+          </tr>
+          <tr>
+            <td>手机号 + 短信验证码</td><td>任何网站注册、领奖、客服</td>
+            <td class="risk">极高：验证码=临时密码</td>
+            <td class="safe">验证码谁都不给，包括自称客服的人</td>
+          </tr>
+          <tr>
+            <td>银行卡号 + 密码</td><td>退款、刷单、投资返利</td>
+            <td class="risk">极高：直接造成财产损失</td>
+            <td class="safe">任何理由都不透露，转账前先冷静 10 分钟</td>
+          </tr>
+          <tr>
+            <td>家庭住址 / 行程</td><td>社交平台晒图、问卷调查</td>
+            <td class="risk">中：隐私与人身安全</td>
+            <td class="safe">晒图关闭定位，避免暴露门牌、车票二维码</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 口诀 -->
+<section id="motto">
+  <div class="wrap">
+    <div class="motto">
+      <h2>记不住细节？记住这四条就行</h2>
+      <ol>
+        <li><strong>密码要长要独</strong>——重要账号一账号一密码，能开两步验证就打开。</li>
+        <li><strong>链接要看域名</strong>——催你立刻点的消息，先停下来核实。</li>
+        <li><strong>验证码是底线</strong>——任何人索要短信验证码，一律拒绝。</li>
+        <li><strong>高回报是陷阱</strong>——先垫钱的兼职、刷单、返利，直接退出。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>大学生网络安全常识 · 单文件静态页面（HTML + CSS + JavaScript 全部内嵌）</span>
+    <span>遇到可疑消息，先核实，再动手。</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var input   = document.getElementById('pw');
+  var bar     = document.getElementById('pwBar');
+  var verdict = document.getElementById('pwVerdict');
+  var btn     = document.getElementById('pwShow');
+  var checks  = document.querySelectorAll('.checks span');
+  var weakWords = ['password','123456','qwerty','admin','abc123','iloveyou','111111','000000','888888','12345678'];
+
+  function evalPw(pw){
+    var r = {
+      len:    pw.length >= 12,
+      lower:  /[a-z]/.test(pw),
+      upper:  /[A-Z]/.test(pw),
+      digit:  /[0-9]/.test(pw),
+      symbol: /[^A-Za-z0-9]/.test(pw),
+      novuln: pw.length > 0 && !weakWords.some(function(w){ return pw.toLowerCase().indexOf(w) !== -1; })
+    };
+    var score = 0;
+    for (var k in r) { if (r[k]) score++; }
+    var variety = 0;
+    if (r.lower) variety++;
+    if (r.upper) variety++;
+    if (r.digit) variety++;
+    if (r.symbol) variety++;
+    var strength = score + variety;   // 0 ~ 10
+    return { r: r, strength: strength, score: score };
+  }
+
+  function render(){
+    var pw = input.value;
+    var res = evalPw(pw);
+    checks.forEach(function(el){
+      el.classList.toggle('ok', !!res.r[el.getAttribute('data-k')]);
+    });
+    if (!pw){
+      bar.style.width = '0%';
+      bar.style.background = '#e03131';
+      verdict.textContent = '等待输入……';
+      return;
+    }
+    var pct = Math.min(100, Math.round(res.strength / 10 * 100));
+    bar.style.width = pct + '%';
+    var label, color;
+    if (res.strength <= 3){ label = '弱：容易被猜到或撞库，请更换'; color = '#e03131'; }
+    else if (res.strength <= 6){ label = '中：还能更好，建议加长并加入符号'; color = '#e8850c'; }
+    else if (res.strength <= 8){ label = '较强：可以作为普通账号密码'; color = '#1f6feb'; }
+    else { label = '很强：符合“长口令 + 多类型”要求'; color = '#12b886'; }
+    bar.style.background = color;
+    verdict.textContent = '强度评分：' + res.strength + '/10　' + label;
+    verdict.style.color = color;
+  }
+
+  input.addEventListener('input', render);
+  btn.addEventListener('click', function(){
+    input.type = (input.type === 'password') ? 'text' : 'password';
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学生网络安全常识</title>
+<style>
+  :root {
+    --bg: #f5f8ff;
+    --card: #ffffff;
+    --ink: #14203a;
+    --muted: #5a6b8c;
+    --brand: #1f5eff;
+    --brand-2: #00b3a4;
+    --line: #e2e9f7;
+    --warn: #ff8a3d;
+    --danger: #e5484d;
+    --ok: #12a150;
+    --shadow: 0 10px 30px rgba(20, 32, 58, .08);
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 500px at 85% -10%, rgba(31, 94, 255, .13), transparent 60%),
+      radial-gradient(900px 420px at -10% 10%, rgba(0, 179, 164, .12), transparent 55%),
+      var(--bg);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--brand); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- 顶部导航 ---------- */
+  header.nav {
+    position: sticky; top: 0; z-index: 20;
+    backdrop-filter: saturate(180%) blur(10px);
+    background: rgba(245, 248, 255, .82);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 980px; margin: 0 auto; padding: 12px 20px; gap: 12px;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .3px; }
+  .brand svg { width: 26px; height: 26px; }
+  .nav-links { display: flex; gap: 6px; flex-wrap: wrap; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 14px;
+    padding: 6px 12px; border-radius: 999px; transition: .2s;
+  }
+  .nav-links a:hover { color: var(--brand); background: rgba(31, 94, 255, .09); }
+
+  /* ---------- 主视觉 ---------- */
+  .hero { display: grid; grid-template-columns: 1.35fr 1fr; gap: 32px; align-items: center; padding: 56px 0 34px; }
+  .hero h1 { font-size: 40px; line-height: 1.25; margin: 0 0 14px; letter-spacing: -.5px; }
+  .hero h1 span {
+    background: linear-gradient(90deg, var(--brand), var(--brand-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p { color: var(--muted); font-size: 17px; margin: 0 0 22px; }
+  .tags { display: flex; gap: 10px; flex-wrap: wrap; }
+  .tag {
+    font-size: 13px; color: var(--brand); background: rgba(31, 94, 255, .1);
+    border: 1px solid rgba(31, 94, 255, .18); padding: 5px 12px; border-radius: 999px;
+  }
+  .hero-art { display: flex; justify-content: center; }
+  .hero-art svg { width: min(260px, 70vw); height: auto; filter: drop-shadow(0 18px 30px rgba(31, 94, 255, .25)); animation: float 5s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  /* ---------- 卡片区 ---------- */
+  section { padding: 26px 0; }
+  .sec-title { display: flex; align-items: center; gap: 12px; margin: 6px 0 20px; }
+  .sec-title .num {
+    flex: none; width: 34px; height: 34px; border-radius: 10px;
+    display: grid; place-items: center; font-weight: 800; color: #fff;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  }
+  .sec-title h2 { font-size: 24px; margin: 0; letter-spacing: -.2px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px 20px 8px; box-shadow: var(--shadow); transition: transform .22s, box-shadow .22s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px rgba(20, 32, 58, .12); }
+  .card .ico { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 12px; }
+  .ico.i1 { background: rgba(31, 94, 255, .12); }
+  .ico.i2 { background: rgba(255, 138, 61, .14); }
+  .ico.i3 { background: rgba(0, 179, 164, .14); }
+  .card h3 { margin: 0 0 4px; font-size: 18px; }
+  .card p { color: var(--muted); font-size: 15px; margin: 0 0 10px; }
+  ul.clean { list-style: none; padding: 0; margin: 0 0 16px; }
+  ul.clean li { position: relative; padding-left: 24px; margin: 8px 0; font-size: 15px; }
+  ul.clean li::before {
+    content: ""; position: absolute; left: 6px; top: 11px; width: 8px; height: 8px;
+    border-radius: 50%; background: var(--brand-2);
+  }
+
+  /* ---------- 自检清单 ---------- */
+  .checklist { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 8px 20px 18px; }
+  .checklist label { display: flex; gap: 12px; align-items: flex-start; padding: 12px 4px; border-bottom: 1px dashed var(--line); cursor: pointer; }
+  .checklist label:last-child { border-bottom: none; }
+  .checklist input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--brand); flex: none; }
+  .checklist input:checked + span { color: var(--muted); text-decoration: line-through; }
+  .progress { display: flex; align-items: center; gap: 12px; margin-top: 14px; font-size: 14px; color: var(--muted); }
+  .bar { flex: 1; height: 10px; background: #eef2fb; border-radius: 999px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--brand), var(--brand-2)); transition: width .3s; }
+
+  /* ---------- 测试题 ---------- */
+  .quiz { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+  .quiz .q { font-weight: 700; margin-bottom: 14px; }
+  .quiz .q small { display: block; color: var(--muted); font-weight: 400; margin-top: 4px; }
+  .opts { display: grid; gap: 10px; }
+  .opt {
+    text-align: left; border: 1px solid var(--line); background: #fbfcff; color: var(--ink);
+    padding: 12px 14px; border-radius: 12px; cursor: pointer; font-size: 15px; transition: .18s;
+  }
+  .opt:hover { border-color: var(--brand); background: rgba(31, 94, 255, .05); }
+  .opt.correct { border-color: var(--ok); background: rgba(18, 161, 80, .1); }
+  .opt.wrong { border-color: var(--danger); background: rgba(229, 72, 77, .1); }
+  .opt:disabled { cursor: default; }
+  .feedback { margin-top: 14px; font-size: 15px; min-height: 24px; }
+
+  /* ---------- 提示条 ---------- */
+  .note {
+    display: flex; gap: 14px; align-items: flex-start; border-radius: var(--radius);
+    background: linear-gradient(135deg, rgba(31, 94, 255, .1), rgba(0, 179, 164, .1));
+    border: 1px solid rgba(31, 94, 255, .2); padding: 18px 20px;
+  }
+  .note b { color: var(--brand); }
+  .note p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+  footer { margin-top: 30px; padding: 26px 0 40px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; text-align: center; }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; padding-top: 34px; }
+    .hero h1 { font-size: 31px; }
+    .hero-art { order: -1; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 2l8 3.5v6c0 5-3.4 8.8-8 10.5-4.6-1.7-8-5.5-8-10.5v-6L12 2z" fill="#1f5eff"/>
+        <path d="M8.6 12.2l2.4 2.4 4.6-4.8" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>网络安全小课堂</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#password">密码安全</a>
+      <a href="#phishing">识别钓鱼</a>
+      <a href="#privacy">信息保护</a>
+      <a href="#checklist">自检清单</a>
+      <a href="#quiz">小测试</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div>
+      <h1>守护你的数字生活，<br><span>从这几个常识开始</span></h1>
+      <p>大学生每天都在用校园网、邮箱、社交软件和在线支付。一次弱密码、一条钓鱼链接、一次随手上传的证件照，都可能带来真实的损失。本页整理了密码安全、识别钓鱼消息与个人信息保护三个最实用的主题。</p>
+      <div class="tags">
+        <span class="tag">强密码与多因子</span>
+        <span class="tag">钓鱼邮件识别</span>
+        <span class="tag">隐私最小化</span>
+        <span class="tag">校园常见骗局</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <svg viewBox="0 0 200 200" role="img" aria-label="安全盾牌插图">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#1f5eff"/>
+            <stop offset="1" stop-color="#00b3a4"/>
+          </linearGradient>
+        </defs>
+        <circle cx="100" cy="100" r="92" fill="url(#g1)" opacity="0.14"/>
+        <circle cx="100" cy="100" r="70" fill="url(#g1)" opacity="0.2"/>
+        <path d="M100 26l52 22v38c0 33-22 58-52 68-30-10-52-35-52-68V48l52-22z" fill="url(#g1)"/>
+        <path d="M79 99l15 15 29-31" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
+  </section>
+
+  <section id="password">
+    <div class="sec-title"><div class="num">1</div><h2>密码安全</h2></div>
+    <div class="cards">
+      <div class="card">
+        <div class="ico i1">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V7a5 5 0 00-5-5zm-3 8V7a3 3 0 116 0v3H9z" fill="#1f5eff"/></svg>
+        </div>
+        <h3>一句话记住强密码</h3>
+        <p>越长越难猜，而不是越乱越难记。</p>
+        <ul class="clean">
+          <li>长度优先：尽量 12 位以上</li>
+          <li>不同网站使用不同密码</li>
+          <li>用「句子改写法」，例如首字母加符号</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico i2">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5.5c0 4.5-2.9 8-7 9.5-4.1-1.5-7-5-7-9.5V6l7-3z" fill="#ff8a3d"/><path d="M9.2 12l1.9 1.9 3.7-4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>开启多因子认证</h3>
+        <p>即使密码泄露，账号也不容易被直接登录。</p>
+        <ul class="clean">
+          <li>校园邮箱、网盘优先开启两步验证</li>
+          <li>验证码应用优于短信验证码</li>
+          <li>不要把验证码转发给任何人</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ico i3">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16v12H4z" fill="none" stroke="#00b3a4" stroke-width="1.8"/><path d="M4 7l8 6 8-6" stroke="#00b3a4" stroke-width="1.8" fill="none" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>用密码管理器</h3>
+        <p>只记一个主密码，其余交给工具生成和保存。</p>
+        <ul class="clean">
+          <li>避免在多处重复使用同一密码</li>
+          <li>主密码务必独立且足够强</li>
+          <li>定期检查是否出现在泄露库中</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="phishing">
+    <div class="sec-title"><div class="num">2</div><h2>识别钓鱼消息</h2></div>
+    <div class="note">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#1f5eff" stroke-width="1.8"/><path d="M12 7.5v6M12 16.6v.1" stroke="#1f5eff" stroke-width="2" stroke-linecap="round"/></svg>
+      <div>
+        <b>记住一个原则：凡是让你"立刻点开、马上填写、否则后果严重"的，先停下来。</b>
+        <p>钓鱼消息利用的是紧迫感和好奇心，而不是技术漏洞。慢一步核实，往往就能避免上当。</p>
+      </div>
+    </div>
+    <div class="cards" style="margin-top:18px">
+      <div class="card">
+        <h3>看发件人与链接</h3>
+        <ul class="clean">
+          <li>陌生或拼写相近的域名要警惕</li>
+          <li>鼠标悬停先看真实链接指向</li>
+          <li>不轻信"官方头像"，要核对账号</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>看话术与附件</h3>
+        <ul class="clean">
+          <li>"账号异常""中奖""退款"是高频套路</li>
+          <li>可疑附件不下载、不启用宏</li>
+          <li>二维码同样可能是钓鱼入口</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>正确应对</h3>
+        <ul class="clean">
+          <li>通过官方 App 或官网自行核实</li>
+          <li>可疑消息可报告给学校信息中心</li>
+          <li>已填写信息要立即改密并告知</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="sec-title"><div class="num">3</div><h2>个人信息保护</h2></div>
+    <div class="cards">
+      <div class="card">
+        <h3>先想清楚再上传</h3>
+        <p>证件照、学生证、成绩单、快递单都含有敏感信息。</p>
+        <ul class="clean">
+          <li>不随意发到群里或社交平台</li>
+          <li>确需提交时先局部打码</li>
+          <li>注意照片原图可能带定位信息</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>管理好应用权限</h3>
+        <p>很多应用索要的权限远超它真正需要的。</p>
+        <ul class="clean">
+          <li>定期检查通讯录、定位、相册权限</li>
+          <li>不用的应用及时卸载或注销</li>
+          <li>公共 WiFi 下避免登录重要账号</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>警惕校园高发骗局</h3>
+        <p>兼职刷单、冒充客服退款、助学金通知最常见。</p>
+        <ul class="clean">
+          <li>凡是先交钱的兼职都是骗局</li>
+          <li>退款不会要求你先转账</li>
+          <li>涉及转账先与家人同学核实</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="sec-title"><div class="num">4</div><h2>日常安全自检清单</h2></div>
+    <div class="checklist" id="checklist">
+      <label><input type="checkbox"><span>重要账号（邮箱、支付、社交）已使用不同密码</span></label>
+      <label><input type="checkbox"><span>关键账号已开启两步验证</span></label>
+      <label><input type="checkbox"><span>手机与电脑的系统更新已及时安装</span></label>
+      <label><input type="checkbox"><span>不会在公共网络下登录网银或支付账号</span></label>
+      <label><input type="checkbox"><span>不熟悉的链接、二维码、附件会先核实再点</span></label>
+      <label><input type="checkbox"><span>证件照、成绩单等敏感文件不会随手外发</span></label>
+      <div class="progress">
+        <span id="count">已完成 0 / 6</span>
+        <div class="bar"><i id="fill"></i></div>
+        <span id="rate">0%</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="quiz">
+    <div class="sec-title"><div class="num">5</div><h2>来做个一分钟小测试</h2></div>
+    <div class="quiz">
+      <div class="q">收到一封邮件，称"你的校园账号将在 1 小时内被停用，请点击链接立即验证"。最合适的做法是？<small>选择你认为正确的选项</small></div>
+      <div class="opts" id="opts">
+        <button class="opt" data-correct="false">马上点击邮件里的链接，按提示填写账号密码</button>
+        <button class="opt" data-correct="true">不点邮件链接，改为自己打开学校官网或官方 App 核实</button>
+        <button class="opt" data-correct="false">把邮件转发给同学，让同学帮忙点开看看</button>
+      </div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>大学生网络安全常识 · 课程实验 Lab2 单文件网页示例</div>
+    <div style="margin-top:6px">本页仅用于教学演示，CSS 与 JavaScript 均已内嵌，不依赖任何外部资源。</div>
+  </footer>
+
+</main>
+
+<script>
+  // ---- 自检清单进度 ----
+  (function () {
+    var boxes = document.querySelectorAll('#checklist input[type="checkbox"]');
+    var fill = document.getElementById('fill');
+    var count = document.getElementById('count');
+    var rate = document.getElementById('rate');
+    function update() {
+      var done = 0;
+      boxes.forEach(function (b) { if (b.checked) done++; });
+      var pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+      fill.style.width = pct + '%';
+      count.textContent = '已完成 ' + done + ' / ' + boxes.length;
+      rate.textContent = pct + '%';
+    }
+    boxes.forEach(function (b) { b.addEventListener('change', update); });
+    update();
+  })();
+
+  // ---- 小测试 ----
+  (function () {
+    var opts = document.querySelectorAll('#opts .opt');
+    var feedback = document.getElementById('feedback');
+    var answered = false;
+    opts.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (answered) return;
+        answered = true;
+        var right = btn.getAttribute('data-correct') === 'true';
+        btn.classList.add(right ? 'correct' : 'wrong');
+        opts.forEach(function (o) {
+          o.disabled = true;
+          if (o.getAttribute('data-correct') === 'true') o.classList.add('correct');
+        });
+        if (right) {
+          feedback.innerHTML = '<strong style="color:#12a150">回答正确！</strong> 不点击可疑链接、自己从官方渠道核实，是应对钓鱼最稳妥的做法。';
+        } else {
+          feedback.innerHTML = '<strong style="color:#e5484d">再想想：</strong> 点击链接或转发给同学，都可能让风险扩散。正确做法是从官方渠道自行核实。';
+        }
+      });
+    });
+  })();
+</script>
+</body>
+</html>
