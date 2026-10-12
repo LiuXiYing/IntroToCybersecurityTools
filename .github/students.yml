@@ -164,7 +164,7 @@ students:
     active: true
   "2026010042":
     name: 俞翔
-    github: xy400
+    github: yx400
     active: true
   "2026010043":
     name: 孔祥西
@@ -193,4 +193,8 @@ students:
   "2026010050":
     name: 方舟
     github: fz-2026
+    active: true
+  "2026010012":
+    name: 王念通
+    github: wnt409
     active: true
