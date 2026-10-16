@@ -342,10 +342,10 @@ sudo apt update
 | :--- | :--- |
 | 虚拟机 IP 地址 | 192.168.192.129 |
 | 网络模式 | NAT |
-| ping `223.5.5.5` 是否成功 | 成功，4 个包全部返回，0% 丢包 |
+| ping `223.5.5.5` 是否成功 | 成功，2 个包全部返回，0% 丢包 |
 | ping `mirrors.tuna.tsinghua.edu.cn` 是否成功 | 成功，域名可正常解析并收到回应 |
 | 软件源（官方源 / 已换的镜像站） | 官方源（http://kali.download/kali），未更换 |
-| `sudo apt update` 是否成功 | 成功，获取 77.1MB 索引，无 Err 或 Failed |
+| `sudo apt update` 是否成功 | 成功，Hit 官方源，无 Err 或 Failed |
 | 联网是否合格 | 合格 |
 
 ![虚拟机联网](imgs/lab3_network.png)
