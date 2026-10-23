@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffd6e6">
+<title>致 兰兰的一封信</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  :root{
+    --rose:#e2508a;
+    --rose-deep:#c22a63;
+    --rose-soft:#ffa8c8;
+    --ink:#5b3644;
+    --ink-soft:#8a6272;
+    --paper:#fffaf4;
+    --shadow:0 24px 60px -18px rgba(180,60,110,.45);
+  }
+  html,body{height:100%;}
+  body{
+    font-family:"Noto Serif SC","Songti SC",STKaiti,KaiTi,"PingFang SC","Microsoft YaHei",serif;
+    color:var(--ink);
+    background:linear-gradient(165deg,#fff5f9 0%,#ffe6f0 38%,#ffd7e8 68%,#fbc9e0 100%);
+    overflow:hidden;
+    position:relative;
+  }
+  /* 背景光晕 */
+  body::before,body::after{
+    content:"";position:fixed;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0;
+  }
+  body::before{width:60vmin;height:60vmin;left:-12vmin;top:-10vmin;background:rgba(255,170,205,.55);animation:float1 14s ease-in-out infinite;}
+  body::after{width:66vmin;height:66vmin;right:-16vmin;bottom:-18vmin;background:rgba(255,205,225,.6);animation:float2 18s ease-in-out infinite;}
+  @keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(6vmin,5vmin) scale(1.12)}}
+  @keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-7vmin,-4vmin) scale(1.08)}}
+
+  #bg{position:fixed;inset:0;z-index:1;pointer-events:none;}
+
+  /* 场景容器 */
+  .scene{
+    position:fixed;inset:0;z-index:2;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:24px;
+    opacity:0;visibility:hidden;transform:scale(.96);
+    transition:opacity .8s ease,transform .8s cubic-bezier(.2,.9,.3,1),visibility .8s;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .scene.active{opacity:1;visibility:visible;transform:scale(1);}
+
+  /* ============ 场景一：信封 ============ */
+  .envelope-wrap{position:relative;width:min(78vw,340px);aspect-ratio:1.5/1;cursor:pointer;
+    animation:breathe 3.4s ease-in-out infinite;}
+  @keyframes breathe{0%,100%{transform:translateY(0) rotate(-.4deg)}50%{transform:translateY(-11px) rotate(.6deg)}}
+  .envelope-wrap.opened{animation:none;transform:translateY(60px) scale(.9);opacity:0;transition:all 1s cubic-bezier(.5,0,.75,0);}
+
+  .env{position:absolute;inset:0;border-radius:10px;
+    background:linear-gradient(150deg,#ffe9f2,#ffd0e3);
+    box-shadow:var(--shadow);}
+  .env-back{position:absolute;inset:0;border-radius:10px;background:linear-gradient(150deg,#ffdfec,#ffc7dd);}
+  .env-letter{
+    position:absolute;left:6%;right:6%;top:6%;height:88%;
+    background:var(--paper);border-radius:6px;
+    box-shadow:0 -2px 10px rgba(160,60,110,.16);
+    display:flex;align-items:center;justify-content:center;
+    transition:transform 1s cubic-bezier(.34,1.2,.64,1) .35s;
+    z-index:1;
+  }
+  .env-letter span{font-size:clamp(15px,4.2vw,19px);color:var(--rose-deep);letter-spacing:.32em;padding-left:.32em;opacity:.85}
+  .envelope-wrap.opened .env-letter{transform:translateY(-58%);}
+
+  .env-front{
+    position:absolute;inset:0;z-index:3;border-radius:10px;
+    background:linear-gradient(150deg,#ffd9e8,#f7bcd6);
+    clip-path:polygon(0 0,0 100%,50% 46%,100% 100%,100% 0);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.6);
+  }
+  .env-flap{
+    position:absolute;inset:0;z-index:4;border-radius:10px 10px 6px 6px;
+    background:linear-gradient(160deg,#ffc8de,#f5a9c9);
+    clip-path:polygon(0 0,100% 0,50% 62%);
+    transform-origin:top center;
+    transition:transform .85s cubic-bezier(.6,-0.2,.4,1.2),z-index 0s .5s;
+  }
+  .envelope-wrap.opened .env-flap{transform:rotateX(-176deg);z-index:1;}
+  .env-seal{
+    position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+    width:19%;aspect-ratio:1;border-radius:50%;z-index:5;
+    background:radial-gradient(circle at 35% 30%,#ff6d9e,#c92252);
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-size:clamp(15px,4vw,20px);letter-spacing:0;
+    box-shadow:0 6px 16px rgba(180,40,90,.45),inset 0 -3px 8px rgba(0,0,0,.18);
+    transition:transform .5s,opacity .5s;
+  }
+  .envelope-wrap.opened .env-seal{transform:translate(-50%,-50%) scale(1.5);opacity:0;}
+
+  .hint{
+    margin-top:44px;font-size:clamp(14px,3.7vw,16px);color:var(--ink-soft);
+    letter-spacing:.18em;animation:blink 2.6s ease-in-out infinite;text-align:center;
+  }
+  @keyframes blink{0%,100%{opacity:.45}50%{opacity:1}}
+
+  /* ============ 场景二：信纸 ============ */
+  .paper{
+    width:min(94vw,620px);
+    background:
+      radial-gradient(circle at 12% 8%,rgba(255,225,238,.9),transparent 55%),
+      var(--paper);
+    border-radius:8px;
+    box-shadow:var(--shadow),0 0 0 1px rgba(226,80,138,.09);
+    padding:clamp(26px,6vw,52px) clamp(22px,5.5vw,48px);
+    position:relative;
+    background-image:
+      radial-gradient(circle at 12% 8%,rgba(255,225,238,.9),transparent 55%),
+      repeating-linear-gradient(180deg,transparent 0 33px,rgba(226,80,138,.07) 33px 34px);
+    background-color:var(--paper);
+    margin:auto;
+  }
+  .paper::before{
+    content:"";position:absolute;left:clamp(14px,3.6vw,30px);top:0;bottom:0;width:1px;
+    background:linear-gradient(180deg,transparent,rgba(226,80,138,.25) 12%,rgba(226,80,138,.25) 88%,transparent);
+  }
+  .paper::after{
+    content:"❦";position:absolute;right:16px;bottom:12px;
+    font-size:22px;color:rgba(226,80,138,.22);
+  }
+  .title{
+    font-size:clamp(22px,6vw,32px);letter-spacing:.16em;color:var(--rose-deep);
+    text-align:center;font-weight:600;
+    text-shadow:0 2px 12px rgba(255,180,210,.7);
+  }
+  .divider{
+    width:96px;height:1px;margin:16px auto 26px;
+    background:linear-gradient(90deg,transparent,rgba(226,80,138,.55),transparent);
+    position:relative;
+  }
+  .divider::after{
+    content:"♥";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    font-size:11px;color:var(--rose);background:var(--paper);padding:0 8px;
+  }
+  .letter-text{font-size:clamp(15px,4.1vw,17.5px);line-height:2.05;color:var(--ink);min-height:40px;}
+  .letter-text p{margin-bottom:1.05em;text-indent:0em;}
+  .letter-text .cursor{
+    display:inline-block;width:2px;height:1.05em;vertical-align:-.18em;
+    background:var(--rose);margin-left:2px;animation:caret .9s step-end infinite;
+  }
+  @keyframes caret{50%{opacity:0}}
+  .sign{
+    margin-top:26px;text-align:right;font-size:clamp(14px,3.8vw,16px);
+    color:var(--ink-soft);letter-spacing:.08em;opacity:0;transition:opacity 1s;
+  }
+  .sign.show{opacity:1;}
+
+  /* ============ 按钮 ============ */
+  .btn{
+    border:none;cursor:pointer;font-family:inherit;
+    font-size:clamp(15px,4vw,17px);letter-spacing:.14em;
+    padding:15px 40px;border-radius:999px;color:#fff;
+    background:linear-gradient(135deg,#f4649e,#d92e6b);
+    box-shadow:0 12px 28px -8px rgba(210,40,100,.65),inset 0 1px 0 rgba(255,255,255,.4);
+    transition:transform .25s cubic-bezier(.34,1.4,.64,1),box-shadow .25s,opacity .5s;
+    -webkit-user-select:none;user-select:none;
+  }
+  .btn:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 18px 34px -10px rgba(210,40,100,.7),inset 0 1px 0 rgba(255,255,255,.4);}
+  .btn:active{transform:translateY(0) scale(.98);}
+  .btn-next{margin-top:26px;opacity:0;pointer-events:none;transition:opacity .7s,transform .25s cubic-bezier(.34,1.4,.64,1);}
+  .btn-next.show{opacity:1;pointer-events:auto;}
+
+  /* ============ 场景三：问询 ============ */
+  #scene-question{gap:26px;text-align:center;}
+  .big-heart{
+    font-size:clamp(52px,15vw,80px);line-height:1;
+    animation:beat 1.15s ease-in-out infinite;
+    filter:drop-shadow(0 12px 26px rgba(220,50,110,.45));
+  }
+  @keyframes beat{0%,100%{transform:scale(1)}14%{transform:scale(1.18)}28%{transform:scale(1)}42%{transform:scale(1.12)}56%{transform:scale(1)}}
+  .ask{
+    font-size:clamp(19px,5.4vw,27px);color:var(--rose-deep);
+    letter-spacing:.1em;line-height:1.8;font-weight:600;
+    text-shadow:0 2px 14px rgba(255,190,215,.8);
+    max-width:min(90vw,560px);
+  }
+  .ask small{display:block;margin-top:12px;font-size:.62em;font-weight:400;color:var(--ink-soft);letter-spacing:.14em;}
+  .btn-row{display:flex;gap:clamp(14px,4vw,26px);flex-wrap:wrap;justify-content:center;align-items:center;margin-top:6px;}
+  #btnNo{
+    background:linear-gradient(135deg,#ffffff,#ffe6f0);
+    color:var(--rose-deep);
+    box-shadow:0 10px 24px -10px rgba(200,80,130,.5),inset 0 0 0 1px rgba(226,80,138,.3);
+    transition:transform .35s cubic-bezier(.34,1.4,.64,1),left .35s,top .35s,opacity .35s;
+  }
+  #btnNo:hover{box-shadow:0 12px 26px -10px rgba(200,80,130,.6),inset 0 0 0 1px rgba(226,80,138,.45);}
+  #btnNo.escaped{position:fixed;z-index:20;margin:0;}
+
+  /* ============ 场景四：答应 ============ */
+  #scene-yes{gap:20px;text-align:center;}
+  .yes-title{
+    font-size:clamp(26px,7.6vw,42px);color:var(--rose-deep);font-weight:600;
+    letter-spacing:.1em;text-shadow:0 3px 20px rgba(255,170,205,.9);
+    animation:pop .9s cubic-bezier(.2,1.5,.4,1) both;
+  }
+  @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  .yes-sub{
+    font-size:clamp(15px,4.2vw,19px);color:var(--ink-soft);line-height:2.1;
+    letter-spacing:.1em;animation:fadeUp 1.2s .4s ease both;
+  }
+  @keyframes fadeUp{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .yes-card{
+    margin-top:8px;padding:22px 30px;border-radius:16px;
+    background:rgba(255,255,255,.62);backdrop-filter:blur(8px);
+    box-shadow:0 16px 40px -18px rgba(190,60,110,.5),inset 0 0 0 1px rgba(255,255,255,.8);
+    font-size:clamp(14px,3.9vw,16px);color:var(--ink);line-height:2;
+    animation:fadeUp 1.2s .7s ease both;max-width:min(92vw,520px);
+  }
+  .yes-card b{color:var(--rose-deep);}
+
+  /* 音乐开关 */
+  #music{
+    position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:30;
+    width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.7);backdrop-filter:blur(10px);
+    box-shadow:0 8px 22px -8px rgba(190,60,110,.55),inset 0 0 0 1px rgba(255,255,255,.9);
+    font-size:19px;line-height:1;display:flex;align-items:center;justify-content:center;
+    transition:transform .25s;
+  }
+  #music:hover{transform:scale(1.08);}
+  #music.playing{animation:beat 1.15s ease-in-out infinite;}
+
+  /* 点击爱心特效层 */
+  .spark{position:fixed;pointer-events:none;z-index:25;font-size:16px;will-change:transform,opacity;}
+
+  @media (max-width:420px){
+    .paper{padding-top:32px;padding-bottom:34px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<button id="music" title="背景音乐" aria-label="背景音乐">♪</button>
+
+<!-- ================= 场景一：信封 ================= -->
+<section id="scene-envelope" class="scene active">
+  <div class="envelope-wrap" id="envelope">
+    <div class="env-back"></div>
+    <div class="env-letter"><span>致 兰兰</span></div>
+    <div class="env-front"></div>
+    <div class="env-flap"></div>
+    <div class="env-seal">兰</div>
+  </div>
+  <p class="hint">轻触信封，打开它</p>
+</section>
+
+<!-- ================= 场景二：信纸 ================= -->
+<section id="scene-letter" class="scene">
+  <div class="paper">
+    <h1 class="title">致 兰兰</h1>
+    <div class="divider"></div>
+    <div class="letter-text" id="typewriter"></div>
+    <div class="sign" id="sign">—— 喜欢你的我</div>
+  </div>
+  <button class="btn btn-next" id="btnNext">读完了，我有话要说 →</button>
+</section>
+
+<!-- ================= 场景三：问询 ================= -->
+<section id="scene-question" class="scene">
+  <div class="big-heart">❤️</div>
+  <div class="ask">
+    兰兰，愿意做我女朋友吗？
+    <small>这是我认真的、唯一的答案</small>
+  </div>
+  <div class="btn-row" id="btnRow">
+    <button class="btn" id="btnYes">我愿意</button>
+    <button class="btn" id="btnNo">再想想…</button>
+  </div>
+</section>
+
+<!-- ================= 场景四：答应 ================= -->
+<section id="scene-yes" class="scene">
+  <div class="yes-title">谢谢你，兰兰 ❤️</div>
+  <div class="yes-sub">
+    从今天起，我的世界多了一个你。<br>
+    往后的每一步，都想和你一起走。
+  </div>
+  <div class="yes-card">
+    这封信只是一个开始。<br>
+    愿我们把每一个平凡的日子，都过成值得收藏的样子。<br>
+    <b>—— 永不迟到的喜欢</b>
+  </div>
+</section>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ============================================================
+     ★ 想改内容，只改下面这一段就行（名字、信的内容、问话等）
+     ============================================================ */
+  var CONFIG = {
+    name: "兰兰",
+    sign: "—— 喜欢你的我",
+    paragraphs: [
+      "兰兰：",
+      "写这封信的时候，我删删改改了很多次，因为总觉得再好的句子，都不太够形容你。",
+      "我喜欢你笑起来的样子，喜欢你认真说话时的神情，也喜欢你偶尔安静下来、眼神飘向远方的样子。认识你之后，我才发现原来有些心动是藏不住的——它会在看到你消息的瞬间跳出来，会在人群里第一眼找到你。",
+      "我不太会说漂亮话，但我可以答应你：你难过的时候我在，你开心的时候我也在；你想去的地方我陪你去，你不想说话的时候我就安静地待在旁边。",
+      "所以，兰兰，我想认真地问你一句——",
+      "能不能，让我成为那个可以一直陪着你的人？"
+    ],
+    typeSpeed: 52,          // 打字速度（毫秒/字），越小越快
+    askTitle: "兰兰，愿意做我女朋友吗？",
+    yesBtn: "我愿意",
+    noBtn: "再想想…"
+  };
+  /* ============================================================ */
+
+  var $ = function(s){ return document.querySelector(s); };
+
+  /* -------- 场景切换 -------- */
+  var scenes = {
+    envelope: $("#scene-envelope"),
+    letter:   $("#scene-letter"),
+    question: $("#scene-question"),
+    yes:      $("#scene-yes")
+  };
+  function show(name){
+    Object.keys(scenes).forEach(function(k){
+      scenes[k].classList.toggle("active", k === name);
+    });
+    if(name === "letter" && !show.letterStarted){ show.letterStarted = true; setTimeout(startTyping, 650); }
+  }
+
+  /* ============================================================
+     背景爱心粒子（Canvas）
+     ============================================================ */
+  var canvas = $("#bg"), ctx = canvas.getContext("2d");
+  var W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+  var hearts = [];
+  var HEART_COLORS = ["#ff9ec4","#ff77ab","#f45e97","#ffb8d3","#e2508a","#ffc9de"];
+  var BURST = [];   // 爆发粒子
+
+  var heartPath = new Path2D();
+  (function(){
+    var N = 64;
+    for(var i = 0; i <= N; i++){
+      var t = i / N * Math.PI * 2;
+      var x = 16 * Math.pow(Math.sin(t), 3);
+      var y = -(13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t));
+      if(i === 0) heartPath.moveTo(x, y); else heartPath.lineTo(x, y);
+    }
+    heartPath.closePath();
+  })();
+
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    canvas.width = W * DPR; canvas.height = H * DPR;
+    canvas.style.width = W + "px"; canvas.style.height = H + "px";
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  }
+
+  function Heart(init){
+    this.reset(init);
+  }
+  Heart.prototype.reset = function(init){
+    this.x = Math.random() * W;
+    this.y = init ? Math.random() * H : H + 40 + Math.random() * 60;
+    this.size = 8 + Math.random() * 20;
+    this.speed = .25 + Math.random() * .85;
+    this.drift = (Math.random() - .5) * .55;
+    this.rot = (Math.random() - .5) * .5;
+    this.vrot = (Math.random() - .5) * .012;
+    this.alpha = .18 + Math.random() * .5;
+    this.color = HEART_COLORS[(Math.random() * HEART_COLORS.length) | 0];
+    this.phase = Math.random() * Math.PI * 2;
+    this.swing = .4 + Math.random() * 1.3;
+  };
+  Heart.prototype.step = function(t){
+    this.y -= this.speed;
+    this.x += this.drift + Math.sin(t / 1100 + this.phase) * this.swing * .35;
+    this.rot += this.vrot;
+    if(this.y < -50 || this.x < -90 || this.x > W + 90) this.reset(false);
+  };
+  Heart.prototype.draw = function(){
+    ctx.save();
+    ctx.globalAlpha = this.alpha;
+    ctx.fillStyle = this.color;
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.rot);
+    var s = this.size / 16;
+    ctx.scale(s, s);
+    ctx.fill(heartPath);
+    ctx.restore();
+  };
+
+  function countHearts(){
+    var n = Math.round((W * H) / 26000);
+    return Math.max(16, Math.min(46, n));
+  }
+
+  function buildHearts(){
+    hearts = [];
+    var n = countHearts();
+    for(var i = 0; i < n; i++) hearts.push(new Heart(true));
+  }
+
+  /* 爆发爱心（点“我愿意”时） */
+  function burst(cx, cy, amount){
+    for(var i = 0; i < amount; i++){
+      var a = Math.random() * Math.PI * 2;
+      var v = 2 + Math.random() * 8;
+      BURST.push({
+        x: cx, y: cy,
+        vx: Math.cos(a) * v,
+        vy: Math.sin(a) * v - 3,
+        size: 10 + Math.random() * 26,
+        rot: Math.random() * Math.PI,
+        vrot: (Math.random() - .5) * .2,
+        life: 1,
+        color: HEART_COLORS[(Math.random() * HEART_COLORS.length) | 0]
+      });
+    }
+  }
+
+  var startTs = 0;
+  function loop(ts){
+    if(!startTs) startTs = ts;
+    ctx.clearRect(0, 0, W, H);
+
+    for(var i = 0; i < hearts.length; i++){
+      hearts[i].step(ts);
+      hearts[i].draw();
+    }
+
+    for(var j = BURST.length - 1; j >= 0; j--){
+      var p = BURST[j];
+      p.vy += .16;          // 重力
+      p.vx *= .992;
+      p.vy *= .992;
+      p.x += p.vx; p.y += p.vy;
+      p.rot += p.vrot;
+      p.life -= .0075;
+      if(p.life <= 0 || p.y > H + 120){ BURST.splice(j, 1); continue; }
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, Math.min(1, p.life));
+      ctx.fillStyle = p.color;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      var s = p.size / 16;
+      ctx.scale(s, s);
+      ctx.fill(heartPath);
+      ctx.restore();
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  resize();
+  buildHearts();
+  requestAnimationFrame(loop);
+
+  var rz;
+  window.addEventListener("resize", function(){
+    clearTimeout(rz);
+    rz = setTimeout(function(){ resize(); buildHearts(); }, 180);
+  });
+
+  /* ============================================================
+     场景一：打开信封
+     ============================================================ */
+  var envelope = $("#envelope");
+  var envWrap = envelope;
+  envWrap.addEventListener("click", function(){
+    if(envWrap.classList.contains("opened")) return;
+    envWrap.classList.add("opened");
+    startMusic();
+    var r = envWrap.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top + r.height / 2, 22);
+    setTimeout(function(){ show("letter"); }, 620);
+  }, { once: false });
+
+  /* ============================================================
+     场景二：打字机
+     ============================================================ */
+  var typeEl = $("#typewriter");
+  var signEl = $("#sign");
+  var btnNext = $("#btnNext");
+  var typing = false, typingDone = false, skipFlag = false;
+
+  function charDelay(ch){
+    if(ch === "，" || ch === "、") return CONFIG.typeSpeed * 4.5;
+    if(ch === "。" || ch === "！" || ch === "？") return CONFIG.typeSpeed * 6;
+    if(ch === "\n") return CONFIG.typeSpeed * 3;
+    return CONFIG.typeSpeed;
+  }
+
+  function startTyping(){
+    if(typing || typingDone) return;
+    typing = true;
+    var pi = 0, ci = 0;
+    var pEl = null;
+
+    function next(){
+      if(skipFlag){ finishAll(); return; }
+      if(pi >= CONFIG.paragraphs.length){ done(); return; }
+      if(!pEl){
+        pEl = document.createElement("p");
+        typeEl.appendChild(pEl);
+      }
+      var text = CONFIG.paragraphs[pi];
+      if(ci < text.length){
+        pEl.textContent += text.charAt(ci);
+        var d = charDelay(text.charAt(ci));
+        ci++;
+        setTimeout(next, d);
+      } else {
+        pi++; ci = 0; pEl = null;
+        setTimeout(next, CONFIG.typeSpeed * 9);
+      }
+    }
+    next();
+  }
+
+  function finishAll(){
+    typeEl.innerHTML = "";
+    CONFIG.paragraphs.forEach(function(t){
+      var p = document.createElement("p");
+      p.textContent = t;
+      typeEl.appendChild(p);
+    });
+    done();
+  }
+
+  function done(){
+    typing = false; typingDone = true; skipFlag = true;
+    signEl.classList.add("show");
+    var last = typeEl.lastElementChild;
+    if(last){
+      last.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+    btnNext.classList.add("show");
+  }
+
+  // 点击信纸可跳过打字动画
+  scenes.letter.addEventListener("click", function(e){
+    if(e.target === btnNext) return;
+    if(typing) skipFlag = true;
+  });
+
+  btnNext.addEventListener("click", function(e){
+    e.stopPropagation();
+    show("question");
+  });
+
+  /* ============================================================
+     场景三：我愿意 / 再想想
+     ============================================================ */
+  var btnYes = $("#btnYes"), btnNo = $("#btnNo");
+
+  function escapeBtn(){
+    var w = btnNo.offsetWidth, h = btnNo.offsetHeight;
+    btnNo.classList.add("escaped");
+    var maxX = Math.max(10, W - w - 14);
+    var maxY = Math.max(10, H - h - 14);
+    var r = btnNo.getBoundingClientRect();
+    var nx, ny, tries = 0;
+    do {
+      nx = 16 + Math.random() * (maxX - 16);
+      ny = 16 + Math.random() * (maxY - 16);
+      tries++;
+    } while (tries < 24 && Math.hypot(nx - r.left, ny - r.top) < Math.min(W, H) * 0.45);
+    btnNo.style.left = nx + "px";
+    btnNo.style.top = ny + "px";
+    var vs = ["真的不再想想吗？","我等你，不着急～","再点一次也是这个答案哦","别走，听我把话说完嘛","这按钮会跑，就像我藏不住的心动"];
+    btnNo.textContent = vs[(Math.random() * vs.length) | 0];
+  }
+  btnNo.addEventListener("mouseenter", escapeBtn);
+  btnNo.addEventListener("click", function(e){ e.preventDefault(); escapeBtn(); });
+  btnNo.addEventListener("touchstart", function(e){ e.preventDefault(); escapeBtn(); }, { passive: false });
+
+  btnYes.addEventListener("click", function(){
+    btnNo.style.display = "none";       // 收掉跑掉的“再想想”按钮
+    burst(W / 2, H * 0.42, 90);
+    setTimeout(function(){ burst(W * 0.22, H * 0.6, 55); }, 260);
+    setTimeout(function(){ burst(W * 0.78, H * 0.6, 55); }, 460);
+    setTimeout(function(){ burst(W * 0.5, H * 0.72, 40); }, 700);
+    show("yes");
+  });
+
+  /* ============================================================
+     点击/触摸的小爱心拖尾
+     ============================================================ */
+  var lastSpark = 0;
+  function spark(x, y){
+    var now = Date.now();
+    if(now - lastSpark < 55) return;
+    lastSpark = now;
+    var el = document.createElement("div");
+    el.className = "spark";
+    el.textContent = ["♥","❤","❥","♡"][(Math.random() * 4) | 0];
+    el.style.left = x + "px";
+    el.style.top = y + "px";
+    el.style.color = HEART_COLORS[(Math.random() * HEART_COLORS.length) | 0];
+    el.style.transform = "translate(-50%,-50%) scale(.6)";
+    el.style.transition = "transform 1s cubic-bezier(.2,.8,.3,1), opacity 1s ease";
+    el.style.opacity = "1";
+    document.body.appendChild(el);
+    requestAnimationFrame(function(){
+      el.style.transform = "translate(-50%,-50%) translate(" +
+        ((Math.random() - .5) * 60) + "px," + (-40 - Math.random() * 60) + "px) scale(1.5) rotate(" +
+        ((Math.random() - .5) * 90) + "deg)";
+      el.style.opacity = "0";
+    });
+    setTimeout(function(){ el.remove(); }, 1100);
+  }
+  document.addEventListener("mousemove", function(e){ spark(e.clientX, e.clientY); });
+  document.addEventListener("touchmove", function(e){
+    var t = e.touches[0];
+    if(t) spark(t.clientX, t.clientY);
+  }, { passive: true });
+
+  /* ============================================================
+     背景音乐：Web Audio 合成（无需任何音频文件）
+     ============================================================ */
+  var ac = null, musicOn = false, musicTimer = null, masterGain = null, step = 0;
+  var musicBtn = $("#music");
+
+  // 温柔的旋律音阶（C 大调五声音阶 + 高音）
+  var MELODY = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50, 880.00, 783.99];
+  var BASS   = [130.81, 146.83, 164.81, 174.61];
+
+  function ensureCtx(){
+    if(ac) return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC) return;
+    ac = new AC();
+    masterGain = ac.createGain();
+    masterGain.gain.value = 0.16;
+    masterGain.connect(ac.destination);
+  }
+
+  function tone(freq, when, dur, vol, type){
+    var o = ac.createOscillator();
+    var g = ac.createGain();
+    o.type = type || "triangle";
+    o.frequency.setValueAtTime(freq, when);
+    g.gain.setValueAtTime(0, when);
+    g.gain.linearRampToValueAtTime(vol, when + 0.03);
+    g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+    o.connect(g); g.connect(masterGain);
+    o.start(when); o.stop(when + dur + 0.06);
+  }
+
+  function musicTick(){
+    if(!ac || !musicOn) return;
+    var now = ac.currentTime + 0.02;
+    // 每 4 拍换一次低音
+    if(step % 4 === 0){
+      var b = BASS[Math.floor(step / 4) % BASS.length];
+      tone(b, now, 2.2, 0.09, "sine");
+      tone(b * 2, now, 1.6, 0.03, "sine");
+    }
+    // 主旋律：有节奏地跳过一些音，听起来更自然
+    if(Math.random() > 0.18){
+      var idx = (step * 3 + Math.floor(Math.random() * 2)) % MELODY.length;
+      tone(MELODY[idx], now, 1.5, 0.045, "triangle");
+      if(Math.random() > 0.6){
+        tone(MELODY[(idx + 2) % MELODY.length] * 2, now + 0.16, 0.9, 0.018, "sine");
+      }
+    }
+    step++;
+  }
+
+  function startMusic(){
+    ensureCtx();
+    if(!ac) return;
+    if(ac.state === "suspended") ac.resume();
+    if(musicOn) return;
+    musicOn = true;
+    musicBtn.classList.add("playing");
+    musicBtn.textContent = "♫";
+    step = 0;
+    musicTick();
+    musicTimer = setInterval(musicTick, 560);
+  }
+
+  function stopMusic(){
+    musicOn = false;
+    musicBtn.classList.remove("playing");
+    musicBtn.textContent = "♪";
+    if(musicTimer){ clearInterval(musicTimer); musicTimer = null; }
+  }
+
+  musicBtn.addEventListener("click", function(e){
+    e.stopPropagation();
+    if(musicOn) stopMusic(); else startMusic();
+  });
+
+  /* ============================================================
+     UI 文案注入（来自 CONFIG）
+     ============================================================ */
+  document.querySelector(".title").textContent = "致 " + CONFIG.name;
+  document.querySelector(".env-letter span").textContent = "致 " + CONFIG.name;
+  signEl.textContent = CONFIG.sign;
+  var askEl = document.querySelector(".ask");
+  askEl.childNodes[0].nodeValue = CONFIG.askTitle;
+  btnYes.textContent = CONFIG.yesBtn;
+  btnNo.textContent = CONFIG.noBtn;
+
+  /* 阻止 iOS 双击缩放 */
+  var lastTouch = 0;
+  document.addEventListener("touchend", function(e){
+    var now = Date.now();
+    if(now - lastTouch < 300) e.preventDefault();
+    lastTouch = now;
+  }, { passive: false });
+
+})();
+</script>
+</body>
+</html>

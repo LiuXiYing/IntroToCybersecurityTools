@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#fff7f8">
+<title>三行情书 · 写给你</title>
+<style>
+  :root{
+    --bg1:#fffdfb;
+    --bg2:#fff2f5;
+    --bg3:#fbe4ec;
+    --ink:#3b2b31;
+    --ink-soft:#8a7078;
+    --rose:#d2456a;
+    --rose-deep:#a82550;
+    --gold:#c9a15a;
+    --line:rgba(201,161,90,.42);
+    --card:rgba(255,255,255,.72);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    font-family:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","PingFang SC","Microsoft YaHei",serif;
+    color:var(--ink);
+    background:
+      radial-gradient(120% 70% at 50% -10%, #fffdfb 0%, var(--bg2) 45%, var(--bg3) 100%);
+    overflow:hidden;
+    position:fixed;
+    inset:0;
+  }
+  #fx{
+    position:fixed;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:1;
+  }
+  .halo{
+    position:fixed;left:50%;top:38%;width:min(120vw,720px);height:min(120vw,720px);
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle, rgba(210,69,106,.14) 0%, rgba(210,69,106,.05) 42%, transparent 68%);
+    filter:blur(6px);pointer-events:none;z-index:0;
+    animation:breathe 9s ease-in-out infinite;
+  }
+  @keyframes breathe{0%,100%{opacity:.75;transform:translate(-50%,-50%) scale(1);}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08);}}
+
+  .screen{
+    position:fixed;inset:0;z-index:2;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:clamp(20px,6vw,56px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .hidden{opacity:0;pointer-events:none;transform:scale(.97);}
+
+  /* ---------- Cover ---------- */
+  .card{
+    width:min(560px,100%);
+    background:var(--card);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:clamp(30px,7vw,58px) clamp(24px,6vw,52px);
+    box-shadow:0 30px 70px -40px rgba(120,50,70,.55), 0 1px 0 rgba(255,255,255,.9) inset;
+    position:relative;text-align:center;
+  }
+  .card::after{
+    content:"";position:absolute;inset:11px;border:1px solid rgba(201,161,90,.22);border-radius:3px;pointer-events:none;
+  }
+  .label{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:11px;letter-spacing:.5em;color:var(--gold);
+    text-transform:uppercase;margin-bottom:18px;
+  }
+  .big{
+    font-size:clamp(30px,8.4vw,52px);
+    letter-spacing:.22em;margin:0 0 10px;font-weight:600;
+    text-indent:.22em;
+    background:linear-gradient(180deg,#4a2c35,#a82550);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{
+    font-size:clamp(13px,3.6vw,15px);color:var(--ink-soft);letter-spacing:.22em;
+    margin:0 0 30px;text-indent:.22em;
+  }
+  .to{
+    font-size:clamp(14px,4vw,17px);letter-spacing:.16em;color:var(--rose-deep);
+    margin:0 0 34px;
+  }
+  .to b{font-weight:600;border-bottom:1px dashed rgba(210,69,106,.45);padding:0 10px 2px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:inherit;font-size:clamp(15px,4.2vw,17px);letter-spacing:.24em;text-indent:.24em;
+    color:#fff;border:none;cursor:pointer;
+    padding:15px 40px;border-radius:999px;
+    background:linear-gradient(135deg,#e05a7d,#a82550);
+    box-shadow:0 14px 30px -12px rgba(168,37,80,.75);
+    transition:transform .25s ease, box-shadow .25s ease, filter .25s ease;
+  }
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.05);box-shadow:0 18px 36px -12px rgba(168,37,80,.8);}
+  .btn:active{transform:translateY(0) scale(.98);}
+  .seal{
+    width:64px;height:64px;margin:0 auto 22px;border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;color:var(--rose);
+    animation:pop 3.4s ease-in-out infinite;
+  }
+  @keyframes pop{0%,100%{transform:scale(1);}50%{transform:scale(1.09);}}
+
+  /* ---------- Poems ---------- */
+  #poems{gap:0;}
+  .stage{
+    width:min(620px,100%);
+    min-height:min(58vh,420px);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:8px 4px 0;
+  }
+  .poem{
+    display:none;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,3.4vw,24px);
+  }
+  .poem.on{display:flex;}
+  .poem .ln{
+    font-size:clamp(19px,5.6vw,30px);
+    letter-spacing:.14em;line-height:1.7;
+    text-indent:.14em;
+    opacity:0;transform:translateY(18px);
+    transition:opacity 1s ease, transform 1s cubic-bezier(.22,.9,.28,1);
+  }
+  .poem.on .ln{opacity:1;transform:translateY(0);}
+  .poem.on .ln:nth-child(1){transition-delay:.15s;}
+  .poem.on .ln:nth-child(2){transition-delay:.75s;}
+  .poem.on .ln:nth-child(3){transition-delay:1.35s;}
+  .poem .ln:nth-child(3){
+    color:var(--rose-deep);font-weight:600;
+  }
+  .dots{
+    display:flex;gap:10px;margin:clamp(26px,6vw,44px) 0 0;
+  }
+  .dot{
+    width:7px;height:7px;border-radius:50%;
+    background:rgba(168,37,80,.22);border:none;padding:0;cursor:pointer;
+    transition:all .4s ease;
+  }
+  .dot.on{width:22px;border-radius:999px;background:var(--rose);}
+  .hint{
+    position:fixed;left:0;right:0;bottom:calc(22px + env(safe-area-inset-bottom));
+    text-align:center;font-size:12px;letter-spacing:.34em;color:var(--ink-soft);
+    opacity:.7;z-index:3;animation:float 2.6s ease-in-out infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0);opacity:.5;}50%{transform:translateY(-6px);opacity:.95;}}
+
+  /* ---------- Finale ---------- */
+  #finale .card{max-width:600px;}
+  .fin-line{
+    font-size:clamp(20px,5.6vw,30px);letter-spacing:.16em;line-height:1.9;
+    text-indent:.16em;margin:0 0 12px;
+    opacity:0;transform:translateY(16px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .fin-line.show{opacity:1;transform:translateY(0);}
+  .fin-final{
+    margin-top:26px;
+    font-size:clamp(21px,6vw,32px);letter-spacing:.18em;text-indent:.18em;
+    color:var(--rose-deep);font-weight:600;line-height:1.8;
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height 1s ease, opacity 1s ease, margin .6s ease;
+  }
+  .fin-final.show{max-height:320px;opacity:1;}
+  .sign{
+    margin-top:22px;font-size:13px;letter-spacing:.22em;color:var(--ink-soft);
+    text-align:right;
+  }
+  .heartbtn{
+    margin-top:26px;
+    width:74px;height:74px;border-radius:50%;border:1px solid var(--line);
+    background:rgba(255,255,255,.8);cursor:pointer;font-size:30px;color:var(--rose);
+    box-shadow:0 16px 34px -16px rgba(168,37,80,.7);
+    transition:transform .25s ease, box-shadow .25s ease;
+    animation:pop 2.4s ease-in-out infinite;
+  }
+  .heartbtn:hover{transform:scale(1.07);}
+  .heartbtn:active{transform:scale(.94);}
+  .heartbtn.done{animation:none;}
+
+  /* music */
+  #music{
+    position:fixed;top:calc(14px + env(safe-area-inset-top));right:14px;z-index:6;
+    width:40px;height:40px;border-radius:50%;
+    border:1px solid var(--line);background:rgba(255,255,255,.7);
+    color:var(--rose-deep);font-size:16px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    transition:transform .2s ease;
+  }
+  #music:active{transform:scale(.92);}
+  #music.spin{animation:spin 3.6s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  @media (max-width:420px){
+    .card{padding:28px 18px;}
+    .poem .ln{letter-spacing:.1em;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important;animation-iteration-count:1 !important;}
+  }
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="halo"></div>
+<button id="music" title="背景音乐" aria-label="背景音乐">&#9834;</button>
+
+<!-- ============ 封面 ============ -->
+<section id="cover" class="screen">
+  <div class="card">
+    <div class="seal">&#10084;</div>
+    <div class="label">To My Dearest</div>
+    <h1 class="big">三行情书</h1>
+    <p class="sub">写给你，只写给你</p>
+    <p class="to">致 <b id="who">我的女孩</b></p>
+    <button class="btn" id="open">翻开它</button>
+  </div>
+</section>
+
+<!-- ============ 正文 ============ -->
+<section id="poems" class="screen hidden">
+  <div class="stage" id="stage"></div>
+  <div class="dots" id="dots"></div>
+</section>
+<div class="hint hidden" id="hint">轻触屏幕 · 继续</div>
+
+<!-- ============ 结尾 ============ -->
+<section id="finale" class="screen hidden">
+  <div class="card">
+    <p class="fin-line" data-d="0">三行太短，</p>
+    <p class="fin-line" data-d="1">写不尽晨昏与四季，</p>
+    <p class="fin-line" data-d="2">也写不完我有多喜欢你。</p>
+    <button class="heartbtn" id="heartbtn">&#10084;</button>
+    <div class="fin-final" id="finFinal">
+      余生很长，<br>请多指教。
+      <div class="sign">—— 爱你的我</div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   可自定义区：把 to / from 改成你们的名字即可
+   ============================================================ */
+const CONFIG = {
+  to: "我的女孩",     // 她的名字或昵称
+  from: "爱你的我"    // 你的署名
+};
+document.getElementById("who").textContent = CONFIG.to;
+document.querySelector("#finFinal .sign").textContent = "—— " + CONFIG.from;
+
+/* ---------------- 三行情书 ---------------- */
+const POEMS = [
+  ["风把云吹得很远", "我把想你的时间", "过成了一整天"],
+  ["我不太会说情话", "可一见到你", "就什么都想说了"],
+  ["从前的日子平平无奇", "直到你来", "每一天才有了名字"],
+  ["我数过很多星星", "后来才发现", "最亮的那颗在你眼睛里"],
+  ["想和你虚度光阴", "从清晨第一缕光", "到深夜最后一盏灯"],
+  ["世界那么大", "我最想住的地方", "是你的日常里"],
+  ["你不用变得更好", "你只要站在那里", "就已经是我全部的答案"],
+  ["喜欢你这件事", "像春天的草", "我没种，它却长满了"],
+  ["如果说我有什么愿望", "那就是明天醒来", "还能看见你"],
+  ["我把心事折成纸船", "顺着水漂向你", "记得签收"]
+];
+
+const stage = document.getElementById("stage");
+const dots  = document.getElementById("dots");
+const hint  = document.getElementById("hint");
+
+POEMS.forEach((p, i) => {
+  const d = document.createElement("div");
+  d.className = "poem";
+  d.innerHTML = p.map(l => '<div class="ln">' + l + '</div>').join("");
+  stage.appendChild(d);
+
+  const b = document.createElement("button");
+  b.className = "dot";
+  b.setAttribute("aria-label", "第" + (i + 1) + "首");
+  b.addEventListener("click", e => { e.stopPropagation(); goto(i, true); });
+  dots.appendChild(b);
+});
+
+const poemEls = [...stage.children];
+const dotEls  = [...dots.children];
+let idx = -1, timer = null;
+
+function goto(i, manual) {
+  if (i < 0) i = 0;
+  if (i >= POEMS.length) { showFinale(); return; }
+  idx = i;
+  poemEls.forEach((el, k) => el.classList.toggle("on", k === i));
+  dotEls.forEach((el, k) => el.classList.toggle("on", k === i));
+  clearTimeout(timer);
+  timer = setTimeout(() => goto(idx + 1), manual ? 5200 : 5600);
+}
+
+/* ---------------- 屏幕切换 ---------------- */
+const cover  = document.getElementById("cover");
+const poemSc = document.getElementById("poems");
+const finale = document.getElementById("finale");
+
+function show(el){ el.classList.remove("hidden"); }
+function hide(el){ el.classList.add("hidden"); }
+
+document.getElementById("open").addEventListener("click", () => {
+  hide(cover);
+  setTimeout(() => { show(poemSc); show(hint); goto(0); }, 260);
+});
+
+function showFinale() {
+  clearTimeout(timer);
+  hide(poemSc); hide(hint);
+  setTimeout(() => {
+    show(finale);
+    document.querySelectorAll(".fin-line").forEach((el, i) => {
+      setTimeout(() => el.classList.add("show"), 260 + i * 620);
+    });
+  }, 340);
+}
+
+/* ---------------- 交互：轻触 / 滑动 ----------------
+   - 页面任意位置轻触 → 飘心 + 情绪反馈
+   - 正文区轻触 / 左滑 → 下一首
+--------------------------------------------------- */
+let touchX = 0, touchY = 0, moved = false;
+document.addEventListener("touchstart", e => {
+  touchX = e.touches[0].clientX; touchY = e.touches[0].clientY; moved = false;
+}, {passive:true});
+document.addEventListener("touchmove", e => {
+  if (Math.abs(e.touches[0].clientX - touchX) > 12) moved = true;
+}, {passive:true});
+document.addEventListener("touchend", e => {
+  const dx = (e.changedTouches[0].clientX - touchX);
+  if (moved && dx < -40 && !poemSc.classList.contains("hidden")) { goto(idx + 1, true); return; }
+  if (!moved) popAt(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
+}, {passive:true});
+
+poemSc.addEventListener("click", () => goto(idx + 1, true));
+document.addEventListener("click", e => {
+  if (cover.classList.contains("hidden") && !e.target.closest("button")) {
+    popAt(e.clientX, e.clientY);
+  }
+});
+
+/* 结尾的心 */
+const heartbtn = document.getElementById("heartbtn");
+const finFinal = document.getElementById("finFinal");
+heartbtn.addEventListener("click", e => {
+  e.stopPropagation();
+  burst(e.clientX, e.clientY, 46);
+  heartbtn.classList.add("done");
+  heartbtn.textContent = "\u2764";
+  finFinal.classList.add("show");
+});
+
+/* ============================================================
+   背景特效：飘心 + 指尖爱心（canvas）
+   ============================================================ */
+const cvs = document.getElementById("fx");
+const ctx = cvs.getContext("2d");
+let W = 0, H = 0, DPR = 1;
+function resize() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = cvs.width = Math.floor(innerWidth * DPR);
+  H = cvs.height = Math.floor(innerHeight * DPR);
+  cvs.style.width = innerWidth + "px";
+  cvs.style.height = innerHeight + "px";
+}
+resize();
+addEventListener("resize", resize);
+
+const ROSES = ["#e8748f","#d2456a","#f0a6b8","#c9a15a","#e98aa4","#b8325c"];
+
+function heartPath(c, s) {
+  c.beginPath();
+  c.moveTo(0, 0.32 * s);
+  c.bezierCurveTo(0, 0.06 * s, -0.52 * s, -0.14 * s, -0.52 * s, -0.56 * s);
+  c.bezierCurveTo(-0.52 * s, -0.94 * s, -0.14 * s, -1.06 * s, 0, -0.72 * s);
+  c.bezierCurveTo(0.14 * s, -1.06 * s, 0.52 * s, -0.94 * s, 0.52 * s, -0.56 * s);
+  c.bezierCurveTo(0.52 * s, -0.14 * s, 0, 0.06 * s, 0, 0.32 * s);
+  c.closePath();
+}
+
+const parts = [];
+const AMBIENT = () => (innerWidth < 500 ? 16 : 26);
+
+function spawnAmbient(initial) {
+  return {
+    x: Math.random() * W,
+    y: initial ? Math.random() * H : H + 40 * DPR,
+    s: (5 + Math.random() * 11) * DPR,
+    vy: -(0.24 + Math.random() * 0.5) * DPR,
+    sway: Math.random() * Math.PI * 2,
+    swaySpd: 0.005 + Math.random() * 0.012,
+    amp: (0.35 + Math.random() * 1.1) * DPR,
+    rot: (Math.random() - 0.5) * 0.5,
+    a: 0.18 + Math.random() * 0.34,
+    col: ROSES[(Math.random() * ROSES.length) | 0],
+    burst: false
+  };
+}
+
+function popAt(cx, cy) {
+  for (let i = 0; i < 7; i++) {
+    const ang = Math.random() * Math.PI * 2, sp = (0.7 + Math.random() * 2.1) * DPR;
+    parts.push({
+      x: cx * DPR, y: cy * DPR,
+      s: (4 + Math.random() * 8) * DPR,
+      vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 0.5 * DPR,
+      rot: (Math.random() - 0.5) * 1.2, vr: (Math.random() - 0.5) * 0.05,
+      a: 0.9, fade: 0.012 + Math.random() * 0.012,
+      col: ROSES[(Math.random() * ROSES.length) | 0],
+      burst: true, gravity: 0.012 * DPR
+    });
+  }
+}
+
+function burst(cx, cy, n) {
+  for (let i = 0; i < n; i++) {
+    const ang = Math.random() * Math.PI * 2, sp = (1.4 + Math.random() * 5) * DPR;
+    parts.push({
+      x: cx * DPR, y: cy * DPR,
+      s: (5 + Math.random() * 12) * DPR,
+      vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 1.4 * DPR,
+      rot: (Math.random() - 0.5) * 1.4, vr: (Math.random() - 0.5) * 0.08,
+      a: 1, fade: 0.008 + Math.random() * 0.01,
+      col: ROSES[(Math.random() * ROSES.length) | 0],
+      burst: true, gravity: 0.03 * DPR
+    });
+  }
+}
+
+for (let i = 0; i < AMBIENT(); i++) parts.push(spawnAmbient(true));
+
+function tick() {
+  ctx.clearRect(0, 0, W, H);
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const p = parts[i];
+    if (p.burst) {
+      p.x += p.vx; p.y += p.vy;
+      p.vy += p.gravity; p.vx *= 0.992;
+      p.rot += p.vr; p.a -= p.fade;
+    } else {
+      p.sway += p.swaySpd;
+      p.x += Math.sin(p.sway) * p.amp * 0.6;
+      p.y += p.vy;
+      p.rot = Math.sin(p.sway) * 0.22;
+      if (p.y < -60 * DPR) Object.assign(p, spawnAmbient(false));
+    }
+    if (p.a <= 0.01) { parts.splice(i, 1); continue; }
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, Math.min(1, p.a));
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    heartPath(ctx, p.s);
+    ctx.fillStyle = p.col;
+    ctx.fill();
+    ctx.restore();
+  }
+  // 保持氛围心数量
+  const ambient = parts.filter(p => !p.burst).length;
+  for (let k = ambient; k < AMBIENT(); k++) parts.push(spawnAmbient(false));
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ============================================================
+   背景音乐：浏览器实时合成的温柔旋律（默认关闭）
+   ============================================================ */
+const musicBtn = document.getElementById("music");
+let audioCtx = null, musicOn = false, loopId = null, step = 0;
+const MELODY = [0, 4, 7, 12, 9, 7, 4, 2, 0, 4, 9, 7, 5, 4, 2, 0]; // 五声音阶走向
+const BASE = 261.63; // C4
+
+function noteFreq(semi) { return BASE * Math.pow(2, semi / 12); }
+
+function playNote(t, freq) {
+  const osc = audioCtx.createOscillator();
+  const g = audioCtx.createGain();
+  osc.type = "sine";
+  osc.frequency.value = freq;
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(0.10, t + 0.06);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 1.5);
+  osc.connect(g).connect(audioCtx.destination);
+  osc.start(t); osc.stop(t + 1.55);
+}
+
+musicBtn.addEventListener("click", () => {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === "suspended") audioCtx.resume();
+  musicOn = !musicOn;
+  musicBtn.classList.toggle("spin", musicOn);
+  musicBtn.style.color = musicOn ? "#d2456a" : "";
+  if (musicOn) {
+    step = 0;
+    const play = () => {
+      const t = audioCtx.currentTime;
+      playNote(t, noteFreq(MELODY[step % MELODY.length]));
+      if (step % 4 === 0) playNote(t + 0.02, noteFreq(MELODY[step % MELODY.length] - 12) / 2);
+      step++;
+    };
+    play();
+    loopId = setInterval(play, 720);
+  } else {
+    clearInterval(loopId); loopId = null;
+  }
+});
+</script>
+</body>
+</html>

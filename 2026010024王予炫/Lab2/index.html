@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>罗尼·奥沙利文 The Rocket · 斯诺克史上最伟大的球手</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08160F;
+  --bg2:#0C2318;
+  --surface:#113022;
+  --surface2:#163B2A;
+  --gold:#C9A227;
+  --gold-lt:#E8CD77;
+  --cream:#F3EEE2;
+  --muted:#8CA498;
+  --line:rgba(201,162,39,.16);
+  --ball-red:#B83A2C;
+  --ball-yellow:#E4B62B;
+  --ball-green:#2E8B57;
+  --ball-brown:#8B5E34;
+  --ball-blue:#2E6DB4;
+  --ball-pink:#E07A9E;
+  --ball-black:#171717;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--cream);
+  font-family:var(--sans);line-height:1.75;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(1180px,92vw);margin:0 auto}
+
+/* ---------- 动画 ---------- */
+.reveal{opacity:0;transform:translateY(24px);
+  transition:opacity .8s cubic-bezier(.2,.7,.3,1),transform .8s cubic-bezier(.2,.7,.3,1);
+  transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- 导航 ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  background:rgba(8,22,15,.72);border-bottom:1px solid rgba(201,162,39,.12)}
+.nav-in{width:min(1180px,92vw);margin:0 auto;height:64px;
+  display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.14em;font-size:13px}
+.brand i{width:9px;height:9px;border-radius:50%;background:var(--ball-red);
+  box-shadow:0 0 0 3px rgba(184,58,44,.18);display:block}
+.nav-links{display:flex;gap:30px;font-size:13.5px;color:var(--muted);letter-spacing:.04em}
+.nav-links a{transition:color .25s}
+.nav-links a:hover{color:var(--gold-lt)}
+@media(max-width:760px){.nav-links{display:none}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;
+  padding:120px 0 80px;overflow:hidden;
+  background:
+    radial-gradient(ellipse 85% 62% at 74% 16%,rgba(23,81,62,.60),transparent 62%),
+    radial-gradient(ellipse 65% 55% at 8% 88%,rgba(201,162,39,.10),transparent 60%),
+    linear-gradient(160deg,#0A1D14 0%,#08160F 52%,#061009 100%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.014) 0 2px,transparent 2px 5px)}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.08fr .92fr;
+  gap:56px;align-items:center}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:52px}}
+
+.eyebrow{display:inline-flex;align-items:center;gap:12px;
+  font-size:12px;letter-spacing:.34em;color:var(--gold);font-weight:700;margin-bottom:26px}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold);opacity:.6}
+
+.hero h1{font-size:clamp(44px,6.4vw,80px);line-height:1.06;font-weight:800;
+  letter-spacing:-.02em;margin-bottom:8px}
+.hero .en{font-size:clamp(13px,1.5vw,16px);letter-spacing:.42em;
+  color:var(--muted);font-weight:600;margin-bottom:22px}
+.rocket{font-size:clamp(56px,9vw,116px);line-height:.94;font-weight:900;
+  letter-spacing:.02em;color:transparent;-webkit-text-stroke:1.6px rgba(232,205,119,.62);
+  margin:14px 0 26px;font-style:italic}
+.hero p.lead{font-size:clamp(15px,1.6vw,17.5px);color:#C6D2CB;max-width:46ch;margin-bottom:34px}
+.hero p.lead b{color:var(--gold-lt);font-weight:600}
+
+.btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:999px;
+  font-size:14px;font-weight:600;letter-spacing:.03em;transition:.28s;border:1px solid transparent}
+.btn-primary{background:var(--gold);color:#1A1206}
+.btn-primary:hover{background:var(--gold-lt);transform:translateY(-2px)}
+.btn-ghost{border-color:rgba(243,238,226,.24);color:var(--cream)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-lt);transform:translateY(-2px)}
+
+.rack-wrap{position:relative;display:flex;justify-content:center;align-items:center}
+.rack{width:100%;max-width:470px;filter:drop-shadow(0 34px 60px rgba(0,0,0,.55));
+  animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+@media (prefers-reduced-motion:reduce){.rack{animation:none}}
+
+/* ---------- 区块头 ---------- */
+.sec{padding:110px 0;position:relative}
+.sec-tag{font-size:11.5px;letter-spacing:.32em;color:var(--gold);font-weight:700;margin-bottom:16px}
+.sec-h{font-size:clamp(28px,3.6vw,44px);font-weight:800;letter-spacing:-.015em;line-height:1.2;margin-bottom:14px}
+.sec-sub{color:var(--muted);font-size:15.5px;max-width:60ch;margin-bottom:56px}
+
+/* ---------- 数字速览 ---------- */
+.stats{background:linear-gradient(180deg,#08160F,#0C2318)}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+@media(max-width:820px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#0C2318;padding:38px 28px;transition:background .3s}
+.stat:hover{background:#123126}
+.stat .num{font-size:clamp(38px,5vw,58px);font-weight:800;color:var(--gold-lt);
+  line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.stat .num .u{font-size:.42em;font-weight:700;margin-left:4px;color:var(--gold);opacity:.85}
+.stat .lb{margin-top:12px;font-size:14px;color:#B9C7BF;font-weight:600}
+.stat .sub{margin-top:4px;font-size:12.5px;color:var(--muted)}
+
+/* ---------- 档案 ---------- */
+.profile{background:#0C2318}
+.prof-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+@media(max-width:820px){.prof-grid{grid-template-columns:1fr;gap:0}}
+.prof-row{display:flex;justify-content:space-between;gap:24px;padding:19px 0;
+  border-bottom:1px solid rgba(243,238,226,.08);font-size:15px}
+.prof-row dt{color:var(--muted);flex:0 0 auto}
+.prof-row dd{text-align:right;font-weight:600;color:#E7EDE9}
+
+/* ---------- 三大赛 ---------- */
+.crown{background:linear-gradient(180deg,#0C2318,#0A1F15)}
+.crown-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+@media(max-width:900px){.crown-grid{grid-template-columns:1fr}}
+.crown-card{background:linear-gradient(165deg,rgba(22,59,42,.92),rgba(13,35,24,.92));
+  border:1px solid var(--line);border-radius:20px;padding:34px 30px;transition:.35s;position:relative;overflow:hidden}
+.crown-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),transparent)}
+.crown-card:hover{transform:translateY(-6px);border-color:rgba(201,162,39,.42)}
+.crown-card .top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.crown-card h3{font-size:19px;font-weight:700;letter-spacing:.02em}
+.crown-card .n{font-size:46px;font-weight:800;color:var(--gold-lt);line-height:1;letter-spacing:-.04em}
+.crown-card .cap{font-size:12.5px;color:var(--muted);margin-bottom:22px}
+.years{display:flex;flex-wrap:wrap;gap:8px}
+.years span{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:7px;
+  background:rgba(201,162,39,.10);color:var(--gold-lt);border:1px solid rgba(201,162,39,.20);
+  font-variant-numeric:tabular-nums}
+
+/* ---------- 时间线（浅色区） ---------- */
+.timeline{background:linear-gradient(180deg,#08160F 0%,#EFE9DC 9%,#EFE9DC 91%,#08160F 100%);
+  color:#1B1B17}
+.timeline .sec-tag{color:#9A7A16}
+.timeline .sec-h{color:#14261C}
+.timeline .sec-sub{color:#5F6B62}
+.tl{position:relative;max-width:920px;margin:0 auto;padding-left:8px}
+.tl::before{content:"";position:absolute;left:11px;top:10px;bottom:10px;width:2px;
+  background:linear-gradient(180deg,rgba(20,38,28,.05),rgba(20,38,28,.22),rgba(20,38,28,.05))}
+.tl-item{position:relative;padding:0 0 34px 52px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{position:absolute;left:0;top:9px;width:24px;height:24px;border-radius:50%;
+  background:var(--ball-red);box-shadow:inset -3px -3px 7px rgba(0,0,0,.35),0 0 0 5px #EFE9DC}
+.tl-item:nth-child(7n+1) .tl-dot{background:var(--ball-red)}
+.tl-item:nth-child(7n+2) .tl-dot{background:var(--ball-yellow)}
+.tl-item:nth-child(7n+3) .tl-dot{background:var(--ball-green)}
+.tl-item:nth-child(7n+4) .tl-dot{background:var(--ball-brown)}
+.tl-item:nth-child(7n+5) .tl-dot{background:var(--ball-blue)}
+.tl-item:nth-child(7n+6) .tl-dot{background:var(--ball-pink)}
+.tl-item:nth-child(7n+7) .tl-dot{background:var(--ball-black)}
+.tl-y{font-size:13px;font-weight:800;letter-spacing:.14em;color:#9A7A16;
+  font-variant-numeric:tabular-nums}
+.tl-t{font-size:19px;font-weight:750;color:#12241A;margin:3px 0 6px;letter-spacing:-.01em}
+.tl-d{font-size:14.5px;color:#5F6B62;max-width:62ch}
+
+/* ---------- 破百榜 ---------- */
+.chart{background:#08160F}
+.bar-row{display:grid;grid-template-columns:150px 1fr 76px;gap:18px;align-items:center;
+  padding:13px 0;border-bottom:1px solid rgba(243,238,226,.07)}
+@media(max-width:640px){.bar-row{grid-template-columns:104px 1fr 58px;gap:12px}}
+.bar-name{font-size:14px;color:#C0CCC5;font-weight:600}
+.bar-track{height:9px;border-radius:999px;background:rgba(243,238,226,.07);overflow:hidden}
+.bar-fill{height:100%;border-radius:999px;width:0;
+  transition:width 1.5s cubic-bezier(.2,.75,.25,1);background:rgba(243,238,226,.24)}
+.bar-val{text-align:right;font-size:14px;font-weight:700;
+  font-variant-numeric:tabular-nums;color:#B9C7BF}
+.bar-row.top .bar-name{color:var(--gold-lt)}
+.bar-row.top .bar-fill{background:linear-gradient(90deg,#C9A227,#E8CD77)}
+.bar-row.top .bar-val{color:var(--gold-lt);font-size:15.5px}
+
+/* ---------- 纪录墙 ---------- */
+.records{background:linear-gradient(180deg,#08160F,#0B2018)}
+.rec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.rec-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.rec-grid{grid-template-columns:1fr}}
+.rec{background:rgba(17,48,34,.72);border:1px solid var(--line);border-radius:16px;
+  padding:26px 24px;transition:.3s}
+.rec:hover{background:rgba(22,59,42,.92);border-color:rgba(201,162,39,.36);transform:translateY(-4px)}
+.rec .v{font-size:33px;font-weight:800;color:var(--gold-lt);line-height:1.05;
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.rec .v small{font-size:.45em;font-weight:700;color:var(--gold);margin-left:3px}
+.rec .t{margin-top:10px;font-size:14.5px;font-weight:650;color:#E2E9E5}
+.rec .d{margin-top:5px;font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ---------- 页脚 ---------- */
+footer{background:#061009;border-top:1px solid rgba(201,162,39,.14);padding:56px 0 42px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:26px;flex-wrap:wrap}
+.foot .l{font-size:13px;color:var(--muted);line-height:1.9}
+.foot .l b{color:#D6DFD9;font-weight:600}
+.foot .r{font-size:12px;color:#5D6E65;text-align:right;line-height:1.9}
+.dots{display:flex;gap:7px;margin-bottom:14px}
+.dots i{width:10px;height:10px;border-radius:50%;display:block}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top"><i></i>R. O'SULLIVAN</a>
+    <nav class="nav-links">
+      <a href="#profile">个人档案</a>
+      <a href="#crown">三大赛</a>
+      <a href="#timeline">生涯时间线</a>
+      <a href="#records">纪录墙</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="reveal">
+        <div class="eyebrow">EST. 1992 · ENGLAND</div>
+        <h1>罗尼·奥沙利文</h1>
+        <div class="en">RONNIE&nbsp;O'SULLIVAN</div>
+        <div class="rocket">The Rocket</div>
+        <p class="lead">
+          七届世界冠军，斯诺克历史上最伟大的球手。他以左手也能赢球的天赋、
+          平均不到 15 秒的出杆节奏，把这项原本沉稳克制的运动，打出了<b>近乎表演的速度感</b>。
+          三十余年过去，他仍在改写自己写下的纪录。
+        </p>
+        <div class="btns">
+          <a class="btn btn-primary" href="#timeline">看他如何赢</a>
+          <a class="btn btn-ghost" href="#records">打开纪录墙</a>
+        </div>
+      </div>
+
+      <div class="rack-wrap reveal" style="--d:.16s">
+        <svg class="rack" viewBox="-118 -84 252 168" role="img" aria-label="斯诺克球堆与母球">
+          <defs>
+            <radialGradient id="gRed" cx="34%" cy="28%" r="72%">
+              <stop offset="0" stop-color="#EE8168"/>
+              <stop offset="46%" stop-color="#B83A2C"/>
+              <stop offset="100%" stop-color="#6E1C14"/>
+            </radialGradient>
+            <radialGradient id="gCue" cx="34%" cy="26%" r="74%">
+              <stop offset="0" stop-color="#FFFFFF"/>
+              <stop offset="58%" stop-color="#F1ECE1"/>
+              <stop offset="100%" stop-color="#BDB6A6"/>
+            </radialGradient>
+            <radialGradient id="gLine" cx="0%" cy="0%" r="100%">
+              <stop offset="0" stop-color="#C9A227" stop-opacity=".45"/>
+              <stop offset="100%" stop-color="#C9A227" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <ellipse cx="52" cy="78" rx="118" ry="13" fill="rgba(0,0,0,.42)"/>
+          <path d="M-96 -34 L-96 34" stroke="url(#gLine)" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- 母球 -->
+          <circle cx="-74" cy="0" r="16" fill="url(#gCue)"/>
+          <circle cx="-79" cy="-5" r="4.4" fill="#fff" opacity=".85"/>
+
+          <!-- 15 颗红球 -->
+          <g>
+            <circle cx="0" cy="0" r="16" fill="url(#gRed)"/>
+            <circle cx="28" cy="-16" r="16" fill="url(#gRed)"/>
+            <circle cx="28" cy="16" r="16" fill="url(#gRed)"/>
+            <circle cx="56" cy="-32" r="16" fill="url(#gRed)"/>
+            <circle cx="56" cy="0" r="16" fill="url(#gRed)"/>
+            <circle cx="56" cy="32" r="16" fill="url(#gRed)"/>
+            <circle cx="84" cy="-48" r="16" fill="url(#gRed)"/>
+            <circle cx="84" cy="-16" r="16" fill="url(#gRed)"/>
+            <circle cx="84" cy="16" r="16" fill="url(#gRed)"/>
+            <circle cx="84" cy="48" r="16" fill="url(#gRed)"/>
+            <circle cx="112" cy="-64" r="16" fill="url(#gRed)"/>
+            <circle cx="112" cy="-32" r="16" fill="url(#gRed)"/>
+            <circle cx="112" cy="0" r="16" fill="url(#gRed)"/>
+            <circle cx="112" cy="32" r="16" fill="url(#gRed)"/>
+            <circle cx="112" cy="64" r="16" fill="url(#gRed)"/>
+          </g>
+
+          <!-- 黑球 -->
+          <circle cx="-42" cy="0" r="15" fill="#141414" stroke="rgba(255,255,255,.10)" stroke-width="1"/>
+          <circle cx="-47" cy="-5" r="4" fill="#fff" opacity=".30"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 数字速览 ============ -->
+  <section class="sec stats">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-tag">CAREER AT A GLANCE</div>
+        <h2 class="sec-h">四个数字，就是一部当代斯诺克史</h2>
+        <p class="sec-sub">以下数据截至 2026 年 10 月，均来自世界职业台球与斯诺克协会（WPBSA）官方球员档案与吉尼斯世界纪录认证。</p>
+      </div>
+
+      <div class="stat-grid reveal" style="--d:.1s">
+        <div class="stat">
+          <div class="num" data-count="7">0</div>
+          <div class="lb">世界锦标赛冠军</div>
+          <div class="sub">与亨德利并列现代斯诺克之最</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="41">0</div>
+          <div class="lb">排名赛冠军</div>
+          <div class="sub">历史第一，领先第二名 5 个</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="17">0</div>
+          <div class="lb">官方 147 满分杆</div>
+          <div class="sub">历史第一，含最快纪录 5'08"</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="1330">0</div>
+          <div class="lb">职业生涯破百</div>
+          <div class="sub">唯一突破千杆的球手</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 个人档案 ============ -->
+  <section class="sec profile" id="profile">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-tag">PROFILE</div>
+        <h2 class="sec-h">一个把天赋练成习惯的人</h2>
+        <p class="sec-sub">10 岁打出 117 分，15 岁完成第一杆 147 并拿下世界青年锦标赛冠军，16 岁转入职业——他的起点，就已经是别人的巅峰。</p>
+      </div>
+
+      <div class="prof-grid reveal" style="--d:.1s">
+        <dl>
+          <div class="prof-row"><dt>全名</dt><dd>Ronald Antonio O'Sullivan</dd></div>
+          <div class="prof-row"><dt>出生</dt><dd>1975 年 12 月 5 日</dd></div>
+          <div class="prof-row"><dt>出生地</dt><dd>英格兰 · 西米德兰兹郡 Wordsley</dd></div>
+          <div class="prof-row"><dt>国籍</dt><dd>英国</dd></div>
+          <div class="prof-row"><dt>绰号</dt><dd>The Rocket（火箭）</dd></div>
+        </dl>
+        <dl>
+          <div class="prof-row"><dt>转为职业</dt><dd>1992 年</dd></div>
+          <div class="prof-row"><dt>握杆手</dt><dd>右手（双手皆可击球）</dd></div>
+          <div class="prof-row"><dt>职业最高单杆</dt><dd>153 分（2026）</dd></div>
+          <div class="prof-row"><dt>世界排名</dt><dd>第 14 位</dd></div>
+          <div class="prof-row"><dt>身份</dt><dd>2024 年取得中国香港居民身份</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 三大赛 ============ -->
+  <section class="sec crown" id="crown">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-tag">TRIPLE CROWN · 23</div>
+        <h2 class="sec-h">三大赛 23 冠，历史无人能及</h2>
+        <p class="sec-sub">世界锦标赛、大师赛、英国锦标赛——斯诺克含金量最高的三项赛事。他在这三项上都保持着赛事纪录，并且至今仍是每项赛事最年轻与最年长冠军的双料持有者。</p>
+      </div>
+
+      <div class="crown-grid">
+        <div class="crown-card reveal">
+          <div class="top"><h3>世界锦标赛</h3><div class="n">7</div></div>
+          <div class="cap">克鲁斯堡 · 与亨德利并列最多</div>
+          <div class="years">
+            <span>2001</span><span>2004</span><span>2008</span><span>2012</span>
+            <span>2013</span><span>2020</span><span>2022</span>
+          </div>
+        </div>
+        <div class="crown-card reveal" style="--d:.1s">
+          <div class="top"><h3>大师赛</h3><div class="n">8</div></div>
+          <div class="cap">赛事纪录保持者</div>
+          <div class="years">
+            <span>1995</span><span>2005</span><span>2007</span><span>2009</span>
+            <span>2014</span><span>2016</span><span>2017</span><span>2024</span>
+          </div>
+        </div>
+        <div class="crown-card reveal" style="--d:.2s">
+          <div class="top"><h3>英国锦标赛</h3><div class="n">8</div></div>
+          <div class="cap">赛事纪录保持者</div>
+          <div class="years">
+            <span>1993</span><span>1997</span><span>2001</span><span>2007</span>
+            <span>2014</span><span>2017</span><span>2018</span><span>2023</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 时间线 ============ -->
+  <section class="sec timeline" id="timeline">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-tag">TIMELINE</div>
+        <h2 class="sec-h">1992 → 2026，三十四年的克鲁斯堡</h2>
+        <p class="sec-sub">从 17 岁的英锦赛冠军，到 50 岁仍在刷新单杆最高分。这条线上几乎没有下坡段。</p>
+      </div>
+
+      <div class="tl">
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">1992</div>
+          <div class="tl-t">转入职业</div>
+          <div class="tl-d">16 岁成为职业球手。新秀赛季的 76 场资格赛中赢下 74 场，其中一度取得 38 连胜。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">1993</div>
+          <div class="tl-t">英锦赛首冠，史上最年轻的排名赛冠军</div>
+          <div class="tl-d">17 岁 358 天，接连击败史蒂夫·戴维斯与斯蒂芬·亨德利夺冠，至今仍是这项纪录的保持者。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">1997</div>
+          <div class="tl-t">5 分 08 秒，人类最快的 147</div>
+          <div class="tl-d">世锦赛首轮对阵米克·普莱斯，平均每杆不到 9 秒。这一杆至今无人接近，被公认为斯诺克史上最不可思议的表演。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2001</div>
+          <div class="tl-t">首夺世界冠军</div>
+          <div class="tl-d">决赛 18-14 击败约翰·希金斯，在克鲁斯堡第一次捧起世界冠军奖杯。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2004 · 2008</div>
+          <div class="tl-t">第二、第三座世界冠军</div>
+          <div class="tl-d">先后以 18-8 战胜格雷姆·多特与阿里·卡特，并在 2008 年打出个人在克鲁斯堡的第三杆 147。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2012 · 2013</div>
+          <div class="tl-t">背靠背夺冠</div>
+          <div class="tl-d">2012 年 18-11 胜卡特；2013 年 18-12 胜霍金斯成功卫冕——而那个赛季他在赛前只打过一场正式比赛。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2014</div>
+          <div class="tl-t">556 分，一整场没让对手得分</div>
+          <div class="tl-d">大师赛对阵里奇·沃顿，创下职业比赛单场连续得分且零失球的纪录。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2019</div>
+          <div class="tl-t">历史第一位千杆破百</div>
+          <div class="tl-d">球员锦标赛决赛对尼尔·罗伯逊，在第 1000 杆破百中锁定冠军，成为斯诺克史上首个职业生涯破百破千的球员。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2020</div>
+          <div class="tl-t">第六座世界冠军</div>
+          <div class="tl-d">18-8 战胜凯伦·威尔逊，终结了长达七年的等待。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2022</div>
+          <div class="tl-t">第七座世界冠军，最年长的克鲁斯堡之王</div>
+          <div class="tl-d">18-13 击败贾德·特鲁姆普，以 46 岁之龄成为世锦赛历史上最年长的冠军，追平亨德利的七冠纪录。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2023 · 2024</div>
+          <div class="tl-t">英锦赛与大师赛双双第 8 冠</div>
+          <div class="tl-d">47 岁 363 天成为最年长英锦赛冠军。三大赛冠军总数由此定格在 23 个。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2025</div>
+          <div class="tl-t">同一场比赛，两杆 147</div>
+          <div class="tl-d">沙特阿拉伯大师赛对阵克里斯·韦克林，他在同一节比赛内打出第 16、17 杆满分——史上第一次，也让他成为最年长的官方 147 创造者。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2026</div>
+          <div class="tl-t">单杆 153 分，重新定义分数上限</div>
+          <div class="tl-d">3 月，玉山世界公开赛对阵瑞恩·戴。一次自由球多出的第 16 颗红球，让他打出职业赛事历史最高单杆。</div>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-y">2026</div>
+          <div class="tl-t">元老世锦赛夺冠</div>
+          <div class="tl-d">首次参赛即夺冠，决赛 10-4 战胜乔·佩里——这是他第 8 次在克鲁斯堡举起世界冠军奖杯。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 破百榜 ============ -->
+  <section class="sec chart">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-tag">CENTURY BREAKS · ALL-TIME</div>
+        <h2 class="sec-h">历史破百榜：他领先第二名 183 杆</h2>
+        <p class="sec-sub">生涯单杆破百数历史排名（截至 2026 年 4 月 26 日）。</p>
+      </div>
+
+      <div class="reveal" style="--d:.1s">
+        <div class="bar-row top">
+          <div class="bar-name">奥沙利文</div>
+          <div class="bar-track"><div class="bar-fill" data-w="100"></div></div>
+          <div class="bar-val">1,330</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">特鲁姆普</div>
+          <div class="bar-track"><div class="bar-fill" data-w="86.2"></div></div>
+          <div class="bar-val">1,147</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">希金斯</div>
+          <div class="bar-track"><div class="bar-fill" data-w="79.8"></div></div>
+          <div class="bar-val">1,061</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">罗伯逊</div>
+          <div class="bar-track"><div class="bar-fill" data-w="78.0"></div></div>
+          <div class="bar-val">1,037</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name">塞尔比</div>
+          <div class="bar-track"><div class="bar-fill" data-w="72.1"></div></div>
+          <div class="bar-val">959</div>
+        </div>
+        <div class="bar-row" style="border-bottom:none">
+          <div class="bar-name">亨德利</div>
+          <div class="bar-track"><div class="bar-fill" data-w="58.4"></div></div>
+          <div class="bar-val">777</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 纪录墙 ============ -->
+  <section class="sec records" id="records">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="sec-tag">RECORDS</div>
+        <h2 class="sec-h">纪录墙</h2>
+        <p class="sec-sub">吉尼斯世界纪录共认证 19 项与斯诺克相关的纪录，其中 17 项由他独占，另有 2 项与亨德利共同保持。</p>
+      </div>
+
+      <div class="rec-grid">
+        <div class="rec reveal">
+          <div class="v">41</div>
+          <div class="t">排名赛冠军 · 历史第一</div>
+          <div class="d">从 1993 年英锦赛到 2024 年，跨越三十一年。</div>
+        </div>
+        <div class="rec reveal" style="--d:.06s">
+          <div class="v">17</div>
+          <div class="t">官方 147 满分杆 · 历史第一</div>
+          <div class="d">第二名亨德利为 11 杆。</div>
+        </div>
+        <div class="rec reveal" style="--d:.12s">
+          <div class="v">1,330</div>
+          <div class="t">生涯破百 · 历史第一</div>
+          <div class="d">2019 年成为首位突破 1,000 杆的球手。</div>
+        </div>
+        <div class="rec reveal" style="--d:.18s">
+          <div class="v">23</div>
+          <div class="t">三大赛冠军 · 历史第一</div>
+          <div class="d">世锦赛 7 + 大师赛 8 + 英锦赛 8。</div>
+        </div>
+        <div class="rec reveal">
+          <div class="v">5<small>′</small>08<small>″</small></div>
+          <div class="t">史上最快 147</div>
+          <div class="d">1997 年世锦赛，至今无人接近。</div>
+        </div>
+        <div class="rec reveal" style="--d:.06s">
+          <div class="v">153</div>
+          <div class="t">职业赛事最高单杆</div>
+          <div class="d">2026 年世界公开赛，借自由球创下。</div>
+        </div>
+        <div class="rec reveal" style="--d:.12s">
+          <div class="v">219</div>
+          <div class="t">世锦赛破百 · 历史第一</div>
+          <div class="d">克鲁斯堡三十余年的累积，其中含 3 杆 147。</div>
+        </div>
+        <div class="rec reveal" style="--d:.18s">
+          <div class="v">556</div>
+          <div class="t">单场连续得分不失一球</div>
+          <div class="d">2014 年大师赛对阵里奇·沃顿。</div>
+        </div>
+        <div class="rec reveal">
+          <div class="v">34</div>
+          <div class="t">世锦赛出场次数 · 历史第一</div>
+          <div class="d">自 1993 年起连续登场，2026 年第 30 次打进 16 强。</div>
+        </div>
+        <div class="rec reveal" style="--d:.06s">
+          <div class="v">19<small>项</small></div>
+          <div class="t">吉尼斯世界纪录</div>
+          <div class="d">独占 17 项，另 2 项与亨德利共同保持。</div>
+        </div>
+        <div class="rec reveal" style="--d:.12s">
+          <div class="v">46<small>岁</small></div>
+          <div class="t">最年长的世锦赛冠军</div>
+          <div class="d">2022 年夺冠，超越里尔顿的年龄纪录。</div>
+        </div>
+        <div class="rec reveal" style="--d:.18s">
+          <div class="v">2<small>杆</small></div>
+          <div class="t">同一场比赛两杆 147</div>
+          <div class="d">2025 年沙特大师赛，史上首次。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="l">
+      <div class="dots">
+        <i style="background:#B83A2C"></i><i style="background:#E4B62B"></i>
+        <i style="background:#2E8B57"></i><i style="background:#8B5E34"></i>
+        <i style="background:#2E6DB4"></i><i style="background:#E07A9E"></i>
+        <i style="background:#171717;box-shadow:0 0 0 1px rgba(255,255,255,.22)"></i>
+      </div>
+      <b>罗尼·奥沙利文 The Rocket</b> · 非官方致敬页面<br>
+      数据来源：WPBSA 官方球员档案、吉尼斯世界纪录、世界斯诺克巡回赛（WST）
+    </div>
+    <div class="r">
+      数据截至 2026 年 10 月<br>
+      仅供学习与交流使用
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* 数字滚动 */
+  function countUp(el){
+    var target = parseInt(el.getAttribute('data-count'), 10) || 0;
+    if (reduce){ el.textContent = target.toLocaleString('en-US'); return; }
+    var dur = 1500, t0 = null;
+    function step(now){
+      if (t0 === null) t0 = now;
+      var p = Math.min((now - t0) / dur, 1);
+      var e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * e).toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* 进度条 */
+  function growBars(scope){
+    var bars = scope.querySelectorAll('.bar-fill');
+    bars.forEach(function(b, i){
+      setTimeout(function(){ b.style.width = b.getAttribute('data-w') + '%'; }, reduce ? 0 : i * 110);
+    });
+  }
+
+  var items = document.querySelectorAll('.reveal');
+  var barsDone = false;
+
+  if (!('IntersectionObserver' in window)){
+    items.forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('[data-count]').forEach(countUp);
+    growBars(document);
+    return;
+  }
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (!en.isIntersecting) return;
+      var el = en.target;
+      el.classList.add('in');
+
+      el.querySelectorAll('[data-count]').forEach(countUp);
+      if (el.hasAttribute('data-count')) countUp(el);
+
+      if (!barsDone && el.querySelector('.bar-fill')){ barsDone = true; growBars(el); }
+
+      io.unobserve(el);
+    });
+  }, { threshold: 0.16, rootMargin: '0px 0px -50px 0px' });
+
+  items.forEach(function(el){ io.observe(el); });
+
+  /* 导航锚点：避免固定头遮挡 */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      var t = document.getElementById(id);
+      if (!t) return;
+      e.preventDefault();
+      var y = t.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

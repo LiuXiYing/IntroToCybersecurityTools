@@ -1,0 +1,203 @@
+version: 1
+
+course:
+  name: 学科综合讲座
+  timezone: Asia/Shanghai
+  title_template: "[{student_id}{student_name}]{assignment_id}作业提交"
+  submission_path_template: "{student_id}{student_name}/{assignment_id}"
+  merge_method: merge
+
+features:
+  auto_merge: true
+  comment_review: true
+  close_late_pr: true
+  ai_review: true
+  ai_feedback: true
+  ocr_review: false
+  vision_review: true
+  metrics: true
+
+defaults:
+  min_nonempty_lines: 10
+  allow_extra_files: false
+  late_close_after_days: 7
+
+ai:
+  providers:
+    - provider: glm
+      model: glm-4.7-flash
+    - provider: gemini
+      model: gemini-3.5-flash-lite
+  consensus_rounds: 3
+  min_confidence: 0.8
+  timeout_seconds: 60
+  max_attempts: 5
+  max_file_bytes: 200000
+  max_total_bytes: 500000
+  max_output_tokens: 2048
+
+feedback:
+  timeout_seconds: 20
+  max_input_bytes: 100000
+  max_output_tokens: 2048
+
+ocr:
+  detection_model: PP-OCRv6_small_det
+  recognition_model: PP-OCRv6_small_rec
+  min_line_confidence: 0.65
+  max_text_chars: 20000
+
+vision:
+  providers:
+    - provider: glm
+      model: glm-4.1v-thinking-flash
+    - provider: gemini
+      model: gemini-3.5-flash-lite
+  consensus_rounds: 3
+  min_confidence: 0.85
+  fail_confidence: 0.9
+  timeout_seconds: 90
+  max_attempts: 5
+  max_images: 6
+  max_image_bytes: 5000000
+  max_total_bytes: 12000000
+  max_pixels: 25000000
+  max_side: 4096
+  max_output_tokens: 4096
+
+# 发布新作业时在这里追加 Lab2、Lab3 等配置。
+# required_files 为相对学生作业目录的精确文件名；vision_files 支持 fnmatch 通配符。
+assignments:
+  Lab1:
+    enabled: true
+    deadline: "2026-10-17T00:00:00+08:00"
+    min_nonempty_lines: 10
+    allow_extra_files: false
+    report_template: homework/Lab1/Lab1.md
+    required_files:
+      - Lab1.md
+      - imgs/typingclub_calendar.png
+      - imgs/typingclub_202_completed.png
+    vision_files:
+      - imgs/typingclub_calendar.png
+      - imgs/typingclub_202_completed.png
+    review_points:
+      - Lab1.md 必须完整保留老师发布的模板，只能替换基本信息表第二列中的填写提示，不得删除、改写或调整其他标题、说明、表格行、图片引用和小节。
+      - 基本信息表中的姓名和 10 位学号必须全部填写，不能留空或保留填写提示，且必须与本次 PR 作者登记的身份一致。
+      - 本次不要求填写 GitHub 账号或 TypingClub 用户名，也不要求另外撰写练习心得。
+    vision_review_points:
+      - typingclub_calendar.png 必须是 TypingClub 主页进入统计数据后向下滚动看到的练习日程表区域，清晰显示“练习日程表”标题、累计练习时间及统计范围、按月份排列的日历方格和练习记录；不要求该图显示顶部导航栏、地址栏或账号名称。
+      - typingclub_202_completed.png 必须是 TypingClub 的关卡选择页面，清晰显示第 202 关的完整关卡卡片、编号 202 及至少一颗已获得的星星，并保留周围页面区域；只有编号、解锁状态或未点亮的星星不算完成。不要求重新练习，也不要求提交本关结束后的成绩页面。
+      - 两张截图必须来自本人同一 TypingClub 账号；仅在两张图均显示账号名称时检查是否相互矛盾。截图未显示账号名称不构成拒绝理由，不要求账号名称与学生姓名相同，也不要求在 Lab1.md 中填写账号名称。
+      - 不设置累计练习时长、练习天数、连续练习、速度、准确率或满星门槛；日历的月份、年份、颜色和练习时间以学生实际记录为准，不要求与教师示例一致。第 202 关有已获得的星星即可，不要求第 200、201 关或全部 202 个关卡同时出现在截图中。
+      - 截图必须由电脑截图功能生成，文字、关卡编号和完成状态清晰可读；出现手机拍摄造成的反光、摩尔纹、明显倾斜或关键文字无法辨认时判为不合格。
+  Lab2:
+    enabled: true
+    deadline: "2026-10-20T00:00:00+08:00"
+    # 报告行数由 template_metrics 检查，不给 index.html 另设行数门槛。
+    min_nonempty_lines: 0
+    allow_extra_files: false
+    report_template: homework/Lab2/Lab2.md
+    required_files:
+      - Lab2.md
+      - index.html
+      - imgs/workbuddy_web.png
+      - imgs/claude_code_hello.png
+    # Lab2 及以后的作业均启用模板行数与字符数量检查，Lab1 保持原有审核规则。
+    template_metrics:
+      enabled: true
+      report_file: Lab2.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/workbuddy_web.png
+      - imgs/claude_code_hello.png
+    review_points:
+      - Lab2.md 必须完整保留发布模板的标题、说明、示例、表格、图片引用和小节，只替换表格中的填写提示。总行数、非空行数和六类 Markdown 字符数量由程序检查；数量达标不能代替实际内容审核。
+      - 基本信息表中的姓名和 10 位学号必须全部填写，不能留空或保留填写提示，且必须与本次 PR 作者登记的身份一致。
+      - 网页主题与公网访问地址均应填写，主题自选、不限制版式或复杂交互。网址应为完整的 http 或 https 公网访问地址，不能是 file、localhost、127.0.0.1 或局域网地址；应提供无需登录即可查看的网页地址，不能用部署控制台或源码仓库地址代替。文本审核不要求联网访问网址，公网展示结果由图片阶段结合截图核对。
+      - index.html 是唯一允许提交的网页文件，必须有与自选主题相关的实际 HTML 页面内容，网页不要求标注学号或姓名。CSS 应集成在 style 标签中；如使用 JavaScript，应集成在 script 标签中，不强制交互功能。不得依赖外部样式、脚本、CDN 框架、额外图片字体资源、本地文件、构建步骤或后端程序；内嵌 SVG、Data URL 和 CSS 图案可以接受。用于用户点击跳转的普通超链接不属于外部资源依赖。不得因页面较简洁或源码行数少判为未完成。
+      - 网页应使用 UTF-8 编码，index.html 不超过 200000 字节，不得含 API Key、密码或部署令牌。提交文件应是与公网网页对应的最终版本，不能只交截图或用网址代替 HTML 文件；不要求提交部署配置或操作过程。
+      - 本次只提交 Lab2.md、index.html 和两张指定截图，不要求额外心得、简答题、软件版本记录、配置文件或用量记录。问候语的实际输出由图片阶段审核；不要在文本阶段因看不到终端截图而判未完成。模板行数及字符数量检查只针对 Lab2.md，不应用于 index.html。
+      - 模板中的学号姓名和提示词示例须保留，不能将示例中的张三、2026010099 或“我的10位学号我的姓名”当成学生实际填写。只有在基本信息表或 Claude Code 实际问候语中沿用示例冒充本人信息时才判为未完成；网页内容不设置身份标注要求。
+    vision_review_points:
+      - workbuddy_web.png 应是浏览器访问已部署公网网页的截图，同一张图中应清晰显示地址栏的公网域名和页面路径、正常加载的主题与主要内容，不要求页面显示学号或姓名。地址应与报告填写的网址对应；浏览器隐藏协议前缀、末尾斜杠或默认 index.html 属合理差异。
+      - 公网网页截图不能用 WorkBuddy 聊天、部署控制台、本地文件预览或 localhost、127.0.0.1、局域网地址代替；页面显示空白、404、未发布或必须登录才能查看时不算完成。网页主题和版式自选，不要求复杂交互或完整长页面；不要求截图显示 WorkBuddy 操作过程或登录账号。
+      - 网页截图中的主题和主要内容应与报告及 index.html 对应，不能用其他网页或旧版本截图冒充提交的作品。普通窗口和无痕窗口截图均可，不额外要求无痕窗口标志；截图不能单独证明持续可访问，不应声称已实际联网验证部署状态。
+      - claude_code_hello.png 应能辨认 Claude Code 终端界面、本人发送的问候语请求和模型已经返回的“你好，本人10位学号姓名”。学号姓名须与本次 PR 登记身份及报告一致；接受中文或英文逗号、合理空格等差异。只有输入提示词而无模型回复、回复仍含占位符、输出报错，或用 echo、print 冒充回复，均不算完成。
+      - 本次使用 Claude Code 客户端连接 DeepSeek API，不要求 Claude 官方订阅或 Claude 官方模型名称。无需另交版本、安装、CC Switch 配置、DeepSeek 充值、余额或密钥截图；不要仅因终端未显示供应商或模型名称而判为未完成。
+      - 两张截图必须来自本人电脑的实际操作，网页截图的公网地址与页面内容、Claude Code 截图中的问候语清晰可读。允许合理裁剪无关区域及不同界面语言和主题，但网页截图必须保留地址栏；不得使用手机拍屏，不得出现 API Key、密码或支付敏感信息。关键内容被裁掉、无法辨认或与报告明显矛盾时应指出。
+  Lab3:
+    enabled: true
+    deadline: "2026-10-24T00:00:00+08:00"
+    min_nonempty_lines: 10
+    allow_extra_files: false
+    report_template: homework/Lab3/Lab3.md
+    required_files:
+      - Lab3.md
+      - imgs/lab3_network.png
+      - imgs/lab3_resources.png
+      - imgs/lab3_mobaxterm.png
+      - imgs/lab3_vscode_remote.png
+    template_metrics:
+      enabled: true
+      report_file: Lab3.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/lab3_network.png
+      - imgs/lab3_resources.png
+      - imgs/lab3_mobaxterm.png
+      - imgs/lab3_vscode_remote.png
+    review_points:
+      - Lab3.md 必须完整保留老师发布的模板，只能替换各验收表格（联网、资源、MobaXterm、VSCode Remote-SSH）第二列中的填写提示和环境验收总结的结论列，不得删除、改写或调整其他标题、说明、表格行、图片引用和小节。总行数、非空行数和六类 Markdown 字符数量由程序检查；数量达标不能代替实际内容审核。
+      - 各验收表格的填写列应全部填写，不能留空或保留填写提示；虚拟机 IP、CPU 核心数、内存、虚磁盘容量、远程终端 whoami 输出、SSH 主机别名等应与截图内容对应，明显矛盾时判为未完成。
+      - 环境验收总结下方的简要说明应填写本人遇到的问题、解决方法或明确说明无问题，不能保留“填写”提示。
+      - 本次只提交 Lab3.md 和 4 张指定截图，不要求提交 hello.txt、配置文件或其他任何文件；软件源用官方源或国内镜像站均可，不得因 Get 行来源判为不合格。
+    vision_review_points:
+      - lab3_network.png 应清晰显示 hostname -I、ip route、ping -c 4 223.5.5.5、ping -c 4 mirrors.tuna.tsinghua.edu.cn 和 sudo apt update 各命令及其输出，命令与输出应能对应；有私有 IP 和 default via 默认路由、两个 ping 有返回、apt update 无 Err/Failed 即算成功。所在网络禁 ping 时，以 apt update 成功输出作为联网证据不算拒绝理由。
+      - lab3_resources.png 应清晰显示 nproc、free -h、lsblk、df -h / 各命令及其输出；CPU 核心数不低于 2、内存不低于 3GB、虚磁盘不小于 40GB 即算达标，显示值略小于 VMware 设置值属正常现象。
+      - lab3_mobaxterm.png 应能辨认 MobaXterm 的 SSH 会话窗口（左侧会话栏或远程终端），远程终端为 Linux 提示符并显示 whoami、hostname、hostname -I 的输出；whoami 输出应与报告填写一致。用 Windows 本地 PowerShell/CMD 冒充远程终端、只有连接界面无命令输出均不算完成。
+      - lab3_vscode_remote.png 应能辨认 VSCode 窗口左下角的 SSH 远程标识（如 SSH：kali-oslab），已打开远程文件夹，集成终端中有 uname -a 输出的 Linux 内核信息；报告填写的主机别名应与图中一致。
+      - 截图必须来自学生本人的 Kali 虚拟机，两张远程连接截图中的 IP 与报告填写的 IP 一致或为同一虚拟机的合理变化；必须由电脑截图功能生成，出现手机拍屏反光、倾斜或关键文字无法辨认时判为不合格。
+  Lab4:
+    enabled: true
+    deadline: "2026-10-26T00:00:00+08:00"
+    # 行数与字符数量由 template_metrics 检查，与 Lab2、Lab3 相同口径
+    min_nonempty_lines: 0
+    allow_extra_files: false
+    report_template: homework/Lab4/Lab4.md
+    required_files:
+      - Lab4.md
+      - imgs/lab4_email.png
+      - imgs/lab4_homepage.png
+      - imgs/lab4_tools.png
+      - imgs/lab4_typingclub_233.png
+    template_metrics:
+      enabled: true
+      report_file: Lab4.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/lab4_email.png
+      - imgs/lab4_homepage.png
+      - imgs/lab4_tools.png
+      - imgs/lab4_typingclub_233.png
+    review_points:
+      - Lab4.md 必须完整保留老师发布的模板，只能替换各表格中的填写提示，不得删除、改写或调整其他标题、说明、表格行、图片引用和小节。总行数、非空行数和六类 Markdown 字符数量由程序检查；数量达标不能代替实际内容审核。
+      - 文本审核按最宽口径执行：只检查各填写栏是否已如实填写，不留空、不保留“（填写）”等填写提示即可；不核对答案的正确性、深度或完整度，填写内容与标准答案、教师示例或模板说明文字不一致、表述简短或口语化均不判不合格，存在疑点或拿不准时一律按完成处理。
+      - 软件清单表格的每一格都必须填写，不得留空或保留填写提示；“是否安装”列填“已安装”或“未安装”均可，试用记录如实写一句话或填“未安装”即可；不要求实际安装任何软件，不设置最低安装数量，不要求 Everything、Geek Uninstaller、WizTree 三款已安装，也不要求软件必须来自推荐清单，不得因未安装或安装数量少判未完成。
+      - 2.3 节的平铺截图在文本阶段只核对 imgs/lab4_tools.png 的文件名与图片引用是否正确；三个窗口是否平铺、软件是否实际运行由图片阶段核对，文本阶段不要因看不到截图内容判未完成。
+      - 快捷键、解压缩、邮件、开机启动项管理、油猴脚本与 Edge 插件各表格的填写栏均不得留空或保留填写提示；快捷键含义按自己理解填写即可，不逐行核对标准答案；解压缩数据以本人实际结果为准，具体数值和写法不作要求；邮件主题不得留空，附件栏如实填写，正文不得涉及违规违法信息；启动项管理填“无”或简短说明保留原因均算完成；4.4 节不设填写表格，不得因该节没有填写内容判未完成。文本审核不要求联网验证邮件、脚本或插件是否真实安装。
+      - 浏览器主页与搜索引擎一节的填写栏不得留空或保留填写提示，按本人实际设置如实填写即可；地址为 bing.com、cn.bing.com 或 bing.cn 均可，关闭的推广内容写大意或简单说明均可，与模板文字略有出入不判不合格；未安装 Chrome 的两栏填“未安装”即算完成，不得因此判未完成。文本审核不要求实际检查浏览器设置。
+      - 4.6 的主页截图在文本阶段只核对 imgs/lab4_homepage.png 的文件名与图片引用是否正确；主页是否真的改为 Bing 由图片阶段核对，文本阶段不要因看不到截图内容判未完成。
+      - 卸载第三方杀毒软件一节为建议内容，卸载与否不作要求，填写栏填“无”或“保留”加一句原因均算完成，不得因未卸载第三方杀毒判未完成；基本正确风格一节的自查表如实填写即可，填“未做到”不影响完成，不得据此判未完成。
+      - 教育账号一节的填写栏不得留空；两个申请填“已通过”“审核中”或“失败”加一句说明均算完成，不得因审核未通过判未完成；文本审核不要求联网验证账号状态，不得要求学生提交账号截图或填写账号密码。
+      - 本次只提交 Lab4.md 和四张指定截图，不要求提交安装包、脚本文件、压缩包或其他任何文件。
+    vision_review_points:
+      - 图片审核按最宽口径执行：只核对每张截图是否具备作业要求的最低完成标志，对清晰度、分辨率、图片大小、排版、窗口大小与位置、界面语言与主题、浏览器与软件版本差异、桌面背景与图标、截图范围和裁剪程度等细节一律不作要求；不得以美观、完整度或与教师示例不一致为由判不合格；存在疑点或拿不准时一律按完成处理。
+      - lab4_homepage.png 只要能确认打开的是 Bing 页面（Bing 主页或 Bing 搜索结果页均可）即算完成；地址栏显示 bing.com、cn.bing.com、global.bing.com 或经跳转的任一 Bing 域名均正常，地址栏被裁掉、被遮挡或看不全不影响完成；不要求浏览器必须是 Edge，其他浏览器同样接受；Bing 自带的背景图、每日图片、天气、资讯卡片等官方内容不算推广，带有此类内容不判不合格；仅当页面明显是导航站、百度等其他搜索引擎、与 Bing 完全无关或明显用网络图片代替时判不合格。
+      - lab4_tools.png 只要同一张图片中能辨认出 Everything、Geek Uninstaller、WizTree 三个软件的运行窗口即算完成：窗口大小、排列方式、层级、重叠与遮挡均不限，每个软件通过标题栏、名称、图标或界面特征中任一项能辨认即可；对三个软件的具体使用状态不作要求，不必核对是否搜索、是否列出软件或是否完成扫描；实际截图与拼图均可接受；不因桌面是否整洁、图标多少、壁纸样式、分辨率低或窗口未铺满屏幕判不合格；仅当缺少任一软件窗口、任一软件完全无法辨认或明显用官网宣传图、网络图片等非本人电脑画面代替时判不合格。
+      - lab4_typingclub_233.png 只要能辨认 TypingClub 关卡页面中编号 233 的关卡，且该关卡卡片上能看到至少一颗已获得的星星（点亮或部分点亮均可）即算完成；不要求完整卡片或保留周围区域，不要求满星，也不核对其他关卡；界面改版、显示语言、缩放比例与清晰度差异均不判不合格；仅当看不到编号 233、该关没有任何已获得的星星或截图与 TypingClub 无关时判不合格。
+      - lab4_email.png 只要能显示一封与本次作业对应的邮件并同时能看到主题、正文和附件标记（附件名称、附件图标或回形针标记任一项均可）即算完成；已发送列表、邮件详情页或收件箱中的同一封邮件均可；邮箱客户端与界面样式不限；主题为 Lab4-学号-姓名，仅大小写、空格或连字符等微小差异均正常；收件人以及正文中隐私相关的局部内容打码不影响完成；不因截图范围或清晰度差异判不合格；仅当看不到主题或正文、完全没有附件标记、明显不是本人邮件（如网络图片）或主题与正文出现明显违规违法内容、账号密码等敏感隐私时判不合格。
+      - 四张截图接受桌面截图、浏览器截取、全屏截图等任何形式；存在轻微反光、摩尔纹、倾斜、模糊或压缩痕迹但关键信息（Bing 页面、三款软件名称、编号 233 与星标、邮件主题正文附件）仍可辨认时不得判不合格，也不因疑似拍屏本身拒绝；画面中出现与作业无关的通知、窗口、水印或打码内容均不影响完成；只有关键信息无法确认时才按不合格处理，其余任何情况一律按完成处理。

@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>熊出没 · 狗熊岭森林乐园</title>
+<style>
+  :root{
+    --forest-deep:#0f2b1d;
+    --forest:#1b4d33;
+    --forest-mid:#2e7d4f;
+    --leaf:#5bbd72;
+    --leaf-light:#a8e6a3;
+    --bark:#7a4a25;
+    --bark-light:#b8814e;
+    --honey:#f7b32b;
+    --honey-light:#ffd166;
+    --cream:#fdf6e3;
+    --paper:#fffdf7;
+    --ink:#1a2b1f;
+    --ink-soft:#4a5f50;
+    --shadow:rgba(15,43,29,.18);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.75;
+    overflow-x:hidden;
+  }
+
+  /* ============ 顶部导航 ============ */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(15,43,29,.86);
+    backdrop-filter:blur(14px);
+    border-bottom:2px solid rgba(247,179,43,.35);
+    transition:all .3s;
+  }
+  nav{
+    max-width:1180px;margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-size:21px;font-weight:900;color:var(--honey);
+    letter-spacing:1px;white-space:nowrap;
+  }
+  .logo .paw{
+    width:38px;height:38px;flex:none;
+    background:linear-gradient(145deg,var(--honey),#e08a00);
+    border-radius:50% 50% 46% 46%;
+    display:grid;place-items:center;font-size:20px;
+    box-shadow:0 3px 0 #b06f00;
+  }
+  .navlinks{display:flex;gap:6px;flex-wrap:wrap}
+  .navlinks a{
+    color:#dff3e2;text-decoration:none;font-size:15px;font-weight:600;
+    padding:8px 14px;border-radius:10px;transition:.25s;
+  }
+  .navlinks a:hover{background:var(--honey);color:var(--forest-deep);transform:translateY(-2px)}
+
+  /* ============ 英雄区 ============ */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:120px 24px 60px;overflow:hidden;
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 0%,rgba(91,189,114,.35),transparent 70%),
+      linear-gradient(180deg,#0f2b1d 0%,#1b4d33 45%,#2e7d4f 78%,#5bbd72 100%);
+  }
+  /* 太阳 */
+  .sun{
+    position:absolute;top:9%;right:12%;width:120px;height:120px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%,#fff3c4,var(--honey) 55%,#e08a00);
+    box-shadow:0 0 70px 24px rgba(247,179,43,.45);
+    animation:pulse 5s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  /* 云 */
+  .cloud{
+    position:absolute;background:rgba(255,255,255,.28);border-radius:100px;
+    filter:blur(1px);
+  }
+  .cloud::before,.cloud::after{
+    content:"";position:absolute;background:inherit;border-radius:50%;
+  }
+  .c1{width:150px;height:44px;top:16%;left:-180px;animation:drift 34s linear infinite}
+  .c1::before{width:64px;height:64px;top:-30px;left:22px}
+  .c1::after{width:48px;height:48px;top:-20px;left:78px}
+  .c2{width:110px;height:34px;top:30%;left:-140px;animation:drift 46s linear infinite 6s}
+  .c2::before{width:48px;height:48px;top:-22px;left:16px}
+  .c2::after{width:36px;height:36px;top:-14px;left:58px}
+  @keyframes drift{to{transform:translateX(140vw)}}
+  /* 远山 */
+  .mountains{position:absolute;bottom:0;left:0;width:100%;height:34%;pointer-events:none}
+  /* 松树剪影 */
+  .trees{position:absolute;bottom:0;left:0;width:100%;height:220px;pointer-events:none;opacity:.95}
+
+  .hero-content{position:relative;z-index:5;max-width:860px}
+  .badge{
+    display:inline-block;padding:8px 20px;border-radius:100px;
+    background:rgba(247,179,43,.16);border:2px solid rgba(247,179,43,.55);
+    color:var(--honey-light);font-weight:700;font-size:14px;letter-spacing:2px;
+    margin-bottom:26px;
+  }
+  .hero h1{
+    font-size:clamp(42px,9vw,92px);font-weight:900;line-height:1.05;
+    color:#fff;letter-spacing:3px;
+    text-shadow:0 6px 0 rgba(15,43,29,.45),0 0 44px rgba(91,189,114,.5);
+    margin-bottom:8px;
+  }
+  .hero h1 .hl{color:var(--honey);text-shadow:0 6px 0 #8c5200,0 0 40px rgba(247,179,43,.6)}
+  .hero .sub{
+    font-size:clamp(15px,2.6vw,20px);color:#d9f0dc;margin:18px auto 34px;max-width:620px;
+  }
+  .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    padding:15px 34px;border-radius:100px;font-size:16px;font-weight:800;
+    text-decoration:none;display:inline-flex;align-items:center;gap:9px;
+    transition:.28s;border:3px solid transparent;cursor:pointer;font-family:inherit;
+  }
+  .btn-primary{
+    background:linear-gradient(145deg,var(--honey),#e08a00);color:var(--forest-deep);
+    box-shadow:0 6px 0 #a86800;
+  }
+  .btn-primary:hover{transform:translateY(-4px);box-shadow:0 10px 0 #a86800}
+  .btn-ghost{
+    background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.5);
+  }
+  .btn-ghost:hover{background:#fff;color:var(--forest);transform:translateY(-4px)}
+
+  .scroll-hint{
+    position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+    color:rgba(255,255,255,.75);font-size:13px;letter-spacing:2px;z-index:6;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,9px)}}
+
+  /* ============ 通用板块 ============ */
+  section{padding:96px 24px}
+  .wrap{max-width:1180px;margin:0 auto}
+  .sec-head{text-align:center;margin-bottom:60px}
+  .sec-kicker{
+    color:var(--forest-mid);font-weight:800;letter-spacing:4px;font-size:13px;
+    text-transform:uppercase;margin-bottom:12px;
+  }
+  .sec-head h2{
+    font-size:clamp(30px,5vw,46px);font-weight:900;color:var(--forest-deep);
+    letter-spacing:2px;position:relative;display:inline-block;
+  }
+  .sec-head h2::after{
+    content:"";position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);
+    width:80px;height:6px;border-radius:6px;
+    background:linear-gradient(90deg,var(--honey),var(--leaf));
+  }
+  .sec-head p{color:var(--ink-soft);margin-top:30px;font-size:16px;max-width:620px;margin-left:auto;margin-right:auto}
+
+  /* ============ 角色卡片 ============ */
+  .chars{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));
+    gap:30px;
+  }
+  .card{
+    background:var(--paper);border-radius:26px;overflow:hidden;
+    box-shadow:0 10px 30px var(--shadow);border:3px solid transparent;
+    transition:.35s cubic-bezier(.34,1.56,.64,1);position:relative;
+  }
+  .card:hover{transform:translateY(-12px) rotate(-1.2deg);box-shadow:0 22px 46px var(--shadow)}
+  .card-top{
+    height:172px;display:grid;place-items:center;position:relative;overflow:hidden;
+  }
+  .card-top .face{font-size:82px;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25));transition:.4s;z-index:2}
+  .card:hover .card-top .face{transform:scale(1.14) rotate(6deg)}
+  .card-top::after{
+    content:"";position:absolute;bottom:-28px;left:-10%;width:120%;height:60px;
+    background:var(--paper);border-radius:50%;
+  }
+  .card-body{padding:8px 26px 28px;position:relative;z-index:3}
+  .card-body h3{font-size:23px;font-weight:900;color:var(--forest-deep);letter-spacing:1px}
+  .card-role{
+    display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;
+    padding:3px 12px;border-radius:100px;margin:8px 0 12px;
+    background:rgba(91,189,114,.16);color:var(--forest-mid);
+  }
+  .card-body p{font-size:14.5px;color:var(--ink-soft);line-height:1.8}
+  .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px}
+  .tag{
+    font-size:12px;font-weight:700;padding:4px 11px;border-radius:8px;
+    background:rgba(247,179,43,.2);color:#8c5200;
+  }
+
+  /* ============ 名场面画廊 ============ */
+  .gallery-sec{background:linear-gradient(180deg,var(--forest-deep),var(--forest))}
+  .gallery-sec .sec-head h2{color:#fff}
+  .gallery-sec .sec-head h2::after{background:linear-gradient(90deg,var(--honey),var(--leaf-light))}
+  .gallery-sec .sec-kicker{color:var(--leaf-light)}
+  .gallery-sec .sec-head p{color:#bedcc4}
+  .gallery{
+    display:grid;gap:22px;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  }
+  .shot{
+    border-radius:22px;overflow:hidden;position:relative;min-height:230px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:24px;color:#fff;transition:.35s;cursor:default;
+    border:2px solid rgba(255,255,255,.13);
+  }
+  .shot:hover{transform:scale(1.035);border-color:var(--honey)}
+  .shot .ico{font-size:46px;position:absolute;top:20px;right:22px;opacity:.9}
+  .shot h4{font-size:19px;font-weight:900;margin-bottom:6px;letter-spacing:1px}
+  .shot span{font-size:13.5px;color:rgba(255,255,255,.82);line-height:1.7}
+  .shot::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 35%,rgba(0,0,0,.55));z-index:1;
+  }
+  .shot>*{position:relative;z-index:2}
+
+  /* ============ 时间线（系列作品） ============ */
+  .timeline{position:relative;max-width:820px;margin:0 auto;padding-left:8px}
+  .timeline::before{
+    content:"";position:absolute;left:22px;top:8px;bottom:8px;width:5px;
+    border-radius:5px;background:linear-gradient(180deg,var(--honey),var(--leaf),var(--forest-mid));
+  }
+  .tl-item{position:relative;padding:0 0 40px 66px}
+  .tl-item:last-child{padding-bottom:0}
+  .tl-dot{
+    position:absolute;left:8px;top:4px;width:34px;height:34px;border-radius:50%;
+    background:var(--paper);border:5px solid var(--forest-mid);
+    display:grid;place-items:center;font-size:14px;font-weight:900;color:var(--forest-mid);
+    box-shadow:0 4px 12px var(--shadow);z-index:2;
+  }
+  .tl-item:hover .tl-dot{background:var(--honey);border-color:var(--honey);color:#fff;transform:scale(1.12);transition:.3s}
+  .tl-body{
+    background:var(--paper);border-radius:18px;padding:20px 24px;
+    box-shadow:0 6px 22px var(--shadow);border-left:6px solid var(--honey);
+    transition:.3s;
+  }
+  .tl-item:hover .tl-body{transform:translateX(8px)}
+  .tl-body h4{font-size:18.5px;font-weight:900;color:var(--forest-deep);margin-bottom:5px}
+  .tl-body .yr{
+    font-size:12.5px;font-weight:800;color:var(--forest-mid);letter-spacing:1px;
+  }
+  .tl-body p{font-size:14.5px;color:var(--ink-soft);margin-top:8px}
+
+  /* ============ 数据条 ============ */
+  .stats{
+    background:linear-gradient(135deg,var(--honey),var(--bark-light));
+    padding:64px 24px;
+  }
+  .stats-grid{
+    max-width:1000px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px;text-align:center;
+  }
+  .stat b{
+    display:block;font-size:clamp(32px,6vw,52px);font-weight:900;color:var(--forest-deep);
+    line-height:1.1;letter-spacing:-1px;
+  }
+  .stat span{
+    font-size:14px;font-weight:800;color:#5c3a12;letter-spacing:1.5px;
+  }
+
+  /* ============ 名言 ============ */
+  .quotes{background:var(--paper)}
+  .quote-grid{display:grid;gap:26px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .quote{
+    background:linear-gradient(160deg,#f3fbf4,#e6f6e9);
+    border-radius:22px;padding:32px 28px;position:relative;
+    border:2px dashed rgba(46,125,79,.35);transition:.3s;
+  }
+  .quote:hover{transform:translateY(-8px);border-style:solid;border-color:var(--leaf)}
+  .quote .mark{
+    position:absolute;top:6px;left:20px;font-size:74px;color:rgba(91,189,114,.28);
+    font-family:Georgia,serif;line-height:1;font-weight:900;
+  }
+  .quote p{font-size:17px;font-weight:700;color:var(--forest-deep);position:relative;z-index:2;margin:22px 0 14px}
+  .quote cite{font-size:13.5px;color:var(--forest-mid);font-weight:800;font-style:normal}
+
+  /* ============ 页脚 ============ */
+  footer{
+    background:var(--forest-deep);color:#a9c9b2;padding:56px 24px 32px;text-align:center;
+  }
+  footer .f-logo{font-size:24px;font-weight:900;color:var(--honey);letter-spacing:2px;margin-bottom:12px}
+  footer p{font-size:13.5px;max-width:560px;margin:0 auto 10px;line-height:1.8}
+  footer .fine{
+    margin-top:26px;padding-top:22px;border-top:1px solid rgba(255,255,255,.12);
+    font-size:12.5px;color:#6f8f79;
+  }
+  footer .forest-line{font-size:22px;margin:18px 0;letter-spacing:6px}
+
+  /* ============ 滚动入场动画 ============ */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+  .reveal.on{opacity:1;transform:none}
+
+  /* ============ 返回顶部 ============ */
+  #top-btn{
+    position:fixed;right:24px;bottom:24px;width:52px;height:52px;border-radius:50%;
+    background:var(--forest-mid);color:#fff;border:none;font-size:22px;cursor:pointer;
+    box-shadow:0 6px 18px rgba(15,43,29,.4);opacity:0;pointer-events:none;
+    transition:.3s;z-index:90;
+  }
+  #top-btn.show{opacity:1;pointer-events:auto}
+  #top-btn:hover{background:var(--honey);color:var(--forest-deep);transform:translateY(-4px)}
+
+  @media(max-width:640px){
+    nav{flex-direction:column;gap:10px;padding:12px}
+    .navlinks{justify-content:center}
+    .navlinks a{padding:6px 10px;font-size:13.5px}
+    section{padding:70px 18px}
+    .hero{padding-top:170px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo"><span class="paw">🐻</span>熊出没 · 狗熊岭</div>
+    <div class="navlinks">
+      <a href="#chars">角色</a>
+      <a href="#gallery">名场面</a>
+      <a href="#series">系列作品</a>
+      <a href="#quotes">经典台词</a>
+    </div>
+  </nav>
+</header>
+
+<!-- 英雄区 -->
+<div class="hero">
+  <div class="sun"></div>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <svg class="mountains" viewBox="0 0 1440 260" preserveAspectRatio="none">
+    <path d="M0,200 L180,90 L340,170 L520,70 L700,180 L900,100 L1100,190 L1280,110 L1440,200 L1440,260 L0,260 Z" fill="rgba(15,43,29,.55)"/>
+  </svg>
+  <svg class="trees" viewBox="0 0 1440 220" preserveAspectRatio="none">
+    <g fill="#0b2417">
+      <path d="M120,220 L120,120 L70,120 L120,20 L170,120 L120,120 Z"/>
+      <path d="M300,220 L300,140 L262,140 L300,60 L338,140 L300,140 Z"/>
+      <path d="M470,220 L470,110 L415,110 L470,0 L525,110 L470,110 Z"/>
+      <path d="M680,220 L680,145 L645,145 L680,70 L715,145 L680,145 Z"/>
+      <path d="M860,220 L860,100 L800,100 L860,-10 L920,100 L860,100 Z"/>
+      <path d="M1050,220 L1050,135 L1010,135 L1050,55 L1090,135 L1050,135 Z"/>
+      <path d="M1250,220 L1250,120 L1200,120 L1250,20 L1300,120 L1250,120 Z"/>
+      <path d="M1400,220 L1400,150 L1370,150 L1400,85 L1430,150 L1400,150 Z"/>
+    </g>
+  </svg>
+
+  <div class="hero-content">
+    <div class="badge">★ 中国大陆经典动画 IP · 狗熊岭出品 ★</div>
+    <h1>熊<span class="hl">出没</span></h1>
+    <p class="sub">在狗熊岭的茂密森林里，两头憨态可掬的熊兄弟，一个执着的伐木工，还有一群森林伙伴——这里每天都在上演笑中带暖的故事。</p>
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#chars">🐾 认识角色</a>
+      <a class="btn btn-ghost" href="#gallery">🎬 看名场面</a>
+    </div>
+  </div>
+  <div class="scroll-hint">向下滚动 ↓</div>
+</div>
+
+<!-- 角色 -->
+<section id="chars">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker">Characters</div>
+      <h2>森林里的主角们</h2>
+      <p>熊大、熊二和光头强，是这段森林故事里最让人熟悉的三个身影。</p>
+    </div>
+
+    <div class="chars">
+      <div class="card reveal">
+        <div class="card-top" style="background:linear-gradient(150deg,#2e7d4f,#5bbd72)">
+          <div class="face">🐻</div>
+        </div>
+        <div class="card-body">
+          <h3>熊大</h3>
+          <span class="card-role">哥哥 · 森林守护者</span>
+          <p>熊兄弟中的哥哥，机智沉稳、有勇有谋。遇事冷静，总能想出办法化解危机，是森林里公认的"主心骨"，也是熊二最信赖的依靠。</p>
+          <div class="tags"><span class="tag">机智</span><span class="tag">领导力</span><span class="tag">护林</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-top" style="background:linear-gradient(150deg,#e08a00,#f7b32b)">
+          <div class="face">🧸</div>
+        </div>
+        <div class="card-body">
+          <h3>熊二</h3>
+          <span class="card-role">弟弟 · 吃货担当</span>
+          <p>憨厚可爱、力大无穷，最大的爱好就是吃蜂蜜。虽然常常因为贪吃闹出笑话，但心地善良，在关键时刻从不含糊。</p>
+          <div class="tags"><span class="tag">憨厚</span><span class="tag">爱吃蜂蜜</span><span class="tag">力大</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-top" style="background:linear-gradient(150deg,#7a4a25,#b8814e)">
+          <div class="face">👨‍🌾</div>
+        </div>
+        <div class="card-body">
+          <h3>光头强</h3>
+          <span class="card-role">伐木工 · 欢喜冤家</span>
+          <p>一心想在狗熊岭砍树谋生的伐木工，留着标志性的光头。虽然总被熊兄弟"搅局"，却也在一次次交手中心生善意，是笑点与温情的重要来源。</p>
+          <div class="tags"><span class="tag">执着</span><span class="tag">小聪明</span><span class="tag">重情义</span></div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-top" style="background:linear-gradient(150deg,#1b4d33,#2e7d4f)">
+          <div class="face">🦌</div>
+        </div>
+        <div class="card-body">
+          <h3>森林伙伴</h3>
+          <span class="card-role">配角群像 · 欢乐加持</span>
+          <p>松鼠蹦蹦、猴子吉吉、熊妈妈以及各式各样的森林小动物，为狗熊岭增添了无数热闹与欢笑，也让这片森林更有生气。</p>
+          <div class="tags"><span class="tag">松鼠蹦蹦</span><span class="tag">猴子吉吉</span><span class="tag">群像</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 名场面 -->
+<section class="gallery-sec" id="gallery">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker">Classic Moments</div>
+      <h2>那些让人记忆深刻的名场面</h2>
+      <p>森林里的追逐、斗智和和解，构成了这部动画最鲜活的部分。</p>
+    </div>
+
+    <div class="gallery">
+      <div class="shot reveal" style="background:linear-gradient(150deg,#2e7d4f,#0f2b1d)">
+        <div class="ico">🪓</div>
+        <h4>光头强砍树</h4>
+        <span>"又没砍成"——电锯刚响，熊兄弟就已闻声赶到，经典开局循环。</span>
+      </div>
+      <div class="shot reveal" style="background:linear-gradient(150deg,#e08a00,#7a4a25)">
+        <div class="ico">🍯</div>
+        <h4>熊二抢蜂蜜</h4>
+        <span>为了树上的蜂窝，熊二可以上蹿下跳无所不用其极，馋相十足。</span>
+      </div>
+      <div class="shot reveal" style="background:linear-gradient(150deg,#1b4d33,#3f9d63)">
+        <div class="ico">🌳</div>
+        <h4>守护狗熊岭</h4>
+        <span>面对乱砍滥伐，熊兄弟齐心协力把森林护在身后，是最热血的一刻。</span>
+      </div>
+      <div class="shot reveal" style="background:linear-gradient(150deg,#5bbd72,#1b4d33)">
+        <div class="ico">🤝</div>
+        <h4>意想不到的和解</h4>
+        <span>再激烈的斗法，也常在关键时刻化为互相帮助，让故事有了温度。</span>
+      </div>
+      <div class="shot reveal" style="background:linear-gradient(150deg,#7a4a25,#b8814e)">
+        <div class="ico">😂</div>
+        <h4>机关陷阱大战</h4>
+        <span>各种自制的机关陷阱轮番登场，结局却常常把自己绕进去。</span>
+      </div>
+      <div class="shot reveal" style="background:linear-gradient(150deg,#0f2b1d,#2e7d4f)">
+        <div class="ico">🎄</div>
+        <h4>四季的森林</h4>
+        <span>春日的嫩芽、盛夏的浓荫、金秋的落叶、冬日的雪原，狗熊岭四季皆景。</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 数据条 -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat"><b>3</b><span>核心主角</span></div>
+    <div class="stat"><b>四季</b><span>森林风景</span></div>
+    <div class="stat"><b>∞</b><span>欢乐瞬间</span></div>
+    <div class="stat"><b>1</b><span>狗熊岭</span></div>
+  </div>
+</div>
+
+<!-- 系列作品 -->
+<section id="series">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker">Series Timeline</div>
+      <h2>一路走来的系列足迹</h2>
+      <p>从电视动画到大电影，狗熊岭的故事陪伴了一代又一代观众。</p>
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-dot">1</div>
+        <div class="tl-body">
+          <span class="yr">起点 · 电视动画</span>
+          <h4>《熊出没》电视系列开播</h4>
+          <p>熊大、熊二与光头强的故事首次走进千家万户，"保护森林"的主题就此立住。</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot">2</div>
+        <div class="tl-body">
+          <span class="yr">拓展 · 多季连载</span>
+          <h4>《熊出没之春日对对碰》等系列</h4>
+          <p>围绕季节与冒险推出多部系列，世界观不断扩展，森林伙伴们陆续登场。</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot">3</div>
+        <div class="tl-body">
+          <span class="yr">升级 · 大电影</span>
+          <h4>《熊出没》院线大电影</h4>
+          <p>走向大银幕，以更完整的故事与更精美的画面，讲述狗熊岭的宏大冒险。</p>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-dot">4</div>
+        <div class="tl-body">
+          <span class="yr">至今 · 经典常青</span>
+          <h4>持续陪伴的国民级 IP</h4>
+          <p>作为中国大陆家喻户晓的动画形象，熊出没持续活跃在荧屏与银幕，陪伴新一代成长。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 经典台词 -->
+<section class="quotes" id="quotes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-kicker">Iconic Lines</div>
+      <h2>那些耳熟能详的台词</h2>
+    </div>
+    <div class="quote-grid">
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <p>保护森林，熊熊有责！</p>
+        <cite>—— 熊兄弟的信念</cite>
+      </div>
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <p>俺熊二来啦！</p>
+        <cite>—— 熊二</cite>
+      </div>
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <p>可恶的光头强，又来砍树！</p>
+        <cite>—— 熊大</cite>
+      </div>
+      <div class="quote reveal">
+        <div class="mark">"</div>
+        <p>这树，我今天非得砍了它！</p>
+        <cite>—— 光头强</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">🐻 熊出没 · 狗熊岭</div>
+  <div class="forest-line">🌲 🐻 🍯 🪓 🌳</div>
+  <p>本站为「熊出没」主题的粉丝向介绍页面，内容以角色、剧情与名场面为主线，用于展示与分享。</p>
+  <p>相关作品名称、角色形象的著作权归原权利方所有，本站仅供学习与交流使用。</p>
+  <div class="fine">© 2026 狗熊岭森林乐园 · 用 ❤️ 与蜂蜜建成的网站</div>
+</footer>
+
+<button id="top-btn" title="返回顶部">↑</button>
+
+<script>
+  // 滚动入场
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('on'), i*70);
+        io.unobserve(e.target);
+      }
+    });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // 返回顶部
+  const topBtn = document.getElementById('top-btn');
+  window.addEventListener('scroll',()=>{
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+
+</body>
+</html>

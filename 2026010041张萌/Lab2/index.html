@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学生网络安全常识｜密码 · 钓鱼 · 个人信息</title>
+<style>
+  :root{
+    --bg:#f5f7fb;
+    --surface:#ffffff;
+    --surface-2:#f0f4fa;
+    --ink:#101a2b;
+    --ink-2:#4a5670;
+    --ink-3:#7b8699;
+    --line:#e2e8f2;
+    --brand:#2563eb;
+    --brand-deep:#1a4fd0;
+    --brand-soft:#e8efff;
+    --cyan:#0891b2;
+    --cyan-soft:#e0f6fb;
+    --danger:#dc2626;
+    --danger-soft:#fdecec;
+    --warn:#c2740a;
+    --warn-soft:#fff5e5;
+    --ok:#0f9d63;
+    --ok-soft:#e6f7ef;
+    --radius:16px;
+    --shadow:0 1px 2px rgba(16,26,43,.04), 0 8px 24px rgba(16,26,43,.06);
+    --shadow-lg:0 2px 6px rgba(16,26,43,.05), 0 18px 40px rgba(16,26,43,.10);
+  }
+
+  *{box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans SC","Noto Sans CJK SC",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:var(--brand);text-decoration:none;}
+  a:hover{text-decoration:underline;}
+
+  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 22px;}
+
+  /* ---------- 顶部导航 ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.86);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{
+    display:flex;align-items:center;gap:18px;
+    height:60px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:9px;
+    font-weight:800;font-size:15.5px;letter-spacing:.2px;color:var(--ink);
+    white-space:nowrap;
+  }
+  .logo .mark{
+    width:30px;height:30px;border-radius:9px;
+    background:linear-gradient(135deg,var(--brand),var(--cyan));
+    display:grid;place-items:center;flex:none;
+    box-shadow:0 4px 10px rgba(37,99,235,.28);
+  }
+  .navlinks{
+    margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;
+  }
+  .navlinks a{
+    color:var(--ink-2);font-size:14px;font-weight:600;
+    padding:7px 13px;border-radius:9px;transition:.18s;
+  }
+  .navlinks a:hover{background:var(--brand-soft);color:var(--brand);text-decoration:none;}
+  .navlinks a.active{background:var(--brand);color:#fff;}
+
+  /* ---------- 首屏 ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(900px 420px at 12% -10%, #e3edff 0%, rgba(227,237,255,0) 62%),
+      radial-gradient(760px 400px at 92% 8%, #ddf5fb 0%, rgba(221,245,251,0) 60%),
+      linear-gradient(180deg,#ffffff 0%, #f7faff 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(37,99,235,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.045) 1px,transparent 1px);
+    background-size:34px 34px;
+    mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 78%);
+    -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.7),transparent 78%);
+  }
+  .hero .wrap{position:relative;z-index:1;padding:70px 22px 62px;}
+  .tagline{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:1px solid var(--line);
+    color:var(--ink-2);font-size:13px;font-weight:700;
+    padding:6px 14px;border-radius:999px;box-shadow:var(--shadow);
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px var(--ok-soft);}
+  .hero h1{
+    font-size:clamp(30px,5.2vw,50px);
+    line-height:1.2;margin:20px 0 0;letter-spacing:-.6px;font-weight:800;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg,var(--brand),var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{
+    max-width:62ch;margin:16px 0 0;color:var(--ink-2);font-size:17px;
+  }
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:14.5px;font-weight:700;padding:11px 20px;border-radius:11px;
+    border:1px solid transparent;cursor:pointer;transition:.18s;font-family:inherit;
+  }
+  .btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 20px rgba(37,99,235,.26);}
+  .btn-primary:hover{background:var(--brand-deep);transform:translateY(-1px);text-decoration:none;color:#fff;}
+  .btn-ghost{background:#fff;color:var(--ink);border-color:var(--line);box-shadow:var(--shadow);}
+  .btn-ghost:hover{border-color:#c9d6ec;text-decoration:none;color:var(--ink);}
+
+  .hero-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:14px;margin-top:38px;
+  }
+  .hero-stat{
+    background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;box-shadow:var(--shadow);
+  }
+  .hero-stat b{display:block;font-size:24px;letter-spacing:-.5px;color:var(--brand);line-height:1.3;}
+  .hero-stat span{font-size:13px;color:var(--ink-3);font-weight:600;}
+
+  /* ---------- 通用区块 ---------- */
+  section.block{padding:66px 0 8px;}
+  .sec-head{margin-bottom:26px;}
+  .sec-kicker{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:12.5px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--brand);background:var(--brand-soft);
+    padding:5px 12px;border-radius:999px;
+  }
+  .sec-head h2{
+    font-size:clamp(23px,3.4vw,31px);margin:14px 0 8px;letter-spacing:-.4px;font-weight:800;
+  }
+  .sec-head p{margin:0;color:var(--ink-2);max-width:70ch;}
+
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;box-shadow:var(--shadow);transition:.22s;
+  }
+  .card:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px);}
+  .card h3{margin:0 0 8px;font-size:17px;font-weight:800;display:flex;align-items:center;gap:9px;}
+  .card p{margin:0;color:var(--ink-2);font-size:14.6px;}
+  .grid{display:grid;gap:16px;}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));}
+
+  .ico{
+    width:34px;height:34px;border-radius:10px;flex:none;
+    display:grid;place-items:center;
+    background:var(--brand-soft);color:var(--brand);
+  }
+  .ico.c{background:var(--cyan-soft);color:var(--cyan);}
+  .ico.w{background:var(--warn-soft);color:var(--warn);}
+  .ico.d{background:var(--danger-soft);color:var(--danger);}
+  .ico.o{background:var(--ok-soft);color:var(--ok);}
+
+  ul.plain{margin:10px 0 0;padding-left:20px;color:var(--ink-2);font-size:14.6px;}
+  ul.plain li{margin:5px 0;}
+  ul.plain li b{color:var(--ink);}
+
+  .note{
+    margin-top:16px;background:var(--surface-2);border:1px dashed #cfdaea;
+    border-radius:12px;padding:14px 16px;font-size:14.2px;color:var(--ink-2);
+  }
+  .note b{color:var(--ink);}
+
+  /* ---------- 表格 ---------- */
+  .table-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.4px;}
+  thead th{
+    background:var(--surface-2);text-align:left;font-weight:800;color:var(--ink);
+    padding:13px 16px;border-bottom:1px solid var(--line);white-space:nowrap;
+  }
+  tbody td{padding:12px 16px;border-bottom:1px solid #eef2f8;color:var(--ink-2);vertical-align:top;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#fafcff;}
+  .pill{
+    display:inline-block;font-size:12px;font-weight:800;padding:2px 9px;border-radius:999px;white-space:nowrap;
+  }
+  .pill.d{background:var(--danger-soft);color:var(--danger);}
+  .pill.w{background:var(--warn-soft);color:var(--warn);}
+  .pill.o{background:var(--ok-soft);color:var(--ok);}
+  code{background:var(--surface-2);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:13px;font-family:ui-monospace,Consolas,Menlo,monospace;color:#1d3a6b;}
+
+  /* ---------- 时间线 ---------- */
+  .steps{position:relative;margin-top:6px;padding-left:6px;}
+  .step{position:relative;padding:0 0 22px 44px;}
+  .step:last-child{padding-bottom:0;}
+  .step::before{
+    content:"";position:absolute;left:14px;top:26px;bottom:-2px;width:2px;
+    background:linear-gradient(180deg,#c9dcff,#eaf1fd);
+  }
+  .step:last-child::before{display:none;}
+  .step .num{
+    position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;
+    background:#fff;border:2px solid var(--brand);color:var(--brand);
+    font-size:13px;font-weight:800;display:grid;place-items:center;z-index:1;
+  }
+  .step h4{margin:2px 0 4px;font-size:15.6px;font-weight:800;}
+  .step p{margin:0;color:var(--ink-2);font-size:14.4px;}
+
+  /* ---------- 密码检测器 ---------- */
+  .tool{
+    background:linear-gradient(180deg,#ffffff,#fbfdff);
+    border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:24px;margin-top:20px;
+  }
+  .tool-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .pw-input{
+    flex:1;min-width:220px;font-family:ui-monospace,Consolas,Menlo,monospace;
+    font-size:15px;padding:12px 14px;border-radius:11px;
+    border:1.5px solid var(--line);background:#fff;color:var(--ink);outline:none;transition:.18s;
+  }
+  .pw-input:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(37,99,235,.12);}
+  .mini-btn{
+    font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;
+    background:#fff;border:1.5px solid var(--line);color:var(--ink-2);
+    padding:11px 15px;border-radius:11px;transition:.18s;white-space:nowrap;
+  }
+  .mini-btn:hover{border-color:#c9d6ec;color:var(--ink);}
+
+  .meter{margin-top:16px;}
+  .meter-bar{height:9px;border-radius:999px;background:#e9eef7;overflow:hidden;}
+  .meter-fill{height:100%;width:0;border-radius:999px;background:var(--ink-3);transition:width .35s ease,background .35s ease;}
+  .meter-meta{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:9px;flex-wrap:wrap;}
+  .meter-label{font-weight:800;font-size:15px;}
+  .meter-crack{font-size:13.4px;color:var(--ink-3);}
+  .meter-crack b{color:var(--ink-2);font-family:ui-monospace,Consolas,Menlo,monospace;}
+
+  .checks{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-top:16px;}
+  .chk{
+    display:flex;align-items:center;gap:8px;font-size:13.6px;color:var(--ink-3);
+    background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 11px;transition:.18s;
+  }
+  .chk.on{color:var(--ok);border-color:#bfe8d4;background:var(--ok-soft);font-weight:700;}
+  .chk .tick{width:15px;height:15px;border-radius:50%;border:1.5px solid #c9d6ec;flex:none;display:grid;place-items:center;font-size:10px;color:#fff;}
+  .chk.on .tick{background:var(--ok);border-color:var(--ok);}
+
+  .tips{margin-top:16px;display:grid;gap:7px;}
+  .tip{
+    font-size:13.8px;color:var(--ink-2);background:var(--surface-2);
+    border-radius:10px;padding:9px 13px;border-left:3px solid #cfdaea;
+  }
+  .tip.bad{border-left-color:var(--danger);background:var(--danger-soft);color:#8a1f1f;}
+
+  /* ---------- 测验 ---------- */
+  .quiz{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:24px;margin-top:20px;
+  }
+  .quiz-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .quiz-top .qidx{font-size:13px;font-weight:800;color:var(--brand);background:var(--brand-soft);padding:4px 12px;border-radius:999px;}
+  .quiz-top .qscore{font-size:13px;color:var(--ink-3);font-weight:700;}
+
+  .msg{
+    border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#fff;
+  }
+  .msg-head{
+    display:flex;gap:11px;align-items:flex-start;
+    padding:13px 16px;background:var(--surface-2);border-bottom:1px solid var(--line);
+  }
+  .avatar{
+    width:36px;height:36px;border-radius:50%;flex:none;display:grid;place-items:center;
+    font-size:14px;font-weight:800;color:#fff;background:linear-gradient(135deg,#7f8ea8,#5d6b83);
+  }
+  .msg-meta{font-size:13.6px;line-height:1.55;min-width:0;}
+  .msg-meta .who{font-weight:800;color:var(--ink);word-break:break-all;}
+  .msg-meta .addr{color:var(--ink-3);font-size:12.8px;font-family:ui-monospace,Consolas,Menlo,monospace;word-break:break-all;}
+  .msg-body{padding:16px;font-size:14.8px;color:var(--ink-2);white-space:pre-line;}
+  .msg-body .hl{background:#fff2c9;color:#6b4b00;border-radius:4px;padding:0 3px;font-weight:700;}
+
+  .quiz-btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}
+  .ans{
+    flex:1;min-width:130px;font-family:inherit;font-size:14.5px;font-weight:800;cursor:pointer;
+    padding:13px 18px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--ink);transition:.18s;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .ans:hover:not(:disabled){border-color:var(--brand);color:var(--brand);background:var(--brand-soft);}
+  .ans:disabled{cursor:default;opacity:.55;}
+  .ans.correct{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);opacity:1;}
+  .ans.wrong{background:var(--danger-soft);border-color:var(--danger);color:var(--danger);opacity:1;}
+
+  .verdict{
+    margin-top:16px;border-radius:12px;padding:15px 17px;font-size:14.4px;display:none;
+  }
+  .verdict.show{display:block;animation:pop .28s ease;}
+  @keyframes pop{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .verdict.good{background:var(--ok-soft);border:1px solid #bfe8d4;color:#0a6b45;}
+  .verdict.bad{background:var(--danger-soft);border:1px solid #f6c9c9;color:#8a1f1f;}
+  .verdict h5{margin:0 0 6px;font-size:14.6px;font-weight:800;}
+  .verdict ul{margin:6px 0 0;padding-left:19px;}
+
+  /* ---------- 自查清单 ---------- */
+  .checklist{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px;margin-top:20px;}
+  .prog-row{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
+  .prog-bar{flex:1;min-width:160px;height:10px;border-radius:999px;background:#e9eef7;overflow:hidden;}
+  .prog-fill{height:100%;width:0;background:linear-gradient(90deg,var(--brand),var(--cyan));transition:width .3s ease;}
+  .prog-txt{font-size:13.6px;font-weight:800;color:var(--ink-2);white-space:nowrap;}
+  .cl-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:9px;}
+  .cl-item{
+    display:flex;gap:11px;align-items:flex-start;
+    border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff;
+    cursor:pointer;transition:.16s;font-size:14.3px;color:var(--ink-2);user-select:none;
+  }
+  .cl-item:hover{border-color:#c9d6ec;background:#fafcff;}
+  .cl-item input{margin:4px 0 0;width:17px;height:17px;accent-color:var(--brand);flex:none;cursor:pointer;}
+  .cl-item.done{background:var(--ok-soft);border-color:#bfe8d4;color:var(--ink);}
+  .cl-item.done .cl-txt{text-decoration:line-through;text-decoration-color:#8fd0b1;}
+
+  /* ---------- 应急 ---------- */
+  .emg{background:linear-gradient(160deg,#fff6f5,#fffdfd);border:1px solid #f6d7d5;}
+  .emg .sec-kicker{background:var(--danger-soft);color:var(--danger);}
+
+  /* ---------- 页脚 ---------- */
+  footer{
+    margin-top:70px;background:#0e1726;color:#9fb0c8;padding:40px 0 34px;font-size:14px;
+  }
+  footer .fwrap{display:flex;gap:20px;justify-content:space-between;flex-wrap:wrap;align-items:flex-start;}
+  footer b{color:#fff;display:block;margin-bottom:7px;font-size:15px;}
+  footer p{margin:0;max-width:56ch;line-height:1.8;}
+  footer .fmeta{font-size:12.8px;color:#7386a0;margin-top:22px;padding-top:18px;border-top:1px solid #1e2b40;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+
+  /* ---------- 滚动出现 ---------- */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (max-width:720px){
+    .navlinks{display:none;}
+    .hero .wrap{padding:52px 20px 46px;}
+    section.block{padding:48px 0 6px;}
+    .card{padding:18px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+    .reveal{opacity:1;transform:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 导航 ================= -->
+<div class="topbar">
+  <div class="wrap">
+    <div class="logo">
+      <span class="mark">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5v6c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-6L12 2z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg>
+      </span>
+      网络安全常识
+    </div>
+    <nav class="navlinks">
+      <a href="#password">密码安全</a>
+      <a href="#phishing">识别钓鱼</a>
+      <a href="#privacy">个人信息</a>
+      <a href="#emergency">应急处理</a>
+      <a href="#checklist">自查清单</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ================= 首屏 ================= -->
+<header class="hero">
+  <div class="wrap">
+    <span class="tagline"><span class="dot"></span>校园网络安全｜大学生必修课</span>
+    <h1>你的<em>账号、隐私和钱包</em><br>都值得被认真保护</h1>
+    <p class="lead">
+      绝大多数校园网络安全事故，并不是因为黑客技术有多高明，而是因为一个弱密码、一次随手点击的链接，
+      或者一张顺手晒出去的截图。这份指南用三件最基础、也最有效的事，帮你把大多数风险挡在门外。
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#password">开始学习
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#quiz">测测你的防骗水平</a>
+    </div>
+
+    <div class="hero-grid">
+      <div class="hero-stat"><b>80%+</b><span>的账号被盗与弱密码 / 密码复用有关</span></div>
+      <div class="hero-stat"><b>0.1 秒</b><span>常用弱密码被字典攻击破解的时间</span></div>
+      <div class="hero-stat"><b>3 件事</b><span>强密码 + 会识别 + 少外泄，收益最高</span></div>
+      <div class="hero-stat"><b>先核实</b><span>所有涉及转账、验证码的要求都先核实</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= 一、密码安全 ================= -->
+<section class="block" id="password">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-kicker">01 · 密码安全</span>
+      <h2>密码是你账号的第一道、也是最重要的一道门</h2>
+      <p>攻击者通常不会"攻破"你的密码，而是在泄露的密码库中直接找到它。所以密码的关键不是"记得住"，而是"攻不破、且不重复"。</p>
+    </div>
+
+    <div class="grid g3 reveal">
+      <div class="card">
+        <h3><span class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>长度优先</h3>
+        <p>密码强度首先看长度。<b>12 位以上</b>才有基本安全边际，16 位以上更稳妥。四个毫不相关的普通词拼起来（如 <code>茶杯-云朵-47-门牌</code>），往往比 8 位杂乱字符更难破解、也更好记。</p>
+      </div>
+      <div class="card">
+        <h3><span class="ico c"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></span>绝不重复</h3>
+        <p>同一个密码用在多个网站，等于把钥匙复制给了所有人。任何一个网站被拖库，攻击者就会拿着这份账号密码去<b>批量撞库</b>你的邮箱、网盘、教务系统、支付账号。</p>
+      </div>
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5.5v6c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-6L12 2z"/><path d="M12 8v4.5M12 16h.01"/></svg></span>开启二次验证</h3>
+        <p>只要支持，就给邮箱、微信/QQ、支付、学校统一身份认证都打开<b>双因素认证（2FA）</b>：短信验证码、动态口令、指纹/人脸。「密码泄露」和「账号被盗」之间就多了一道墙。</p>
+      </div>
+    </div>
+
+    <!-- 弱密码表 -->
+    <div class="reveal" style="margin-top:24px;">
+      <h3 style="font-size:17px;font-weight:800;margin:0 0 12px;">这些密码，等于没有密码</h3>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>类型</th><th>典型例子</th><th>被破解速度</th><th>风险等级</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>连续数字 / 单字符重复</td><td><code>123456</code> <code>888888</code> <code>000000</code></td><td>字典库中排名第一，瞬间命中</td><td><span class="pill d">极高</span></td></tr>
+            <tr><td>键盘走位</td><td><code>qwerty</code> <code>1qaz2wsx</code> <code>zxcvbnm</code></td><td>秒级</td><td><span class="pill d">极高</span></td></tr>
+            <tr><td>生日 / 手机号 / 学号</td><td><code>20050312</code> <code>138xxxx1234</code></td><td>结合社交信息即可猜出</td><td><span class="pill d">极高</span></td></tr>
+            <tr><td>姓名拼音 + 数字</td><td><code>zhangsan123</code> <code>wang5201314</code></td><td>分钟级</td><td><span class="pill w">高</span></td></tr>
+            <tr><td>常见单词 / 恋爱纪念日</td><td><code>iloveyou</code> <code>5201314</code> <code>woaini</code></td><td>秒级</td><td><span class="pill w">高</span></td></tr>
+            <tr><td>位数不足的纯字母</td><td><code>abcdefg</code> <code>asdfghjkl</code></td><td>秒级</td><td><span class="pill w">高</span></td></tr>
+            <tr><td>多词组合 + 独立符号（推荐）</td><td><code>雨伞-橘子-73-走廊</code></td><td>现有算力下难以穷举</td><td><span class="pill o">较安全</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <b>一句话记住：</b>能被猜到规律、能被字典收录、能和其他账号共用的密码，都不算强密码。真正的强密码只有你自己和密码管理器知道。
+      </div>
+    </div>
+
+    <!-- 密码强度检测 -->
+    <div class="tool reveal" id="pwTool">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+        <span class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M18 6l-2.5 2.5M8.5 15.5 6 18"/></svg></span>
+        <h3 style="margin:0;font-size:17px;font-weight:800;">密码强度检测器</h3>
+      </div>
+      <p style="margin:0 0 14px;color:var(--ink-2);font-size:14.4px;">
+        在下方输入你想检查的密码，即时查看强度与预估破解时间。<b>检测完全在本机浏览器中进行，不会上传到任何服务器。</b>
+      </p>
+      <div class="tool-row">
+        <input id="pwInput" class="pw-input" type="password" placeholder="在此输入要检测的密码…" autocomplete="off" spellcheck="false" aria-label="待检测的密码">
+        <button class="mini-btn" id="pwToggle" type="button">显示</button>
+        <button class="mini-btn" id="pwGen" type="button">生成一个</button>
+        <button class="mini-btn" id="pwClear" type="button">清空</button>
+      </div>
+
+      <div class="meter">
+        <div class="meter-bar"><div class="meter-fill" id="pwFill"></div></div>
+        <div class="meter-meta">
+          <span class="meter-label" id="pwLabel">等待输入</span>
+          <span class="meter-crack">预估穷举破解时间：<b id="pwCrack">—</b></span>
+        </div>
+      </div>
+
+      <div class="checks" id="pwChecks">
+        <div class="chk" data-k="len"><span class="tick">✓</span>长度 ≥ 12 位</div>
+        <div class="chk" data-k="long"><span class="tick">✓</span>长度 ≥ 16 位</div>
+        <div class="chk" data-k="lower"><span class="tick">✓</span>含小写字母</div>
+        <div class="chk" data-k="upper"><span class="tick">✓</span>含大写字母</div>
+        <div class="chk" data-k="digit"><span class="tick">✓</span>含数字</div>
+        <div class="chk" data-k="symbol"><span class="tick">✓</span>含特殊符号</div>
+        <div class="chk" data-k="common"><span class="tick">✓</span>不是常见弱密码</div>
+        <div class="chk" data-k="seq"><span class="tick">✓</span>无连续 / 重复规律</div>
+      </div>
+
+      <div class="tips" id="pwTips"></div>
+    </div>
+
+    <!-- 管理建议 -->
+    <div class="grid g2 reveal" style="margin-top:24px;">
+      <div class="card">
+        <h3><span class="ico o"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16v13H4z"/><path d="M4 7l8-5 8 5M9 20v-6h6v6"/></svg></span>用密码管理器，而不是脑子</h3>
+        <p style="margin-bottom:8px;">你不需要记住 30 个不同的强密码。使用密码管理器（浏览器自带或独立 App）后，你只需要记住一个主密码：</p>
+        <ul class="plain">
+          <li>它为每个网站生成<b>完全随机且互不相同</b>的密码</li>
+          <li>自动填充，也避免了在假登录页手输密码</li>
+          <li>主密码本身请务必又长又独特，并开启二次验证</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 7v5c0 5.2 3.8 9.4 9 11 5.2-1.6 9-5.8 9-11V7l-9-4z"/><path d="M9 12.5l2 2 4.2-4.2"/></svg></span>养成 5 个习惯</h3>
+        <ul class="plain">
+          <li>学校统一身份认证、邮箱、支付账号使用<b>三个互不相同</b>的密码</li>
+          <li>不在公共电脑、网吧、他人手机上保存密码或勾选"记住我"</li>
+          <li>公共 Wi-Fi 下不登录网银、教务、邮箱等重要账号</li>
+          <li>收到"账号异常请改密"的链接，一律从官网手动进入核实</li>
+          <li>重要账号定期换密；发现某个网站被泄露，立即改密并更换同密码的其他站点</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 二、识别钓鱼 ================= -->
+<section class="block" id="phishing">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-kicker">02 · 识别钓鱼消息</span>
+      <h2>钓鱼攻击靠的不是技术，是让你"来不及想"</h2>
+      <p>钓鱼邮件、短信、私信的共同套路是：<b>制造紧急感 + 冒充权威 + 诱导你点击或转账</b>。只要慢下来核对三处细节，绝大多数骗局当场露馅。</p>
+    </div>
+
+    <!-- 五步识别 -->
+    <div class="card reveal">
+      <h3 style="margin-bottom:16px;"><span class="ico"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg></span>收到可疑消息，按这五步走</h3>
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <h4>核发件人，不核显示名</h4>
+          <p>显示名可以随便改，"教务处""辅导员"都能伪造。展开完整地址看真实域名：学校通知一般来自 <code>@xxx.edu.cn</code>，而你看到的如果是 <code>@xxx-edu.cn</code>、<code>@xxx.edu.cn.zzz.top</code> 之类，基本就是仿冒。</p>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <h4>看话术是否在逼迫你立刻行动</h4>
+          <p>"账号将在 24 小时内注销""奖学金未领取即将作废""快递异常需马上补款"——制造时间压力是钓鱼的核心手法。真实机构不会用恐吓式话术逼你在几分钟内做决定。</p>
+        </div>
+        <div class="step">
+          <span class="num">3</span>
+          <h4>先悬停，再决定点不点</h4>
+          <p>电脑上把鼠标悬停在链接上（手机上长按预览），看底部显示的真实网址。警惕短链接、二维码跳转、"品牌名+随机数字"的域名。看不清去向的链接，直接不点。</p>
+        </div>
+        <div class="step">
+          <span class="num">4</span>
+          <h4>警惕一切索要凭据的请求</h4>
+          <p>正规平台<b>永远不会</b>在邮件、短信或聊天里索要你的密码、短信验证码、银行卡 CVV 或要求你"共享屏幕"。凡是索要这些的，不论对方自称是谁，一律视为诈骗。</p>
+        </div>
+        <div class="step">
+          <span class="num">5</span>
+          <h4>换一条独立渠道去核实</h4>
+          <p>不回复、不点击、不拨打消息里给的电话。自己打开官网、找官方客服电话、或直接当面问辅导员/教务老师确认。真实的事情经得起你多核实一遍。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 校园高发骗局 -->
+    <h3 class="reveal" style="font-size:17px;font-weight:800;margin:30px 0 12px;">校园里最常遇到的 6 种骗局</h3>
+    <div class="grid g3 reveal">
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18v4H3zM5 11h14v9H5z"/><path d="M12 7V4"/></svg></span>兼职刷单 / 打字员</h3>
+        <p>先给你小额返现建立信任，再诱导你垫付大额"任务金"。<b>所有要求你先垫钱、先充值的兼职都是诈骗</b>，且参与刷单本身违规。</p>
+      </div>
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5v8l-9 5-9-5V8z"/><path d="M12 12v9M3 8l9 4 9-4"/></svg></span>助学金 / 奖学金通知</h3>
+        <p>冒充学校部门，称"需填写银行卡信息领取补贴"。真实奖助学金通过学校正规系统发放，绝不会私发链接让你填卡号密码。</p>
+      </div>
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg></span>四六级查分 / 成绩查询</h3>
+        <p>假的"提前查分""内部改分"链接，页面做得和官网几乎一样，目的就是套取你的准考证号、身份证号和登录密码。</p>
+      </div>
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M9 12h7M9 16h5"/></svg></span>二手交易 / 低价票务</h3>
+        <p>"低价出演唱会票""急出闲置电脑"，诱导绕开平台私下转账。一旦脱离平台，钱和货都无保障，务必走平台担保交易。</p>
+      </div>
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5S20 17 20 21"/></svg></span>冒充同学 / 老师借钱</h3>
+        <p>盗号或换头像昵称后，以"手机坏了""急用钱"为由借钱。<b>哪怕头像熟得不能再熟，也一定要打个电话或当面确认。</b></p>
+      </div>
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7 9h10M7 13h6"/></svg></span>AI 换脸 / 伪装亲友视频</h3>
+        <p>用 AI 合成亲友的语音或视频形象实施诈骗。涉及转账时，用<b>你自己的方式</b>回拨对方常用号码，或问一个只有你们知道的问题。</p>
+      </div>
+    </div>
+
+    <!-- 测验 -->
+    <div class="quiz reveal" id="quiz">
+      <div class="quiz-top">
+        <span class="qidx" id="qIdx">第 1 / 5 题</span>
+        <span class="qscore" id="qScore">得分：0</span>
+      </div>
+
+      <div class="msg">
+        <div class="msg-head">
+          <div class="avatar" id="qAvatar">?</div>
+          <div class="msg-meta">
+            <div class="who" id="qWho">发件人</div>
+            <div class="addr" id="qAddr">地址</div>
+          </div>
+        </div>
+        <div class="msg-body" id="qBody">内容</div>
+      </div>
+
+      <div class="quiz-btns">
+        <button class="ans" id="btnPhish" type="button">这是钓鱼</button>
+        <button class="ans" id="btnReal" type="button">这是正常的</button>
+      </div>
+
+      <div class="verdict" id="verdict"></div>
+
+      <div class="quiz-btns" style="margin-top:14px;">
+        <button class="ans" id="btnNext" type="button" style="flex:none;min-width:150px;">下一题</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 三、个人信息保护 ================= -->
+<section class="block" id="privacy">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-kicker">03 · 个人信息保护</span>
+      <h2>信息一旦公开，就再也收不回来</h2>
+      <p>《中华人民共和国个人信息保护法》明确保护你的个人信息权益。而对个人来说，最有用的原则只有一条：<b>能不提供的就不提供，非提供不可的就想清楚它要去哪里。</b></p>
+    </div>
+
+    <!-- 信息分级 -->
+    <div class="grid g3 reveal">
+      <div class="card">
+        <h3><span class="ico d"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></span>绝密级 · 任何情况不给</h3>
+        <ul class="plain">
+          <li>短信验证码、动态口令</li>
+          <li>银行卡密码、CVV 安全码、U 盾密码</li>
+          <li>各类账号的登录密码</li>
+          <li>身份证正反面照片 + 手持身份证照</li>
+          <li>人脸、指纹等生物特征原始数据</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ico w"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 3 7v5c0 5.2 3.8 9.4 9 11 5.2-1.6 9-5.8 9-11V7l-9-4z"/><path d="M12 9v4M12 16h.01"/></svg></span>敏感级 · 确认用途才给</h3>
+        <ul class="plain">
+          <li>身份证号、家庭住址</li>
+          <li>学号、考生号、录取信息</li>
+          <li>手机号、常用邮箱</li>
+          <li>银行卡号、账单流水</li>
+          <li>实时定位、行程与出行记录</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ico o"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11 12h1v5h1"/></svg></span>公开级 · 也要注意分寸</h3>
+        <ul class="plain">
+          <li>姓名、头像、社团经历</li>
+          <li>校园风景、日常动态</li>
+          <li>不涉及证件与票据的普通照片</li>
+          <li>公开的学习笔记与作品</li>
+          <li>注意：单条无害，<b>叠加起来可能拼出完整画像</b></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 场景风险 -->
+    <h3 class="reveal" style="font-size:17px;font-weight:800;margin:30px 0 12px;">这些日常动作，正在悄悄泄露你的信息</h3>
+    <div class="table-scroll reveal">
+      <table>
+        <thead>
+          <tr><th>常见行为</th><th>泄露了什么</th><th>可能被用来做什么</th><th>更安全的做法</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>晒学生证 / 录取通知书 / 车票机票</td>
+            <td>姓名、学号、身份证号、行程</td>
+            <td>精准冒充身份、行程被掌握</td>
+            <td>发图前打码关键字段，或只发局部</td>
+          </tr>
+          <tr>
+            <td>朋友圈定位 + 实时晒宿舍</td>
+            <td>居住地址、作息规律</td>
+            <td>线下安全风险、社会工程学攻击</td>
+            <td>延迟发布定位，别暴露具体楼栋门牌</td>
+          </tr>
+          <tr>
+            <td>随意丢弃的快递单与外包装</td>
+            <td>姓名、手机号、详细地址</td>
+            <td>骚扰电话、冒充电商客服诈骗</td>
+            <td>撕毁或用记号笔涂掉面单信息</td>
+          </tr>
+          <tr>
+            <td>为"兼职/贷款/免费领"上传身份证照片</td>
+            <td>完整身份信息 + 人脸</td>
+            <td>被冒名开户、办网贷、注册账号</td>
+            <td>正规场景也确认主体资质，绝不发给个人</td>
+          </tr>
+          <tr>
+            <td>来路不明的测试 / 抽奖小程序，授权登录</td>
+            <td>昵称头像、手机号、好友关系</td>
+            <td>被拉入诈骗群、精准营销</td>
+            <td>拒绝不必要的授权，用完及时取消</td>
+          </tr>
+          <tr>
+            <td>App 一律点"允许"（通讯录/相册/位置）</td>
+            <td>联系人、照片、实时轨迹</td>
+            <td>数据被过度收集或转卖</td>
+            <td>按最小必要授权，不用时关闭权限</td>
+          </tr>
+          <tr>
+            <td>出租 / 出借银行卡、电话卡、账号</td>
+            <td>你的实名账户被他人使用</td>
+            <td>沦为诈骗资金通道，可能构成<b>帮信罪</b></td>
+            <td>绝对不租不借不卖，这是违法行为</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 权限与法律 -->
+    <div class="grid g2 reveal" style="margin-top:24px;">
+      <div class="card">
+        <h3><span class="ico c"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="3"/><path d="M10.5 18.5h3"/></svg></span>给手机做一次权限"体检"</h3>
+        <p style="margin-bottom:8px;">在系统设置中逐个检查 App 权限，遵循"<b>当时不用就不给</b>"：</p>
+        <ul class="plain">
+          <li>手电筒 App 要通讯录？直接拒绝</li>
+          <li>非地图类 App 索取"始终允许定位"？改为"仅使用时允许"</li>
+          <li>相册权限优先选"仅选中的照片"</li>
+          <li>关闭不必要的个性化广告与位置记录</li>
+          <li>卸载长期不用的 App，账号一并注销</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ico d"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v6c0 4.6-3.3 8.5-8 9.8C7.3 21.5 4 17.6 4 13V7z"/><path d="M9 12l2 2 4-4.5"/></svg></span>这几条法律红线要清楚</h3>
+        <ul class="plain">
+          <li><b>《个人信息保护法》</b>：处理个人信息须取得同意，你有权查阅、更正、删除、撤回授权</li>
+          <li><b>《网络安全法》</b>：不得非法获取、出售、提供个人信息</li>
+          <li><b>帮助信息网络犯罪活动罪</b>：出借、出售银行卡、电话卡、支付账号，可能被追究刑事责任</li>
+          <li><b>反电信网络诈骗法</b>：为诈骗提供技术支持、引流、账户，均可能担责</li>
+          <li>发现信息被泄露或盗用，可向平台投诉，并向网信、公安部门举报</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 四、应急处理 ================= -->
+<section class="block" id="emergency">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-kicker">04 · 已经中招了怎么办</span>
+      <h2>先止损，再取证，越早行动损失越小</h2>
+      <p>被骗或被入侵后最忌讳两件事：一是慌张之下继续按对方指令操作，二是觉得丢脸而不敢告诉任何人。<b>黄金处理时间往往只有几十分钟。</b></p>
+    </div>
+
+    <div class="grid g4 reveal">
+      <div class="card emg">
+        <h3><span class="ico d">1</span>立即断开</h3>
+        <p>怀疑设备被控或安装了恶意程序，立刻断网（关 Wi-Fi、拔网线），并停止在该设备上登录任何账号。</p>
+      </div>
+      <div class="card emg">
+        <h3><span class="ico d">2</span>改密 + 踢下线</h3>
+        <p>用另一台干净设备修改邮箱、支付、社交等账号密码，并"退出所有设备"。开启二次验证，防止被再次顶号。</p>
+      </div>
+      <div class="card emg">
+        <h3><span class="ico d">3</span>冻结资金</h3>
+        <p>已转账立刻拨打银行客服挂失/冻结银行卡，支付账户申请止付，争取在资金转出前拦截。</p>
+      </div>
+      <div class="card emg">
+        <h3><span class="ico d">4</span>保留证据并报警</h3>
+        <p>截图保存聊天记录、转账凭证、对方账号与链接，不要删除。及时拨打 <b>110</b> 或到派出所报案，并同步告知辅导员。</p>
+      </div>
+    </div>
+
+    <div class="note reveal" style="margin-top:20px;border-color:#f0d9d6;background:#fff8f7;">
+      <b>重要澄清：</b>接到"你在网上被骗了，请把钱转入安全账户接受审查"的电话时，请记住——<b>公安机关不存在所谓"安全账户"，任何要求你转账配合调查的电话都是诈骗。</b>真正的警察不会通过电话办案，更不会要求你转账、共享屏幕或提供验证码。
+    </div>
+  </div>
+</section>
+
+<!-- ================= 五、自查清单 ================= -->
+<section class="block" id="checklist">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-kicker">05 · 行动清单</span>
+      <h2>花 10 分钟，把这 12 件事做完</h2>
+      <p>看懂了不等于做到了。逐项勾选，让上面的知识真正变成你的安全习惯。</p>
+    </div>
+
+    <div class="checklist reveal">
+      <div class="prog-row">
+        <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+        <span class="prog-txt" id="progTxt">已完成 0 / 12 项</span>
+      </div>
+      <div class="cl-list" id="clList">
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">把邮箱、支付、学校账号改成三个互不相同的强密码</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">为邮箱和支付账号开启双因素认证（2FA）</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">启用密码管理器，逐步淘汰所有重复密码</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">检查是否曾出现在公开泄露事件中，必要时改密</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">卸载长期不用的 App 并注销其账号</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">逐个检查 App 权限，关闭不必要的定位与通讯录授权</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">清理社交平台上暴露住址、学号、证件、行程的旧动态</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">把手机号、邮箱等敏感号码从公开主页移除</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">丢弃快递包装前，涂掉或撕毁面单上的个人信息</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">把辅导员、家人、银行客服的官方联系方式存进手机</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">和室友约定：涉及转账一律当面或电话二次确认</span></label>
+        <label class="cl-item"><input type="checkbox" data-cl><span class="cl-txt">关注学校保卫处与官方公众号，了解最新校园骗局预警</span></label>
+      </div>
+      <div class="note" style="margin-top:18px;">
+        <b>核心口诀：</b>密码要长不重复，链接不点先核实，验证码谁都不给，转账之前问一句。
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <div class="wrap">
+    <div class="fwrap">
+      <div>
+        <b>大学生网络安全常识</b>
+        <p>密码安全 · 识别钓鱼 · 个人信息保护。把这三件事做好，就能避开绝大多数校园网络风险。遇到可疑情况，第一时间联系辅导员、学校保卫处或拨打 110。</p>
+      </div>
+      <div style="min-width:190px;">
+        <b>关键时刻</b>
+        <p>
+          报警：110<br>
+          反诈专线：96110<br>
+          学校保卫处：请以本校官方公布为准
+        </p>
+      </div>
+    </div>
+    <div class="fmeta">
+      <span>本页面仅供学习参考，不涉及任何外部资源请求。</span>
+      <span>最后更新：2026 年</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- 通用：滚动出现动画 ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    revealEls.forEach(function(el, i){
+      el.style.transitionDelay = (Math.min(i,5) * 40) + 'ms';
+      io.observe(el);
+    });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  /* ---------- 导航高亮 ---------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.navlinks a'));
+  var sections = navLinks.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
+  function syncNav(){
+    var y = window.scrollY + 120, idx = -1;
+    sections.forEach(function(s, i){ if (s.offsetTop <= y) idx = i; });
+    navLinks.forEach(function(a, i){ a.classList.toggle('active', i === idx); });
+  }
+  window.addEventListener('scroll', syncNav, {passive:true});
+  syncNav();
+
+  /* ================= 密码强度检测 ================= */
+  var COMMON = ['123456','123456789','12345678','password','qwerty','111111','000000','888888','abc123','1234567890',
+    'admin','iloveyou','woaini','woaini1314','5201314','123123','666666','112233','123321','qwe123','1qaz2wsx',
+    'zxcvbnm','asdfgh','1234qwer','qwer1234','p@ssw0rd','letmein','monkey','dragon','sunshine','princess',
+    'football','welcome','master','student','a123456','123456a','zhangsan','lisi','wang123456','admin123',
+    'woaini520','147258','963852','qq123456','123456abc','abcd1234','12341234','666666666','999999'];
+
+  var elInput = document.getElementById('pwInput');
+  var elToggle = document.getElementById('pwToggle');
+  var elGen = document.getElementById('pwGen');
+  var elClear = document.getElementById('pwClear');
+  var elFill = document.getElementById('pwFill');
+  var elLabel = document.getElementById('pwLabel');
+  var elCrack = document.getElementById('pwCrack');
+  var elTips = document.getElementById('pwTips');
+  var chkMap = {};
+  Array.prototype.forEach.call(document.querySelectorAll('#pwChecks .chk'), function(el){
+    chkMap[el.getAttribute('data-k')] = el;
+  });
+
+  var SET_LOWER = 26, SET_UPPER = 26, SET_DIGIT = 10, SET_SYMBOL = 32, SET_OTHER = 128;
+
+  function isSequential(s){
+    if (s.length < 4) return false;
+    var qwerty = 'qwertyuiopasdfghjklzxcvbnm0123456789';
+    var low = s.toLowerCase();
+    var run = 1;
+    for (var i = 1; i < low.length; i++){
+      if (low.charCodeAt(i) === low.charCodeAt(i-1) + 1) { run++; }
+      else { run = 1; }
+      if (run >= 4) return true;
+    }
+    run = 1;
+    for (var j = 1; j < low.length; j++){
+      if (low.charCodeAt(j) === low.charCodeAt(j-1) - 1) { run++; }
+      else { run = 1; }
+      if (run >= 4) return true;
+    }
+    for (var k = 0; k + 4 <= low.length; k++){
+      var seg = low.substr(k, 4);
+      if (qwerty.indexOf(seg) >= 0) return true;
+      var rev = seg.split('').reverse().join('');
+      if (qwerty.indexOf(rev) >= 0) return true;
+    }
+    return false;
+  }
+
+  function hasRepeat(s){
+    var t = s.replace(/(.)\1{2,}/g, '');
+    return t.length !== s.length;
+  }
+
+  function hasPersonal(s){
+    if (/(19|20)\d{2}[01]\d[0-3]\d/.test(s)) return true;
+    if (/1[3-9]\d{9}/.test(s)) return true;
+    return false;
+  }
+
+  function charsetSize(s){
+    var n = 0;
+    if (/[a-z]/.test(s)) n += SET_LOWER;
+    if (/[A-Z]/.test(s)) n += SET_UPPER;
+    if (/[0-9]/.test(s)) n += SET_DIGIT;
+    if (/[^A-Za-z0-9\s]/.test(s)) n += SET_SYMBOL;
+    if (/[^\x00-\x7F]/.test(s)) n += SET_OTHER;
+    return n || 1;
+  }
+
+  function fmtTime(sec){
+    if (!isFinite(sec) || sec <= 0) return '—';
+    var units = [
+      ['年', 31557600], ['天', 86400], ['小时', 3600], ['分钟', 60], ['秒', 1]
+    ];
+    if (sec > 31557600 * 1e6) return '远超宇宙年龄';
+    for (var i = 0; i < units.length; i++){
+      var v = sec / units[i][1];
+      if (v >= 1){
+        if (units[i][0] === '年' && v >= 10000) return (v/10000).toFixed(1) + ' 万年';
+        if (v >= 1000) return v.toFixed(0) + ' ' + units[i][0];
+        return v.toFixed(v < 10 ? 1 : 0) + ' ' + units[i][0];
+      }
+    }
+    return '不到 1 秒';
+  }
+
+  function evaluate(pw){
+    var r = {len:pw.length, long:pw.length >= 16, lower:/[a-z]/.test(pw), upper:/[A-Z]/.test(pw),
+             digit:/[0-9]/.test(pw), symbol:/[^A-Za-z0-9\s]/.test(pw), common:false, seq:false};
+    var low = pw.toLowerCase();
+    r.common = COMMON.indexOf(low) >= 0 || COMMON.some(function(c){ return low.length >= 5 && (low.indexOf(c) >= 0 || c.indexOf(low) >= 0) && c.length >= Math.min(6, low.length); });
+    r.seq = !(isSequential(pw) || hasRepeat(pw));
+    return r;
+  }
+
+  function render(){
+    var pw = elInput.value;
+    var tips = [];
+
+    if (!pw){
+      elFill.style.width = '0%';
+      elFill.style.background = '#7b8699';
+      elLabel.textContent = '等待输入';
+      elLabel.style.color = '#7b8699';
+      elCrack.textContent = '—';
+      elTips.innerHTML = '';
+      Object.keys(chkMap).forEach(function(k){ chkMap[k].classList.remove('on'); });
+      return;
+    }
+
+    var st = evaluate(pw);
+    Object.keys(chkMap).forEach(function(k){
+      chkMap[k].classList.toggle('on', !!st[k]);
+    });
+
+    // 综合评分 0 - 100
+    var score = 0;
+    score += Math.min(st.len, 16) * 3.4;            // 最多约 54 分
+    if (st.len >= 20) score += 6;
+    if (st.lower) score += 6;
+    if (st.upper) score += 8;
+    if (st.digit) score += 8;
+    if (st.symbol) score += 12;
+    if (!st.common) score += 12; else score -= 40;
+    if (st.seq) score += 8; else score -= 18;
+    if (hasPersonal(pw)){ score -= 22; tips.push({t:'包含生日或手机号等可被推断的信息，攻击者会优先尝试这类组合。', bad:true}); }
+    if (st.common) tips.push({t:'这是常见弱密码或与常见密码高度相似，几乎会在字典攻击中被第一时间命中。', bad:true});
+    if (!st.seq) tips.push({t:'存在连续字符（如 abcd、1234）或重复字符，会显著降低破解难度。', bad:true});
+    if (st.len < 12) tips.push({t:'长度不足 12 位。长度是影响强度的第一因素，建议再加长。', bad:true});
+    if (!st.symbol && !st.upper) tips.push({t:'字符种类偏单一，混入大写字母和特殊符号能大幅提高强度。', bad:false});
+
+    score = Math.max(0, Math.min(100, Math.round(score)));
+
+    var label, color;
+    if (score < 30){ label = '非常弱 · 立即更换'; color = '#dc2626'; }
+    else if (score < 55){ label = '偏弱 · 不建议使用'; color = '#c2740a'; }
+    else if (score < 78){ label = '中等 · 可再加强'; color = '#0891b2'; }
+    else { label = '较强 · 保持这个水平'; color = '#0f9d63'; }
+
+    elFill.style.width = Math.max(6, score) + '%';
+    elFill.style.background = color;
+    elLabel.textContent = label + '（' + score + ' / 100）';
+    elLabel.style.color = color;
+
+    var cs = charsetSize(pw);
+    var entropy = pw.length * Math.log(cs) / Math.log(2);
+    if (pw.length > 26) entropy = Math.min(entropy, 200);
+    var seconds = Math.pow(2, entropy - 1) / 1e10;
+    elCrack.textContent = fmtTime(seconds);
+
+    if (!tips.length) tips.push({t:'做得不错：长度、字符种类和随机性都达标，请确保它不与其他账号重复。', bad:false});
+
+    elTips.innerHTML = tips.map(function(x){
+      return '<div class="tip' + (x.bad ? ' bad' : '') + '">' + x.t + '</div>';
+    }).join('');
+  }
+
+  elInput.addEventListener('input', render);
+
+  elToggle.addEventListener('click', function(){
+    var isPw = elInput.type === 'password';
+    elInput.type = isPw ? 'text' : 'password';
+    elToggle.textContent = isPw ? '隐藏' : '显示';
+  });
+
+  elClear.addEventListener('click', function(){
+    elInput.value = '';
+    elInput.focus();
+    render();
+  });
+
+  elGen.addEventListener('click', function(){
+    var lower = 'abcdefghijkmnopqrstuvwxyz';
+    var upper = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+    var digit = '23456789';
+    var sym = '!@#$%^&*-_=+?';
+    var all = lower + upper + digit + sym;
+    var out = [lower[r(26)], upper[r(24)], digit[r(8)], sym[r(13)]];
+    for (var i = 0; i < 12; i++) out.push(all[r(all.length)]);
+    // 打乱
+    for (var j = out.length - 1; j > 0; j--){
+      var k = r(j + 1), tmp = out[j]; out[j] = out[k]; out[k] = tmp;
+    }
+    elInput.value = out.join('');
+    render();
+    elInput.focus();
+  });
+
+  function r(n){
+    if (window.crypto && window.crypto.getRandomValues){
+      var a = new Uint32Array(1);
+      window.crypto.getRandomValues(a);
+      return a[0] % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+
+  /* ================= 钓鱼识别测验 ================= */
+  var QUESTIONS = [
+    {
+      who:'学校教务处', addr:'通知 <notice@mail.xuexiao-edu.cn>', avatar:'教',
+      body:'【紧急通知】系统检测到你的教务账号存在异常登录，账号将于 24 小时内被冻结。\n请立即点击下方链接完成身份验证，否则将影响本次选课与成绩查询：\nhttp://xuexiao-edu.cn-verify.top/login?id=8823',
+      phish:true,
+      reason:[
+        '真实域名是 xuexiao-edu.cn-verify.top，真正的学校域名应结束于 .edu.cn，这里被挂在了陌生域名下。',
+        '用"24 小时冻结""影响选课"制造紧急感，是典型钓鱼话术。',
+        '通过短信/邮件里的链接直接引导登录，正规系统不会这样要求。'
+      ],
+      safe:'正确做法：不点击链接，自己打开学校官网或教务系统核实，或直接联系教务处确认。'
+    },
+    {
+      who:'校园快递驿站', addr:'取件提醒 <service@kuaidi-notice.com>', avatar:'递',
+      body:'您好，您有一个包裹因地址不详无法派送，请补充收件信息以便安排派送。\n查询单号：SF1234567890\n点击补充地址：http://kd-bc.info/a2',
+      phish:true,
+      reason:[
+        '发件域名 kuaidi-notice.com 与正规快递公司无关，属于仿冒。',
+        '包裹地址不详通常直接电话联系，很少通过陌生短链要求"补充信息"。',
+        '短链 http://kd-bc.info/a2 看不出真实去向，点开后常是仿冒的填写页。'
+      ],
+      safe:'正确做法：打开购物 App 或快递官方小程序查看真实物流，不通过短信链接填写地址与手机号。'
+    },
+    {
+      who:'国家奖学金评审组', addr:'office@scholarship-gov.cn', avatar:'奖',
+      body:'同学你好，你已通过本年度奖学金初审。请于 3 个工作日内提交本人身份证正反面照片、银行卡号及开户行信息，以便完成发放。\n回复本邮件即可提交。',
+      phish:true,
+      reason:[
+        '正规奖助学金由学校官方渠道通知，不会用私发邮件索要身份证照片与银行卡信息。',
+        '域名 scholarship-gov.cn 是仿冒的，不能仅凭"gov"字样判断权威性。',
+        '身份证正反面照片 + 银行卡号，足以被用于冒名开户、办理网贷。'
+      ],
+      safe:'正确做法：向辅导员或学生资助中心当面核实，任何索要证件照片与银行卡信息的通知都要先验证来源。'
+    },
+    {
+      who:'图书馆系统', addr:'library@mail.school.edu.cn', avatar:'图',
+      body:'您预约的《数据结构》已到馆，请于 3 日内到三层中文图书借阅区 A-12 架取书。如需取消预约，可登录图书馆官网"我的借阅"操作。\n（本邮件由系统自动发送，请勿回复）',
+      phish:false,
+      reason:[
+        '发件域名是 @mail.school.edu.cn，属于学校自有域名，可信度较高。',
+        '内容为常规到馆提醒，没有索要任何凭据，也没有催促点击链接。',
+        '即使如此，仍建议自己从官网进入查询，而不是依赖邮件中的链接。'
+      ],
+      safe:'提醒自己：看起来正常的邮件也要顺手核对一下域名，这个习惯成本极低。'
+    },
+    {
+      who:'室友 小林（微信）', addr:'头像与昵称与本人一致', avatar:'林',
+      body:'在吗？我手机摔了现在用新号，微信支付用不了。急事，能不能先帮我转 1500 到这个卡上，晚上回宿舍就还你：\n6222 **** **** 3389 户名：陈某某',
+      phish:true,
+      reason:[
+        '账号被盗后换头像昵称继续用原号行骗，是校园里非常高发的套路。',
+        '转账到"陈某某"的银行卡，户名与室友完全不符，这是最明显的破绽。',
+        '强调"急""先用新号""晚上就还"，都是让你来不及核实的压力话术。'
+      ],
+      safe:'正确做法：挂断聊天，直接拨打室友原来的手机号或当面确认。哪怕头像再熟悉，转账前也要过一遍电话。'
+    }
+  ];
+
+  var qIdx = 0, qScore = 0, answered = false, finished = false;
+  var elAvatar = document.getElementById('qAvatar');
+  var elWho = document.getElementById('qWho');
+  var elAddr = document.getElementById('qAddr');
+  var elBody = document.getElementById('qBody');
+  var elQIdx = document.getElementById('qIdx');
+  var elQScore = document.getElementById('qScore');
+  var btnPhish = document.getElementById('btnPhish');
+  var btnReal = document.getElementById('btnReal');
+  var btnNext = document.getElementById('btnNext');
+  var elVerdict = document.getElementById('verdict');
+
+  function esc(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function highlight(s){
+    // 高亮正文中的网址，便于观察
+    var out = esc(s);
+    out = out.replace(/(https?:\/\/[^\s，。；]+)/g, '<span class="hl">$1</span>');
+    return out;
+  }
+
+  function renderQ(){
+    var q = QUESTIONS[qIdx];
+    answered = false;
+    elAvatar.textContent = q.avatar;
+    elWho.textContent = q.who;
+    elAddr.textContent = q.addr;
+    elBody.innerHTML = highlight(q.body);
+    elQIdx.textContent = '第 ' + (qIdx + 1) + ' / ' + QUESTIONS.length + ' 题';
+    elQScore.textContent = '得分：' + qScore;
+    elVerdict.className = 'verdict';
+    elVerdict.innerHTML = '';
+    btnPhish.disabled = false;
+    btnReal.disabled = false;
+    btnPhish.className = 'ans';
+    btnReal.className = 'ans';
+    finished = false;
+    btnNext.textContent = (qIdx === QUESTIONS.length - 1) ? '查看结果' : '下一题';
+  }
+
+  function choose(sayPhish){
+    if (answered) return;
+    answered = true;
+    var q = QUESTIONS[qIdx];
+    var correct = (sayPhish === q.phish);
+    if (correct) qScore++;
+
+    btnPhish.disabled = true;
+    btnReal.disabled = true;
+
+    var truthBtn = q.phish ? btnPhish : btnReal;
+    truthBtn.classList.add('correct');
+    var wrongBtn = q.phish ? btnReal : btnPhish;
+    if (!correct) wrongBtn.classList.add('wrong');
+
+    elQScore.textContent = '得分：' + qScore;
+
+    var html = '<h5>' + (correct ? '✅ 判断正确' : '❌ 判断有误') +
+      '—— 这条消息' + (q.phish ? '是钓鱼/诈骗' : '是正常的') + '</h5>';
+    html += '<ul>' + q.reason.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    html += '<div style="margin-top:10px;"><b>' + esc(q.safe) + '</b></div>';
+
+    elVerdict.className = 'verdict show ' + (correct ? 'good' : 'bad');
+    elVerdict.innerHTML = html;
+  }
+
+  btnPhish.addEventListener('click', function(){ choose(true); });
+  btnReal.addEventListener('click', function(){ choose(false); });
+
+  btnNext.addEventListener('click', function(){
+    if (finished){
+      qIdx = 0; qScore = 0;
+      renderQ();
+      document.getElementById('quiz').scrollIntoView({block:'center'});
+      return;
+    }
+    if (!answered){
+      elVerdict.className = 'verdict show bad';
+      elVerdict.innerHTML = '<h5>先做个判断吧</h5>请先选择「这是钓鱼」或「这是正常的」，再看解析。';
+      return;
+    }
+    if (qIdx < QUESTIONS.length - 1){
+      qIdx++;
+      renderQ();
+      return;
+    }
+    var total = QUESTIONS.length;
+    var pass = qScore >= Math.ceil(total * 0.6);
+    var txt = qScore === total
+      ? '全对！你的警惕性很高，继续保持——但记住，骗术一直在升级。'
+      : (pass
+          ? '不错，大部分骗局你都能识破，再留意一下容易忽略的细节。'
+          : '还有提升空间，建议把上面"五步核实法"再过一遍。');
+    elVerdict.className = 'verdict show ' + (pass ? 'good' : 'bad');
+    elVerdict.innerHTML = '<h5>测验结束：' + qScore + ' / ' + total + ' 分</h5>' + esc(txt) +
+      '<div style="margin-top:10px;"><b>核心原则再强调一次：不轻信、不点击、不转账、多核实。</b></div>';
+    btnNext.textContent = '重新开始';
+    finished = true;
+  });
+
+  renderQ();
+
+  /* ================= 自查清单进度 ================= */
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('[data-cl]'));
+  var elProgFill = document.getElementById('progFill');
+  var elProgTxt = document.getElementById('progTxt');
+
+  function updateProg(){
+    var done = boxes.filter(function(b){ return b.checked; }).length;
+    var pct = boxes.length ? Math.round(done / boxes.length * 100) : 0;
+    elProgFill.style.width = pct + '%';
+    if (done === boxes.length){
+      elProgTxt.textContent = '已全部完成 ' + done + ' / ' + boxes.length + ' 项，很棒！';
+      elProgTxt.style.color = '#0f9d63';
+    } else {
+      elProgTxt.textContent = '已完成 ' + done + ' / ' + boxes.length + ' 项（' + pct + '%）';
+      elProgTxt.style.color = '';
+    }
+  }
+
+  boxes.forEach(function(b){
+    b.addEventListener('change', function(){
+      b.closest('.cl-item').classList.toggle('done', b.checked);
+      updateProg();
+    });
+  });
+  updateProg();
+
+})();
+</script>
+</body>
+</html>

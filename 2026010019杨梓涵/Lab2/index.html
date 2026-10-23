@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>吞噬星空 · 从地球废墟到宇宙之巅</title>
+<meta name="description" content="《吞噬星空》作品介绍：世界观、修炼体系、主角罗峰成长线、角色群像与影视改编。">
+<style>
+  :root{
+    --bg:#04060d;
+    --bg-2:#080d1a;
+    --panel:rgba(14,21,38,.72);
+    --panel-solid:#0e1526;
+    --line:rgba(120,160,255,.16);
+    --line-strong:rgba(120,180,255,.32);
+    --txt:#e8eefc;
+    --txt-2:#a8b6d4;
+    --txt-3:#6f7f9e;
+    --cyan:#3ee0ff;
+    --violet:#8b7bff;
+    --magenta:#ff5fa8;
+    --gold:#ffc861;
+    --green:#4be3a8;
+    --radius:18px;
+    --maxw:1140px;
+    --font:"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",system-ui,-apple-system,sans-serif;
+  }
+
+  *{box-sizing:border-box}
+
+  html{scroll-behavior:smooth}
+
+  body{
+    margin:0;
+    font-family:var(--font);
+    background:var(--bg);
+    color:var(--txt);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  /* ---------- 星空背景 ---------- */
+  #starfield{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    display:block;
+  }
+  .nebula{
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+      radial-gradient(680px 520px at 12% 8%, rgba(139,123,255,.20), transparent 62%),
+      radial-gradient(760px 600px at 88% 18%, rgba(62,224,255,.14), transparent 60%),
+      radial-gradient(820px 700px at 50% 108%, rgba(255,95,168,.13), transparent 62%);
+  }
+  .grain{
+    position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.35;
+    background-image:radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:3px 3px;
+  }
+
+  .wrap{position:relative;z-index:2}
+
+  /* ---------- 导航 ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:linear-gradient(180deg, rgba(4,6,13,.88), rgba(4,6,13,.55));
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw);margin:0 auto;padding:12px 22px;
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    font-weight:800;letter-spacing:.14em;font-size:15px;
+    white-space:nowrap;
+  }
+  .brand .orb{
+    width:18px;height:18px;border-radius:50%;
+    background:radial-gradient(circle at 32% 30%, #fff, var(--cyan) 38%, #1b3a63 78%);
+    box-shadow:0 0 16px rgba(62,224,255,.85),0 0 34px rgba(139,123,255,.45);
+    animation:pulse 3.6s ease-in-out infinite;
+  }
+  @keyframes pulse{50%{transform:scale(1.16);filter:brightness(1.25)}}
+  nav.links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+  nav.links a{
+    color:var(--txt-2);text-decoration:none;font-size:13.5px;
+    padding:7px 12px;border-radius:999px;transition:.22s;white-space:nowrap;
+  }
+  nav.links a:hover{color:#fff;background:rgba(120,180,255,.12);box-shadow:inset 0 0 0 1px var(--line-strong)}
+
+  /* ---------- 通用版式 ---------- */
+  section{max-width:var(--maxw);margin:0 auto;padding:76px 22px;scroll-margin-top:70px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--cyan);margin:0 0 14px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+  h2.sec{
+    font-size:clamp(24px,3.4vw,36px);margin:0 0 12px;font-weight:800;letter-spacing:.02em;
+  }
+  h2.sec .hl{
+    background:linear-gradient(100deg,var(--cyan),var(--violet) 55%,var(--magenta));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  p.lead{color:var(--txt-2);font-size:15.5px;margin:0 0 34px;max-width:74ch}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;min-height:92vh;display:flex;align-items:center;
+    max-width:var(--maxw);margin:0 auto;padding:80px 22px 60px;
+  }
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.16em;
+    color:var(--gold);border:1px solid rgba(255,200,97,.35);
+    background:rgba(255,200,97,.07);padding:6px 14px;border-radius:999px;margin-bottom:22px;
+  }
+  .hero h1{
+    font-size:clamp(46px,10vw,104px);line-height:1.02;margin:0 0 6px;font-weight:900;
+    letter-spacing:.06em;
+    background:linear-gradient(180deg,#ffffff 8%,#a9d8ff 46%,#7c7bff 78%,#ff7fc0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 8px 40px rgba(90,140,255,.4));
+  }
+  .hero h1 .en{
+    display:block;font-size:clamp(12px,1.7vw,17px);letter-spacing:.62em;
+    font-weight:600;color:var(--txt-3);margin-top:16px;
+    -webkit-text-fill-color:var(--txt-3);filter:none;
+  }
+  .hero .tag{
+    font-size:clamp(15px,2.2vw,20px);color:var(--txt-2);max-width:56ch;margin:24px 0 30px;
+  }
+  .hero .tag b{color:#fff;font-weight:700}
+  .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:12px 24px;border-radius:999px;font-size:14.5px;font-weight:700;
+    text-decoration:none;border:1px solid transparent;transition:.24s;cursor:pointer;
+  }
+  .btn.primary{
+    color:#04121c;
+    background:linear-gradient(100deg,var(--cyan),#8ee9ff);
+    box-shadow:0 10px 34px rgba(62,224,255,.34);
+  }
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(62,224,255,.46)}
+  .btn.ghost{color:var(--txt);border-color:var(--line-strong);background:rgba(120,180,255,.06)}
+  .btn.ghost:hover{background:rgba(120,180,255,.14);transform:translateY(-2px)}
+
+  .hero-stats{
+    display:flex;gap:34px;flex-wrap:wrap;margin-top:52px;
+    padding-top:26px;border-top:1px solid var(--line);
+  }
+  .hero-stats div{min-width:104px}
+  .hero-stats b{display:block;font-size:clamp(22px,3.2vw,30px);font-weight:900;color:#fff;letter-spacing:.02em}
+  .hero-stats span{font-size:12.5px;color:var(--txt-3);letter-spacing:.14em}
+
+  /* ---------- 卡片 / 网格 ---------- */
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(238px,1fr))}
+  .g4{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+
+  .card{
+    position:relative;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius);padding:24px 22px;overflow:hidden;
+    backdrop-filter:blur(10px);transition:.28s;
+  }
+  .card::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:radial-gradient(340px 200px at 80% -10%, rgba(62,224,255,.14), transparent 70%);
+    opacity:0;transition:.28s;
+  }
+  .card:hover{transform:translateY(-5px);border-color:var(--line-strong);box-shadow:0 20px 52px rgba(4,10,30,.7)}
+  .card:hover::after{opacity:1}
+  .card h3{margin:0 0 10px;font-size:17px;font-weight:800;letter-spacing:.02em}
+  .card p{margin:0;color:var(--txt-2);font-size:14px}
+  .card .num{
+    font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--cyan);
+    display:block;margin-bottom:12px;
+  }
+
+  /* ---------- 世界观 ---------- */
+  .world{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .world .card{border-left:3px solid transparent}
+  .world .card:nth-child(1){border-left-color:var(--magenta)}
+  .world .card:nth-child(2){border-left-color:var(--cyan)}
+  .world .card:nth-child(3){border-left-color:var(--gold)}
+  .world .card:nth-child(4){border-left-color:var(--violet)}
+  .world .card:nth-child(5){border-left-color:var(--green)}
+  .world .card:nth-child(6){border-left-color:#5aa9ff}
+
+  /* ---------- 修炼体系 ---------- */
+  .phase{margin-bottom:34px}
+  .phase-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+  .phase-head .dot{
+    width:12px;height:12px;border-radius:50%;flex:none;
+    background:var(--cyan);box-shadow:0 0 0 5px rgba(62,224,255,.14),0 0 20px var(--cyan);
+  }
+  .phase:nth-child(2) .phase-head .dot{background:var(--violet);box-shadow:0 0 0 5px rgba(139,123,255,.16),0 0 20px var(--violet)}
+  .phase:nth-child(3) .phase-head .dot{background:var(--gold);box-shadow:0 0 0 5px rgba(255,200,97,.16),0 0 20px var(--gold)}
+  .phase:nth-child(4) .phase-head .dot{background:var(--magenta);box-shadow:0 0 0 5px rgba(255,95,168,.16),0 0 20px var(--magenta)}
+  .phase-head h3{margin:0;font-size:19px;font-weight:800;letter-spacing:.04em}
+  .phase-head span{font-size:12.5px;color:var(--txt-3);letter-spacing:.1em}
+
+  .levels{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(216px,1fr))}
+  .lvl{
+    background:linear-gradient(150deg, rgba(20,30,52,.85), rgba(10,16,30,.7));
+    border:1px solid var(--line);border-radius:14px;padding:16px 16px 15px;
+    transition:.25s;position:relative;overflow:hidden;
+  }
+  .lvl:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+  .lvl .lv-top{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+  .lvl .lv-name{font-weight:800;font-size:15.5px;color:#fff}
+  .lvl .lv-ord{font-size:11px;color:var(--txt-3);letter-spacing:.14em;margin-left:auto;white-space:nowrap}
+  .lvl .lv-desc{font-size:12.8px;color:var(--txt-2);margin:0;line-height:1.6}
+  .lvl.top{border-color:rgba(255,95,168,.4);background:linear-gradient(150deg, rgba(60,22,48,.6), rgba(14,16,32,.75))}
+
+  /* ---------- 人物 ---------- */
+  .roles{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .role{
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px 20px;text-align:left;transition:.28s;
+  }
+  .role:hover{transform:translateY(-5px);border-color:var(--line-strong);box-shadow:0 20px 48px rgba(4,10,30,.7)}
+  .avatar{
+    width:52px;height:52px;border-radius:14px;display:grid;place-items:center;
+    font-weight:900;font-size:21px;color:#06121e;margin-bottom:14px;
+    box-shadow:0 8px 24px rgba(0,0,0,.4);
+  }
+  .a1{background:linear-gradient(135deg,#3ee0ff,#8b7bff)}
+  .a2{background:linear-gradient(135deg,#ff5fa8,#ffc861)}
+  .a3{background:linear-gradient(135deg,#4be3a8,#3ee0ff)}
+  .a4{background:linear-gradient(135deg,#ffc861,#ff8a5f)}
+  .a5{background:linear-gradient(135deg,#8b7bff,#ff5fa8)}
+  .a6{background:linear-gradient(135deg,#5aa9ff,#4be3a8)}
+  .a7{background:linear-gradient(135deg,#ff8a5f,#ff5fa8)}
+  .a8{background:linear-gradient(135deg,#b6f36a,#3ee0ff)}
+  .role h3{margin:0 0 4px;font-size:16.5px;font-weight:800}
+  .role .r-tag{font-size:11.5px;letter-spacing:.14em;color:var(--cyan);margin-bottom:9px;display:block}
+  .role p{margin:0;font-size:13.2px;color:var(--txt-2)}
+
+  /* ---------- 时间线 ---------- */
+  .timeline{position:relative;margin-top:8px;padding-left:34px}
+  .timeline::before{
+    content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--cyan),var(--violet) 50%,var(--magenta));
+    opacity:.5;border-radius:2px;
+  }
+  .tl{position:relative;margin-bottom:22px}
+  .tl::before{
+    content:"";position:absolute;left:-31px;top:8px;width:12px;height:12px;border-radius:50%;
+    background:var(--bg-2);border:2px solid var(--cyan);box-shadow:0 0 14px rgba(62,224,255,.8);
+  }
+  .tl:nth-child(4n+2)::before{border-color:var(--violet);box-shadow:0 0 14px rgba(139,123,255,.8)}
+  .tl:nth-child(4n+3)::before{border-color:var(--gold);box-shadow:0 0 14px rgba(255,200,97,.8)}
+  .tl:nth-child(4n+4)::before{border-color:var(--magenta);box-shadow:0 0 14px rgba(255,95,168,.8)}
+  .tl .tl-title{font-weight:800;font-size:15.5px;margin:0 0 4px;color:#fff}
+  .tl .tl-title em{font-style:normal;color:var(--txt-3);font-weight:600;font-size:12.5px;letter-spacing:.12em;margin-right:9px}
+  .tl p{margin:0;font-size:13.4px;color:var(--txt-2)}
+
+  /* ---------- 影视改编 ---------- */
+  .seasons{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px;overflow:hidden;border-radius:14px}
+  .seasons th,.seasons td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line)}
+  .seasons th{background:rgba(120,180,255,.08);color:var(--txt-2);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+  .seasons td{color:var(--txt)}
+  .seasons tr:last-child td{border-bottom:none}
+  .seasons tr:hover td{background:rgba(120,180,255,.05)}
+  .seasons .s-name{font-weight:700;color:#fff}
+
+  .facts{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-top:26px}
+  .fact{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .fact b{display:block;font-size:22px;font-weight:900;background:linear-gradient(100deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .fact span{font-size:12.5px;color:var(--txt-3);letter-spacing:.1em}
+
+  /* ---------- 星语 ---------- */
+  .quotes{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .quote{
+    background:linear-gradient(150deg, rgba(24,32,58,.8), rgba(10,16,30,.6));
+    border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;
+    position:relative;transition:.28s;
+  }
+  .quote:hover{border-color:var(--line-strong);transform:translateY(-4px)}
+  .quote::before{
+    content:"“";position:absolute;top:-6px;left:16px;font-size:64px;
+    color:rgba(62,224,255,.22);font-family:Georgia,serif;line-height:1;
+  }
+  .quote p{margin:14px 0 0;font-size:15px;color:#dfe8fb;line-height:1.85}
+  .quote span{display:block;margin-top:14px;font-size:12.5px;color:var(--txt-3);letter-spacing:.1em}
+
+  /* ---------- 页脚 ---------- */
+  footer{
+    border-top:1px solid var(--line);margin-top:40px;
+    padding:44px 22px 60px;text-align:center;position:relative;z-index:2;
+  }
+  footer .f-title{font-weight:900;letter-spacing:.3em;font-size:13px;color:var(--txt-2)}
+  footer p{font-size:12.5px;color:var(--txt-3);margin:14px auto 0;max-width:70ch;line-height:1.9}
+  footer a{color:var(--cyan);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+
+  .totop{
+    position:fixed;right:22px;bottom:24px;z-index:60;
+    width:46px;height:46px;border-radius:50%;border:1px solid var(--line-strong);
+    background:rgba(14,21,38,.85);color:var(--cyan);font-size:19px;cursor:pointer;
+    backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:.3s;
+  }
+  .totop.show{opacity:1;pointer-events:auto}
+  .totop:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(62,224,255,.3)}
+
+  @media (max-width:640px){
+    section{padding:56px 18px}
+    .hero{padding:56px 18px 36px;min-height:auto}
+    .hero-stats{gap:22px}
+    .nav-inner{padding:10px 16px}
+    nav.links a{padding:6px 9px;font-size:12.5px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="starfield" aria-hidden="true"></canvas>
+<div class="nebula" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="wrap">
+
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand"><span class="orb"></span>吞噬星空</div>
+      <nav class="links">
+        <a href="#about">作品</a>
+        <a href="#world">世界观</a>
+        <a href="#power">修炼体系</a>
+        <a href="#roles">人物</a>
+        <a href="#timeline">剧情线</a>
+        <a href="#screen">影视改编</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-badge">● 未来科幻 · 星际修真 · 热血升级</div>
+      <h1>吞噬星空<span class="en">S W A L L O W E D &nbsp; S T A R</span></h1>
+      <p class="tag">
+        大涅槃之后，怪兽踏破城市，人类退守基地市。<br>
+        一个来自江南基地市的普通高中生，从<strong>废墟</strong>中握紧拳头，
+        一路吞噬星空，走向<strong>宇宙之巅</strong>。
+      </p>
+      <div class="cta">
+        <a class="btn primary" href="#about">开始了解 →</a>
+        <a class="btn ghost" href="#power">查看修炼体系</a>
+      </div>
+
+      <div class="hero-stats">
+        <div><b>我吃西红柿</b><span>原 著 作 者</span></div>
+        <div><b>≈477万</b><span>作 品 字 数</span></div>
+        <div><b>2010</b><span>开 始 连 载</span></div>
+        <div><b>2020</b><span>动 画 首 播</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 作品简介 -->
+  <section id="about" class="reveal">
+    <p class="eyebrow">About the Novel</p>
+    <h2 class="sec">一部把世界<span class="hl">越写越大</span>的作品</h2>
+    <p class="lead">
+      《吞噬星空》是由网络作家<strong>我吃西红柿</strong>创作的长篇科幻小说，2010 年起在起点中文网连载。
+      它把<strong>末日生存、武道修炼、星际文明、种族战争</strong>熔于一炉：故事从一座被怪兽包围的基地市起步，
+      随着主角罗峰一次次突破境界，视野从城市扩展到星球、星系、宇宙海，直到浩渺的起源大陆。
+    </p>
+
+    <div class="grid g3">
+      <div class="card">
+        <span class="num">01 / 起点</span>
+        <h3>末世与武道</h3>
+        <p>大涅槃后怪兽横行，人类以基地市自保，武者成为文明最锋利的刀。生存压力与少年热血交织，开局极具现实感。</p>
+      </div>
+      <div class="card">
+        <span class="num">02 / 升级</span>
+        <h3>清晰的成长线</h3>
+        <p>从准武者到战神、行星级、恒星级……每一个境界都有明确的战力刻度与生命形态跃迁，升级爽感层层递进。</p>
+      </div>
+      <div class="card">
+        <span class="num">03 / 格局</span>
+        <h3>宇宙级史诗</h3>
+        <p>天才战、秘境试炼、族群竞争、域外战场接踵而至，地球人族在浩瀚宇宙中求生、图强、立足。</p>
+      </div>
+      <div class="card">
+        <span class="num">04 / 内核</span>
+        <h3>守护的重量</h3>
+        <p>变强的根本动力，是守护家人、地球与人类一脉。亲情与友情的牵绊，让宏大叙事始终有温度。</p>
+      </div>
+      <div class="card">
+        <span class="num">05 / 特色</span>
+        <h3>武者 · 精神念师</h3>
+        <p>主角兼修两条路线：武者近身搏杀，精神念师远距操控念力兵器。加之夺舍异兽获得分身，战斗方式多变。</p>
+      </div>
+      <div class="card">
+        <span class="num">06 / 影响</span>
+        <h3>国漫科幻标杆</h3>
+        <p>改编动画由玄机科技制作，自 2020 年播出后成为国产长篇科幻年番中极具代表性的作品之一。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 世界观 -->
+  <section id="world" class="reveal">
+    <p class="eyebrow">Worldview</p>
+    <h2 class="sec">灾变地球开局，<span class="hl">宇宙修炼升级</span></h2>
+    <p class="lead">作品的世界观属于典型的"灾变开局 + 星际成长"框架。地球篇偏末世都市武道，进入宇宙后迅速切换为宏大星际文明图景。</p>
+
+    <div class="world">
+      <div class="card">
+        <h3>大涅槃时期</h3>
+        <p>不明来由的病毒（RR 病毒）席卷全球，大量动物被感染并变异为怪兽，人类文明遭受重创，史称"大涅槃"。</p>
+      </div>
+      <div class="card">
+        <h3>基地市时代</h3>
+        <p>幸存者筑起高墙建立基地市，以城市为堡垒自保。城墙之外是怪兽盘踞的荒野区，也是武者的试炼场与猎场。</p>
+      </div>
+      <div class="card">
+        <h3>武馆与武者</h3>
+        <p>人类中有人觉醒基因原能，修炼成为武者，是抵御怪兽的核心力量。极限武馆、雷电武馆等势力应运而生。</p>
+      </div>
+      <div class="card">
+        <h3>星空与宇宙</h3>
+        <p>真相远不止地球：宇宙中存在无数高等文明与种族，人类只是其中渺小一支。走出星球，才算真正踏入修炼体系。</p>
+      </div>
+      <div class="card">
+        <h3>宇宙势力</h3>
+        <p>虚拟宇宙公司、巨斧武斗场、宇宙佣兵联盟、黑龙山帝国等庞然大物盘踞星空，人族需在其中争夺资源与生存空间。</p>
+      </div>
+      <div class="card">
+        <h3>炼狱与秘境</h3>
+        <p>雷霆世界、界中界、血洛世界、混沌城、宇宙海……无数秘境承载着传承、宝物与杀机，是强者诞生之地。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 修炼体系 -->
+  <section id="power" class="reveal">
+    <p class="eyebrow">Cultivation System</p>
+    <h2 class="sec">从孤城武者到<span class="hl">宇宙之巅</span></h2>
+    <p class="lead">《吞噬星空》的修炼体系跨越地球、原始宇宙、宇宙海三个大阶段，每一层境界都伴随生命形态与战力的质变。</p>
+
+    <!-- Phase 1 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="dot"></span>
+        <h3>地球篇 · 凡人起步</h3>
+        <span>EARTH</span>
+      </div>
+      <div class="levels">
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">准武者</span><span class="lv-ord">起点</span></div>
+          <p class="lv-desc">普通人向武者的过渡，须通过拳力、速度、神经反应的准武者考核。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">学徒级</span><span class="lv-ord">战士 · 战将 · 战神</span></div>
+          <p class="lv-desc">修炼基因原能，强化细胞活性。战士对抗普通怪兽，战将单挑高级怪兽，战神是地球战力的天花板。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">行星级</span><span class="lv-ord">地球称"议员"</span></div>
+          <p class="lv-desc">识海凝聚微型星球，可御空飞行、真空生存，寿元约千年，是真正脱离星球的起点。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="dot"></span>
+        <h3>原始宇宙篇 · 星际成长</h3>
+        <span>PRIMORDIAL UNIVERSE</span>
+      </div>
+      <div class="levels">
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">恒星级</span><span class="lv-ord">01</span></div>
+          <p class="lv-desc">识海形成微型恒星系，寿元以纪元计，肉身可硬抗小行星，边陲之地足以称王。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">宇宙级</span><span class="lv-ord">02</span></div>
+          <p class="lv-desc">识海化为星云，九阶时中心现黑洞，觉醒领域能力，可肉身横渡星空、毁灭行星。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">域主级</span><span class="lv-ord">03</span></div>
+          <p class="lv-desc">灵魂收入命核，命核不碎则不死，可统治整片星域，一方星际大势力的首领。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">界主级</span><span class="lv-ord">04</span></div>
+          <p class="lv-desc">开辟体内世界，可释放世界投影压制对手，是接触宇宙本源法则的关键阶段。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">不朽</span><span class="lv-ord">军主 · 封侯 · 封王</span></div>
+          <p class="lv-desc">身化神力，寿命永恒，难以被彻底抹杀。细分至"封王无敌"，战力已可比肩最弱的宇宙尊者。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">宇宙尊者</span><span class="lv-ord">06</span></div>
+          <p class="lv-desc">悟透空间法则，肉身与灵魂可瞬移数千光年，抬手震碎星域，高等宇宙国的顶级战力。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">宇宙之主</span><span class="lv-ord">07</span></div>
+          <p class="lv-desc">掌控时空、逆转时空复活死者，是原始宇宙的顶层存在，人类族群中屈指可数。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">真神</span><span class="lv-ord">宇宙最强者</span></div>
+          <p class="lv-desc">悟透十大法则，神国化为小型宇宙，言出法随，是原始宇宙的天花板。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase">
+      <div class="phase-head">
+        <span class="dot"></span>
+        <h3>宇宙海篇 · 更高层级</h3>
+        <span>SEA OF UNIVERSE</span>
+      </div>
+      <div class="levels">
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">虚空真神</span><span class="lv-ord">09</span></div>
+          <p class="lv-desc">寿命永恒，可肆意屠戮真神，全力一击能毁掉真神的小型宇宙。</p>
+        </div>
+        <div class="lvl top">
+          <div class="lv-top"><span class="lv-name">永恒真神</span><span class="lv-ord">主角正篇结局</span></div>
+          <p class="lv-desc">一念可创造微型宇宙，实力横扫虚空真神。罗峰正篇结局限定于此境，闯轮回后抵达起源大陆。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">混沌主宰</span><span class="lv-ord">称圣</span></div>
+          <p class="lv-desc">融合法则形成混沌法则，真神之心衍变为混沌空间，战力远迈永恒真神。</p>
+        </div>
+        <div class="lvl">
+          <div class="lv-top"><span class="lv-name">神王</span><span class="lv-ord">巅峰</span></div>
+          <p class="lv-desc">能创造体内宇宙，原始宇宙在其造物中仅算冰山一角；仅气流威压便可灭杀不朽强者。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 人物 -->
+  <section id="roles" class="reveal">
+    <p class="eyebrow">Characters</p>
+    <h2 class="sec">星海之间的<span class="hl">执灯者</span>与同行者</h2>
+    <p class="lead">罗峰是绝对的核心，而洪、雷神、巴巴塔、真衍王等人，则构成了他成长路上最重要的灯塔、战友与引路人。</p>
+
+    <div class="roles">
+      <div class="role">
+        <div class="avatar a1">峰</div>
+        <h3>罗峰</h3>
+        <span class="r-tag">主角 · 武念双修</span>
+        <p>江南基地市高中生出身，兼修武者与精神念师。凭陨墨星传承与夺舍异兽所得的分身一路突破，最终成为人类最强战力。</p>
+      </div>
+      <div class="role">
+        <div class="avatar a2">洪</div>
+        <h3>洪</h3>
+        <span class="r-tag">地球第一强者 · 大哥</span>
+        <p>极限武馆的创立者，沉稳强大，善使长枪与《灭世枪法》。既是罗峰的目标，也是并肩作战的前辈与兄长。</p>
+      </div>
+      <div class="role">
+        <div class="avatar a3">雷</div>
+        <h3>雷神</h3>
+        <span class="r-tag">雷电武馆 · 二哥</span>
+        <p>张扬外放的地球顶级强者，与洪、罗峰情同手足。地球三兄弟之一，个性鲜明、魅力十足。</p>
+      </div>
+      <div class="role">
+        <div class="avatar a4">欣</div>
+        <h3>徐欣</h3>
+        <span class="r-tag">重要情感线</span>
+        <p>罗峰的重要情感支撑。在高强度的战斗与冒险之外，为故事保留了一层温柔而稳定的底色。</p>
+      </div>
+      <div class="role">
+        <div class="avatar a5">塔</div>
+        <h3>巴巴塔</h3>
+        <span class="r-tag">智能生命 · 引路人</span>
+        <p>陨墨星主人呼延博遗留的智能生命，引导罗峰接受传承、认识宇宙，是早期最重要的信息与知识来源。</p>
+      </div>
+      <div class="role">
+        <div class="avatar a6">衍</div>
+        <h3>真衍王</h3>
+        <span class="r-tag">封王不朽 · 导师</span>
+        <p>罗峰在初始宇宙混沌城修炼时的老师，封王级不朽强者，以严苛的指点为罗峰打下不朽阶段的根基。</p>
+      </div>
+      <div class="role">
+        <div class="avatar a7">混</div>
+        <h3>混沌城主</h3>
+        <span class="r-tag">宇宙之主级</span>
+        <p>虚拟宇宙公司的顶尖存在，宇宙之主层次的强者，对罗峰的境界跃迁起到关键作用。</p>
+      </div>
+      <div class="role">
+        <div class="avatar a8">客</div>
+        <h3>坐山客</h3>
+        <span class="r-tag">晋之神王转生</span>
+        <p>来历深不可测的神秘强者，向罗峰传授《列元术》与星辰塔传承，是后期剧情的重要推手。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 剧情线 -->
+  <section id="timeline" class="reveal">
+    <p class="eyebrow">Story Timeline</p>
+    <h2 class="sec">罗峰的<span class="hl">成长年表</span></h2>
+    <p class="lead">从一张准武者考核表开始，到踏足宇宙海，这条主线是整部作品的骨架。</p>
+
+    <div class="timeline">
+      <div class="tl">
+        <p class="tl-title"><em>起点</em>基地市少年</p>
+        <p>江南基地市的高中生兼武馆高级学员，家境普通，立志成为武者守护家人。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>入门</em>准武者考核 · 加入极限武馆</p>
+        <p>通过拳力、速度、神经反应三项考核，觉醒基因原能成为正式武者，进入极限武馆修炼。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>历练</em>荒野区的"疯子"</p>
+        <p>在怪兽盘踞的荒野区反复猎杀历练，凭借远超常人的拼命劲头，被同伴称作"疯子"。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>进阶</em>战神级 · 江南监察使</p>
+        <p>突破至战神级，成为极限武馆江南监察使，短暂衣锦还乡，却很快踏上更远的路。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>机缘</em>9 号古文明遗迹 · 遁天梭</p>
+        <p>于古文明遗迹中获得遁天梭与遁天秘法，精神念师战力初具锋芒，随后步入行星级。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>传承</em>陨墨星主人呼延博</p>
+        <p>正式得到陨墨星主人的传承，结识智能生命巴巴塔，视野第一次真正投向星空。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>转折</em>金角巨兽危机</p>
+        <p>星空巨兽幼体降临地球，洪与雷神燃烧灵魂拼死一战；罗峰舍弃肉身，以秘法击杀并夺舍其肉身。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>立足</em>买下地球 · 成为领主</p>
+        <p>晋级恒星级，提取遗产买下地球，化解诺岚山家族的觊觎，地球第一次真正接触宇宙秩序。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>试炼</em>雷霆世界 · 界中界</p>
+        <p>参加宇宙佣兵考核，闯入陨落界主遗留的雷霆世界，开启界中界，收获海量宇宙晶与传承。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>扬名</em>宇宙人类巅峰天才战</p>
+        <p>在亿万宇宙天才的竞逐中跻身前十，成为虚拟宇宙公司核心成员，正式站上星际舞台。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>修行</em>初始宇宙 · 混沌城</p>
+        <p>进入混沌城苦修三十载，拜封王不朽真衍王为师，闯通天桥、磨砺境界，为不朽之路奠定根基。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>蜕变</em>血洛世界 · 血武者</p>
+        <p>前往血洛世界历练，融合血洛晶体成为血武者，实力与心性同步跃迁。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>成神</em>不朽 · 银河领地</p>
+        <p>由界主突破至不朽，身化神力、寿命永恒，创立银河领地，成为守护地球一脉的支柱。</p>
+      </div>
+      <div class="tl">
+        <p class="tl-title"><em>终局</em>宇宙海 · 界兽浩劫</p>
+        <p>深入宇宙海修行，历经界兽浩劫，突破真神；最终感悟毁灭之道成为永恒真神，闯轮回抵达起源大陆。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 影视改编 -->
+  <section id="screen" class="reveal">
+    <p class="eyebrow">Animation</p>
+    <h2 class="sec">从文字到<span class="hl">荧幕星空</span></h2>
+    <p class="lead">2020 年，《吞噬星空》由玄机科技改编为 3D 动画，以高规格的星际特效与异兽设计，把文字里的宇宙具象化，并逐步成长为持续更新的长篇年番。</p>
+
+    <div class="card" style="padding:8px 6px 6px;">
+      <table class="seasons">
+        <thead>
+          <tr><th>季数</th><th>首播时间</th><th>导演</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="s-name">第一季</td><td>2020 年 11 月 29 日</td><td>沈乐平</td></tr>
+          <tr><td class="s-name">第二季</td><td>2021 年 12 月 29 日</td><td>沈乐平</td></tr>
+          <tr><td class="s-name">第三季</td><td>2022 年 9 月 13 日</td><td>沈乐平</td></tr>
+          <tr><td class="s-name">第四季</td><td>2023 年 10 月 3 日</td><td>沈乐平</td></tr>
+          <tr><td class="s-name">第五季</td><td>2024 年 8 月 6 日</td><td>沈乐平 等</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="facts">
+      <div class="fact"><b>玄机科技</b><span>制 作 方</span></div>
+      <div class="fact"><b>沈乐平</b><span>总 导 演</span></div>
+      <div class="fact"><b>3D 年番</b><span>形 式</span></div>
+      <div class="fact"><b>年度最佳美术</b><span>2023 金鹅荣誉</span></div>
+    </div>
+  </section>
+
+  <!-- 星语 -->
+  <section id="quotes" class="reveal">
+    <p class="eyebrow">Starlight</p>
+    <h2 class="sec">写给<span class="hl">星空</span>的几句话</h2>
+    <p class="lead">《吞噬星空》最动人的地方，或许不是碾压一切的强，而是在浩瀚宇宙里，一个人如何守住自己想守的东西。</p>
+
+    <div class="quotes">
+      <div class="quote">
+        <p>宇宙很大，大到足以吞下所有骄傲；可也正因为大，才留得下一个人全部的坚持。</p>
+        <span>星语 · 关于渺小与执着</span>
+      </div>
+      <div class="quote">
+        <p>他从城墙之内出发，先守一座城，再守一颗星球，最后守的是一个族群的未来。</p>
+        <span>星语 · 关于守护</span>
+      </div>
+      <div class="quote">
+        <p>境界一阶一阶地往上爬，世界便一层一层地向外展开——这大概就是升级流最朴素的浪漫。</p>
+        <span>星语 · 关于成长</span>
+      </div>
+      <div class="quote">
+        <p>真正的强者不是没有恐惧，而是把恐惧咬碎了咽下去，然后继续往前走。</p>
+        <span>星语 · 关于意志</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-title">吞 噬 星 空 · 作 品 介 绍</div>
+    <p>
+      本页为《吞噬星空》主题的介绍性网页，内容依据公开资料整理，用于学习与交流；
+      涉及的小说、动画及相关名称、设定，其著作权归原作者及出品方所有。
+    </p>
+    <p>原著作者：我吃西红柿 &nbsp;·&nbsp; 动画制作：玄机科技 &nbsp;·&nbsp; <a href="#about">返回顶部内容</a></p>
+  </footer>
+
+</div>
+
+<button class="totop" id="totop" title="回到顶部" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- 星空粒子 ---------- */
+  var canvas = document.getElementById("starfield");
+  var ctx = canvas.getContext("2d");
+  var W = 0, H = 0, dpr = 1;
+  var stars = [];
+  var shoots = [];
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function rnd(a, b) { return a + Math.random() * (b - a); }
+
+  function build() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + "px";
+    canvas.style.height = H + "px";
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    var count = Math.round(Math.min(260, Math.max(90, (W * H) / 9000)));
+    stars = [];
+    var palette = ["255,255,255", "62,224,255", "139,123,255", "255,200,97", "255,95,168"];
+    for (var i = 0; i < count; i++) {
+      stars.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        r: rnd(0.4, 1.7),
+        a: rnd(0.22, 0.9),
+        vx: rnd(-0.055, 0.055),
+        vy: rnd(-0.045, 0.045),
+        tw: Math.random() * Math.PI * 2,
+        tws: rnd(0.006, 0.022),
+        c: palette[Math.floor(Math.random() * 3)]
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.x += s.vx; s.y += s.vy; s.tw += s.tws;
+      if (s.x < -2) s.x = W + 2;
+      if (s.x > W + 2) s.x = -2;
+      if (s.y < -2) s.y = H + 2;
+      if (s.y > H + 2) s.y = -2;
+
+      var alpha = reduce ? s.a : s.a * (0.62 + 0.38 * Math.sin(s.tw));
+      ctx.beginPath();
+      ctx.fillStyle = "rgba(" + s.c + "," + alpha.toFixed(3) + ")";
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    /* 流星 */
+    if (!reduce && Math.random() < 0.0055 && shoots.length < 3) {
+      var sx = rnd(W * 0.1, W * 0.95), sy = rnd(-40, H * 0.4);
+      shoots.push({ x: sx, y: sy, vx: rnd(-7.5, -4.5), vy: rnd(3.2, 5.4), life: 1 });
+    }
+    for (var j = shoots.length - 1; j >= 0; j--) {
+      var p = shoots[j];
+      p.x += p.vx; p.y += p.vy; p.life -= 0.012;
+      if (p.life <= 0 || p.y > H + 60 || p.x < -80) { shoots.splice(j, 1); continue; }
+      var tail = 112;
+      var g = ctx.createLinearGradient(p.x, p.y, p.x - p.vx * tail / 6, p.y - p.vy * tail / 6);
+      g.addColorStop(0, "rgba(190,235,255," + (0.85 * p.life).toFixed(3) + ")");
+      g.addColorStop(1, "rgba(190,235,255,0)");
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.7;
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(p.x - p.vx * tail / 6, p.y - p.vy * tail / 6);
+      ctx.stroke();
+    }
+
+    if (!reduce) requestAnimationFrame(draw);
+  }
+
+  build();
+  draw();
+
+  var rt;
+  window.addEventListener("resize", function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { build(); if (reduce) draw(); }, 160);
+  });
+
+  /* ---------- 滚动淡入 ---------- */
+  var items = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* ---------- 回到顶部 ---------- */
+  var totop = document.getElementById("totop");
+  window.addEventListener("scroll", function () {
+    if (window.scrollY > 520) totop.classList.add("show");
+    else totop.classList.remove("show");
+  }, { passive: true });
+  totop.addEventListener("click", function () {
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+  });
+})();
+</script>
+</body>
+</html>

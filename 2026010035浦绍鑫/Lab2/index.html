@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>会泽文旅 · 钱王之乡 铜都会泽</title>
+<meta name="description" content="会泽旅游宣传：会泽古城、大海草山、念湖、娜姑古镇白雾村、雨碌大地缝等景点，以及羊八碗、稀豆粉、盐水石榴等特色美食。">
+<style>
+  :root{
+    --ink:#1e2a28;
+    --ink-soft:#41504d;
+    --muted:#75827f;
+    --copper:#c2601f;
+    --copper-d:#8f3f10;
+    --gold:#d9a441;
+    --green:#2c6b4f;
+    --lake:#2f6fa8;
+    --cream:#fbf6ee;
+    --card:#fffdfa;
+    --line:#ebe1d3;
+    --radius:18px;
+    --maxw:1120px;
+    --shadow:0 10px 30px rgba(90,60,25,.08);
+    --shadow-lg:0 20px 48px rgba(90,60,25,.16);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+    font-size:16px;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:
+      radial-gradient(900px 500px at 8% -6%, rgba(217,164,65,.16), transparent 60%),
+      radial-gradient(800px 460px at 96% 4%, rgba(47,111,168,.10), transparent 62%);
+  }
+  img,svg{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  h1,h2,h3,h4{margin:0;line-height:1.3;font-weight:800;letter-spacing:.02em}
+  p{margin:0}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+  /* ---------- 导航 ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(251,246,238,.86);
+    backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-in{
+    max-width:var(--maxw);margin:0 auto;padding:10px 22px;
+    display:flex;align-items:center;gap:18px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.08em}
+  .brand .seal{
+    width:34px;height:34px;border-radius:10px;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--copper),var(--copper-d));
+    color:#fff;font-size:15px;font-weight:800;letter-spacing:0;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 14px rgba(194,96,31,.35);
+  }
+  .brand small{display:block;font-size:10px;letter-spacing:.22em;color:var(--muted);font-weight:600}
+  .nav-links{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+  .nav-links a{
+    font-size:14px;font-weight:600;color:var(--ink-soft);
+    padding:7px 13px;border-radius:999px;transition:.22s;white-space:nowrap;
+  }
+  .nav-links a:hover{background:rgba(194,96,31,.10);color:var(--copper-d)}
+  .nav-links a.on{background:var(--copper);color:#fff}
+
+  /* ---------- 首屏 ---------- */
+  .hero{position:relative;overflow:hidden;background:#2a2118;color:#fff}
+  .hero-bg{position:absolute;inset:0;width:100%;height:100%}
+  .hero-in{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:92px 22px 78px}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;
+    font-size:12px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;
+    padding:7px 15px;border-radius:999px;
+    border:1px solid rgba(255,255,255,.32);color:#ffe6c0;
+    background:rgba(255,255,255,.08);
+  }
+  .hero h1{
+    margin:22px 0 0;font-size:clamp(40px,7.2vw,74px);font-weight:900;letter-spacing:.06em;
+    text-shadow:0 6px 26px rgba(0,0,0,.42);
+  }
+  .hero h1 span{color:#ffc46b}
+  .hero .latin{
+    margin-top:10px;font-size:13px;letter-spacing:.42em;color:rgba(255,255,255,.62);font-weight:600;
+  }
+  .hero .lead{
+    margin-top:22px;max-width:660px;font-size:17px;color:rgba(255,255,255,.9);
+  }
+  .hero .tags{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}
+  .hero .tags span{
+    font-size:13px;font-weight:600;padding:6px 14px;border-radius:999px;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#fff4e2;
+  }
+  .stats{
+    margin-top:44px;display:grid;gap:1px;grid-template-columns:repeat(4,1fr);
+    background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.2);
+    border-radius:14px;overflow:hidden;
+  }
+  .stats div{background:rgba(20,15,10,.42);padding:16px 18px}
+  .stats b{display:block;font-size:25px;color:#ffc46b;letter-spacing:.02em}
+  .stats em{font-style:normal;font-size:12.5px;color:rgba(255,255,255,.72)}
+
+  /* ---------- 通用区块 ---------- */
+  section{padding:82px 0;position:relative}
+  .head{max-width:720px;margin-bottom:42px}
+  .head .kicker{
+    font-size:12px;font-weight:800;letter-spacing:.26em;text-transform:uppercase;color:var(--copper);
+    display:flex;align-items:center;gap:10px;
+  }
+  .head .kicker::before{content:"";width:34px;height:2px;background:var(--copper);border-radius:2px}
+  .head h2{font-size:clamp(27px,3.6vw,38px);margin:14px 0 12px}
+  .head p{color:var(--muted);font-size:16px}
+  .alt{background:linear-gradient(180deg,#fff9f0,#fbf6ee)}
+
+  /* ---------- 走进会泽 ---------- */
+  .intro{display:grid;grid-template-columns:1.15fr .85fr;gap:34px;align-items:start}
+  .intro p+p{margin-top:14px}
+  .intro .prose p{color:var(--ink-soft)}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .fact{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;
+    box-shadow:var(--shadow);
+  }
+  .fact b{display:block;font-size:22px;color:var(--copper-d)}
+  .fact span{font-size:13px;color:var(--muted)}
+
+  /* ---------- 景点卡片 ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;
+    transition:transform .3s cubic-bezier(.2,.7,.3,1),box-shadow .3s;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+  .card .banner{position:relative;aspect-ratio:5/3;overflow:hidden;background:#e9e1d4}
+  .card .banner svg{width:100%;height:100%}
+  .card .banner .no{
+    position:absolute;left:14px;top:13px;
+    font-size:11px;font-weight:800;letter-spacing:.14em;
+    background:rgba(255,255,255,.92);color:var(--copper-d);
+    padding:4px 11px;border-radius:999px;
+  }
+  .card .body{padding:20px 21px 22px;display:flex;flex-direction:column;flex:1}
+  .card h3{font-size:19px}
+  .card .sub{font-size:12px;color:var(--muted);letter-spacing:.06em;margin-top:6px;font-weight:600}
+  .card .desc{margin-top:12px;font-size:14.5px;color:var(--ink-soft);flex:1}
+  .card .meta{
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    display:flex;gap:8px;flex-wrap:wrap;
+  }
+  .card .meta span{
+    font-size:12px;font-weight:600;color:var(--green);
+    background:rgba(44,107,79,.09);padding:4px 10px;border-radius:6px;
+  }
+
+  /* ---------- 美食 ---------- */
+  .food-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .food{
+    background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 20px;
+    box-shadow:var(--shadow);transition:transform .28s,box-shadow .28s;
+  }
+  .food:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+  .food .ico{
+    width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#fdf0dd,#f6dcc0);margin-bottom:14px;
+  }
+  .food h3{font-size:17px}
+  .food .tag{font-size:11.5px;font-weight:700;color:var(--copper);letter-spacing:.1em;margin-top:5px;display:block}
+  .food p{margin-top:10px;font-size:14px;color:var(--ink-soft)}
+  .food-top{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:0;margin-bottom:34px;
+    background:linear-gradient(135deg,#3a2415,#5b3317 55%,#7a4318);color:#fff;border-radius:20px;overflow:hidden;
+    box-shadow:0 22px 50px rgba(90,50,15,.28);
+  }
+  .food-top .txt{padding:36px 34px}
+  .food-top .k{
+    font-size:11.5px;font-weight:800;letter-spacing:.26em;color:#ffc46b;text-transform:uppercase;
+  }
+  .food-top h3{font-size:27px;margin:12px 0 10px}
+  .food-top p{color:rgba(255,255,255,.86);font-size:15px}
+  .food-top ul{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+  .food-top li{font-size:14px;color:#ffe9cb;display:flex;gap:10px;align-items:flex-start}
+  .food-top li i{
+    flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:#ffc46b;margin-top:9px;
+  }
+  .food-top .pic{position:relative;min-height:250px}
+
+  /* ---------- 特产 ---------- */
+  .chips{display:flex;flex-wrap:wrap;gap:12px}
+  .chip{
+    display:flex;align-items:center;gap:10px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
+    padding:10px 18px 10px 12px;box-shadow:var(--shadow);transition:.25s;
+  }
+  .chip:hover{border-color:var(--copper);transform:translateY(-2px)}
+  .chip i{
+    width:26px;height:26px;border-radius:50%;flex:0 0 auto;
+    background:linear-gradient(135deg,var(--gold),var(--copper));
+  }
+  .chip b{font-size:14.5px;font-weight:700}
+  .chip small{font-size:12px;color:var(--muted)}
+
+  /* ---------- 行程 ---------- */
+  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .plan{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px 24px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .plan::after{
+    content:"";position:absolute;left:0;top:0;width:100%;height:4px;
+    background:linear-gradient(90deg,var(--copper),var(--gold));
+  }
+  .plan .days{font-size:12px;font-weight:800;letter-spacing:.2em;color:var(--copper)}
+  .plan h3{font-size:20px;margin:10px 0 16px}
+  .step{display:flex;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .step:last-child{border-bottom:0}
+  .step em{
+    font-style:normal;flex:0 0 auto;font-size:11.5px;font-weight:800;color:#fff;
+    background:var(--green);border-radius:6px;padding:3px 8px;height:22px;line-height:16px;margin-top:4px;
+  }
+  .step p{font-size:14px;color:var(--ink-soft)}
+  .step p b{color:var(--ink)}
+
+  /* ---------- 贴士 ---------- */
+  .tips{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .tip{
+    display:flex;gap:14px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);
+  }
+  .tip .dot{
+    flex:0 0 auto;width:36px;height:36px;border-radius:11px;
+    background:linear-gradient(135deg,#e8f1ea,#d3e5da);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .tip h4{font-size:15.5px;margin-bottom:5px}
+  .tip p{font-size:13.8px;color:var(--ink-soft)}
+
+  /* ---------- 页脚 ---------- */
+  footer{
+    background:#241c13;color:rgba(255,255,255,.72);padding:52px 0 30px;margin-top:0;
+  }
+  .foot-top{display:flex;flex-wrap:wrap;gap:26px;justify-content:space-between;align-items:flex-start}
+  .foot-top h4{color:#fff;font-size:19px;margin-bottom:8px}
+  .foot-top p{font-size:13.5px;max-width:520px;color:rgba(255,255,255,.62)}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap;font-size:13.5px}
+  .foot-links a:hover{color:#ffc46b}
+  .foot-bot{
+    margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.14);
+    font-size:12.5px;color:rgba(255,255,255,.45);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+
+  /* ---------- 动效 ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:960px){
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .food-grid{grid-template-columns:repeat(2,1fr)}
+    .plans{grid-template-columns:1fr}
+    .intro,.food-top{grid-template-columns:1fr}
+    .food-top .pic{min-height:190px}
+  }
+  @media (max-width:640px){
+    section{padding:60px 0}
+    .cards,.food-grid,.tips,.facts{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}
+    .hero-in{padding:64px 22px 56px}
+    .nav-links a{padding:6px 9px;font-size:13px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 导航 ================= -->
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="#top">
+      <span class="seal">会</span>
+      <span>会泽文旅<small>HUIZE · YUNNAN</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#about">走进会泽</a>
+      <a href="#spots">旅游景点</a>
+      <a href="#food">特色美食</a>
+      <a href="#goods">土产非遗</a>
+      <a href="#plan">行程推荐</a>
+      <a href="#tips">出行贴士</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= 首屏 ================= -->
+<header class="hero" id="top">
+  <svg class="hero-bg" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3b2a1a"/>
+        <stop offset="46%" stop-color="#6b3d1d"/>
+        <stop offset="100%" stop-color="#a75f24"/>
+      </linearGradient>
+      <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#2b2018"/><stop offset="100%" stop-color="#1b130d"/>
+      </linearGradient>
+      <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3d2c1d"/><stop offset="100%" stop-color="#241a11"/>
+      </linearGradient>
+      <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#ffd79a" stop-opacity=".95"/>
+        <stop offset="100%" stop-color="#ffb04d" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <rect width="1440" height="620" fill="url(#sky)"/>
+    <circle cx="1080" cy="200" r="230" fill="url(#sun)"/>
+    <circle cx="1080" cy="200" r="46" fill="#ffd08a" opacity=".85"/>
+    <path d="M0 400 L210 300 L360 372 L520 268 L700 380 L880 300 L1060 392 L1230 320 L1440 406 L1440 620 L0 620 Z" fill="url(#m2)" opacity=".85"/>
+    <path d="M0 470 L180 404 L330 458 L500 390 L660 466 L840 402 L1010 470 L1180 416 L1440 486 L1440 620 L0 620 Z" fill="url(#m1)"/>
+    <g opacity=".28" fill="#ffe3bb">
+      <ellipse cx="250" cy="150" rx="130" ry="34"/>
+      <ellipse cx="340" cy="140" rx="86" ry="26"/>
+      <ellipse cx="820" cy="112" rx="104" ry="27"/>
+      <ellipse cx="900" cy="104" rx="66" ry="20"/>
+    </g>
+  </svg>
+  <div class="hero-in">
+    <span class="eyebrow">国家历史文化名城 · 云南省曲靖市</span>
+    <h1>会<span>泽</span></h1>
+    <div class="latin">HUIZE · 钱王之乡 · 铜都古城</div>
+    <p class="lead">乌蒙山深处的这座小城，因铜而兴、因会馆而盛。明清两代，天下铜料经此北上，商帮云集，留下百余座会馆庙宇；城外是三千多米的高山草甸与黑颈鹤起舞的高原湖泊。来会泽，走一段铜运古道，吃一碗热气腾腾的羊八碗。</p>
+    <div class="tags">
+      <span>会泽古城</span><span>大海草山</span><span>念湖观鹤</span>
+      <span>娜姑古镇</span><span>雨碌大地缝</span><span>羊八碗</span>
+    </div>
+    <div class="stats">
+      <div><b>2000+年</b><em>建城史 · 明清铜运中心</em></div>
+      <div><b>4017 米</b><em>最高海拔 · 立体气候</em></div>
+      <div><b>26 个民族</b><em>多元风情聚居地</em></div>
+      <div><b>1 座名城</b><em>国家历史文化名城</em></div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= 走进会泽 ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="kicker">About Huize</div>
+      <h2>一座藏在乌蒙山里的“钱王之乡”</h2>
+      <p>会泽县城海拔约 2100 米，最高海拔 4017 米，最低 695 米，一县之内跨越亚热带到寒温带，山水与人文都被压缩在很小的半径里。</p>
+    </div>
+    <div class="intro">
+      <div class="prose reveal">
+        <p>会泽地处云南东北部、曲靖市北部，与昆明、昭通相邻，自古是川滇通道上的咽喉要地。清代这里一度成为全国重要的铜矿开采与铸币原料集散地，铜运京城的“京运”起点之一即在此，故有“铜都”“钱王之乡”之称。</p>
+        <p>财富带来了建筑。当年各省客商在此修建同乡会馆，江西会馆、湖广会馆、贵州会馆等连片成群，形成了规模宏大、保存完整的明清会馆建筑群；青石板街道、斑驳老墙、飞檐戏台至今仍在使用，是一座“活着”的古城，而非翻新的布景。</p>
+        <p>走出县城，地貌立刻换一副面孔：东南是连绵起伏的大海草山，冬天可滑雪；大桥乡的念湖是黑颈鹤等高原候鸟的重要越冬地；娜姑古镇守着茶马古道与铜运古道的旧驿站；雨碌大地缝、以礼河大峡谷则把山体劈成幽深一线。</p>
+        <p>多民族聚居造就了会泽的餐桌——汉族的老八碗、回族风格的全羊席、彝族的火把节与海腔，加上高原阳光养出的石榴、苹果与苦荞，让这里同时适合“看”和“吃”。</p>
+      </div>
+      <div class="facts reveal">
+        <div class="fact"><b>国家历史文化名城</b><span>会泽古城，云南重要的历史文化名城之一</span></div>
+        <div class="fact"><b>明清会馆建筑群</b><span>江西会馆、湖广会馆、贵州会馆等百余处古建</span></div>
+        <div class="fact"><b>黑颈鹤越冬地</b><span>念湖一带为国家级自然保护区范围</span></div>
+        <div class="fact"><b>国家级非遗</b><span>会泽斑铜制作技艺 · 洞经音乐等民间文化</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 旅游景点 ================= -->
+<section id="spots" class="alt">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="kicker">Scenic Spots</div>
+      <h2>会泽必去的六个地方</h2>
+      <p>从古城街巷到高山草甸，从观鹤湖畔到峡谷一线天，一条路线串起会泽最精华的风景。</p>
+    </div>
+    <div class="cards">
+
+      <!-- 会泽古城 -->
+      <article class="card reveal">
+        <div class="banner">
+          <span class="no">01</span>
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f7d9a6"/><stop offset="100%" stop-color="#e7a960"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="240" fill="url(#g1)"/>
+            <circle cx="318" cy="62" r="30" fill="#fff5df" opacity=".85"/>
+            <path d="M0 150 L400 150 L400 240 L0 240 Z" fill="#c98c4e"/>
+            <path d="M0 150 L400 150 L400 162 L0 162 Z" fill="#a86f38"/>
+            <g fill="#8d5a2c">
+              <rect x="40" y="96" width="74" height="54"/>
+              <rect x="286" y="104" width="66" height="46"/>
+              <rect x="160" y="86" width="88" height="64"/>
+            </g>
+            <g fill="#6f4620">
+              <path d="M30 96 L77 70 L124 96 Z"/>
+              <path d="M150 86 L204 56 L258 86 Z"/>
+              <path d="M278 104 L319 82 L360 104 Z"/>
+            </g>
+            <g fill="#5c3a1a">
+              <rect x="192" y="120" width="24" height="30" rx="11"/>
+              <rect x="62" y="118" width="14" height="22" rx="6"/>
+              <rect x="86" y="118" width="14" height="22" rx="6"/>
+            </g>
+            <g fill="#fff3dc" opacity=".5">
+              <rect x="0" y="196" width="400" height="3"/>
+              <rect x="0" y="214" width="400" height="3"/>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3>会泽古城 · 明清会馆群</h3>
+          <div class="sub">HUIZE ANCIENT TOWN</div>
+          <p class="desc">青石板路被岁月磨得发亮，江西会馆的戏台、万寿宫的飞檐、唐继尧故居的院落藏在小巷深处。这里不是商业化的仿古街，而是原住民仍在生活的老城，转角就能遇到打铜、做凉粉的手艺人。</p>
+          <div class="meta"><span>必看：江西会馆</span><span>唐继尧故居</span><span>半日—一日</span></div>
+        </div>
+      </article>
+
+      <!-- 大海草山 -->
+      <article class="card reveal">
+        <div class="banner">
+          <span class="no">02</span>
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#a8d3ea"/><stop offset="60%" stop-color="#d8ecf5"/><stop offset="100%" stop-color="#eaf3e4"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="240" fill="url(#g2)"/>
+            <g fill="#ffffff" opacity=".92">
+              <ellipse cx="96" cy="56" rx="46" ry="17"/>
+              <ellipse cx="132" cy="46" rx="32" ry="13"/>
+              <ellipse cx="300" cy="82" rx="40" ry="14"/>
+              <ellipse cx="330" cy="74" rx="26" ry="10"/>
+            </g>
+            <path d="M0 158 C60 132 110 150 160 138 C230 122 268 146 330 132 C360 125 380 132 400 128 L400 240 L0 240 Z" fill="#7fb069"/>
+            <path d="M0 186 C70 164 130 184 200 170 C270 156 320 178 400 164 L400 240 L0 240 Z" fill="#5d9455"/>
+            <path d="M0 214 C90 196 160 214 250 202 C320 193 360 206 400 198 L400 240 L0 240 Z" fill="#457a44"/>
+            <g fill="#f6f1e3">
+              <ellipse cx="120" cy="176" rx="17" ry="10"/>
+              <ellipse cx="132" cy="168" rx="8" ry="7"/>
+              <rect x="106" y="182" width="4" height="11"/>
+              <rect x="116" y="182" width="4" height="11"/>
+              <rect x="128" y="181" width="4" height="12"/>
+              <rect x="136" y="181" width="4" height="12"/>
+            </g>
+            <g fill="#3d4f66">
+              <ellipse cx="252" cy="200" rx="15" ry="9"/>
+              <ellipse cx="263" cy="193" rx="7" ry="6"/>
+              <rect x="240" y="206" width="4" height="10"/>
+              <rect x="250" y="206" width="4" height="10"/>
+              <rect x="260" y="205" width="4" height="11"/>
+              <rect x="267" y="205" width="4" height="11"/>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3>大海草山</h3>
+          <div class="sub">高山草甸 · 东方新西兰</div>
+          <p class="desc">海拔三千米上下的连绵草甸，夏天满山绿色、牛羊在云影下吃草，秋天的草甸转为金黄，风一吹像起伏的海。冬天此处另有大海草山滑雪场，是南方少见的滑雪去处。山顶风大温差大，务必带外套。</p>
+          <div class="meta"><span>日出日落最佳</span><span>避暑胜地</span><span>冬季滑雪</span></div>
+        </div>
+      </article>
+
+      <!-- 念湖 -->
+      <article class="card reveal">
+        <div class="banner">
+          <span class="no">03</span>
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f2c894"/><stop offset="48%" stop-color="#e9d7bd"/><stop offset="100%" stop-color="#c9dbdc"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="240" fill="url(#g3)"/>
+            <circle cx="86" cy="106" r="24" fill="#ffd7a0" opacity=".9"/>
+            <g fill="#9db3b0" opacity=".7">
+              <path d="M0 132 L70 108 L140 130 L215 104 L290 128 L360 108 L400 122 L400 152 L0 152 Z"/>
+            </g>
+            <rect y="146" width="400" height="94" fill="#b9d1d3"/>
+            <rect y="146" width="400" height="6" fill="#e7f0ef" opacity=".8"/>
+            <g stroke="#ffffff" stroke-width="2" opacity=".55">
+              <line x1="20" y1="176" x2="120" y2="176"/>
+              <line x1="180" y1="196" x2="300" y2="196"/>
+              <line x1="60" y1="214" x2="200" y2="214"/>
+            </g>
+            <g fill="#f7f7f2">
+              <path d="M250 176 c6-14 20-20 30-14 c10 6 12 20 6 30 c-8 4-26 2-36-16 Z"/>
+              <path d="M292 166 c16-2 28 6 28 16 c0 10-12 16-26 14 c-10-8-12-22-2-30 Z"/>
+              <path d="M238 174 l-12-16 l6-2 l10 12 Z"/>
+              <path d="M286 198 l-4 12 l4 2 l6-12 Z"/>
+              <path d="M312 198 l2 12 l-4 1 l-4-12 Z"/>
+            </g>
+            <g fill="#1f2e29">
+              <path d="M282 178 c8-2 16 2 18 8 c-8 4-18 2-24-2 Z"/>
+              <path d="M268 174 l8-12 l4 2 l-6 12 Z"/>
+              <rect x="280" y="190" width="3" height="18"/>
+              <rect x="304" y="188" width="3" height="18"/>
+            </g>
+            <g stroke="#5f7a5a" stroke-width="2" opacity=".8">
+              <line x1="44" y1="240" x2="46" y2="196"/>
+              <line x1="56" y1="240" x2="54" y2="190"/>
+              <line x1="68" y1="240" x2="70" y2="200"/>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3>念湖 · 观黑颈鹤</h3>
+          <div class="sub">大桥乡 · 高原候鸟越冬地</div>
+          <p class="desc">名字里带着“念念不忘”。每年冬季，黑颈鹤等高原候鸟飞抵此地越冬；清晨薄雾未散时，鹤群掠过水面，是最动人的一幕。秋天湖边水杉转红，倒影成画。观鸟请保持距离，不投喂、不喧哗。</p>
+          <div class="meta"><span>11月—次年3月观鹤</span><span>秋季水杉</span><span>清晨薄雾</span></div>
+        </div>
+      </article>
+
+      <!-- 娜姑古镇 -->
+      <article class="card reveal">
+        <div class="banner">
+          <span class="no">04</span>
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#efe0c4"/><stop offset="100%" stop-color="#d9bf94"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="240" fill="url(#g4)"/>
+            <circle cx="200" cy="120" r="86" fill="#fff6e2" opacity=".45"/>
+            <g fill="#8a6a44">
+              <path d="M0 92 L92 60 L184 92 Z"/>
+              <path d="M216 92 L308 60 L400 92 Z"/>
+              <rect x="0" y="92" width="184" height="76"/>
+              <rect x="216" y="92" width="184" height="76"/>
+            </g>
+            <g fill="#5d452a">
+              <rect x="0" y="86" width="184" height="8"/>
+              <rect x="216" y="86" width="184" height="8"/>
+              <rect x="168" y="92" width="12" height="76"/>
+              <rect x="220" y="92" width="12" height="76"/>
+            </g>
+            <path d="M172 168 L228 168 L244 240 L156 240 Z" fill="#c9ab7d"/>
+            <g fill="#efe0c4">
+              <rect x="182" y="180" width="36" height="8"/>
+              <rect x="176" y="198" width="48" height="8"/>
+              <rect x="170" y="216" width="60" height="8"/>
+            </g>
+            <g fill="#4a3823">
+              <rect x="40" y="112" width="26" height="34" rx="3"/>
+              <rect x="96" y="112" width="26" height="34" rx="3"/>
+              <rect x="278" y="112" width="26" height="34" rx="3"/>
+              <rect x="334" y="112" width="26" height="34" rx="3"/>
+            </g>
+            <g fill="#7a5c38" opacity=".9">
+              <circle cx="152" cy="120" r="12"/>
+              <circle cx="248" cy="120" r="12"/>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3>娜姑古镇 · 白雾村</h3>
+          <div class="sub">茶马古道 · 铜运古道驿站</div>
+          <p class="desc">娜姑曾是铜运古道上的繁华驿站，白雾村至今保留着成片的老宅与窄巷——有的巷子只容一人通过，阳光从屋檐缝隙洒在石板上。来这里最好留出午餐时间，一份铜锅洋芋饭，锅巴香得让人停不下筷子。</p>
+          <div class="meta"><span>古村落摄影</span><span>铜锅洋芋饭</span><span>半日</span></div>
+        </div>
+      </article>
+
+      <!-- 雨碌大地缝 -->
+      <article class="card reveal">
+        <div class="banner">
+          <span class="no">05</span>
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g5" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#7fb4cd"/><stop offset="100%" stop-color="#2f5e63"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="240" fill="url(#g5)"/>
+            <path d="M0 0 L150 0 L176 92 L150 240 L0 240 Z" fill="#2a4238"/>
+            <path d="M400 0 L250 0 L224 92 L250 240 L400 240 Z" fill="#22362e"/>
+            <path d="M150 0 L250 0 L246 60 L224 92 L176 92 L154 60 Z" fill="#a9d6e5"/>
+            <path d="M0 0 L150 0 L168 74 L0 96 Z" fill="#3a5747" opacity=".7"/>
+            <path d="M400 0 L250 0 L232 74 L400 96 Z" fill="#31493c" opacity=".7"/>
+            <g fill="#cfe8dd" opacity=".55">
+              <ellipse cx="200" cy="150" rx="30" ry="58"/>
+              <ellipse cx="200" cy="204" rx="46" ry="40"/>
+            </g>
+            <path d="M186 240 C190 200 194 176 200 160 C206 176 210 200 214 240 Z" fill="#4c8b8f" opacity=".85"/>
+            <g stroke="#eaf7ff" stroke-width="2" opacity=".5">
+              <line x1="150" y1="70" x2="146" y2="120"/>
+              <line x1="250" y1="70" x2="254" y2="120"/>
+              <line x1="120" y1="120" x2="118" y2="180"/>
+              <line x1="282" y1="120" x2="286" y2="180"/>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3>雨碌大地缝</h3>
+          <div class="sub">峡谷一线天 · 探险体验</div>
+          <p class="desc">两山之间被撕开一道狭长裂口，窄处仅容侧身而过，抬头只见天光一线，谷内水声隆隆、岩壁滴水，清凉幽深。景区配套有玻璃漂流、观光车等项目，适合体力尚好的年轻游客，务必穿防滑徒步鞋。</p>
+          <div class="meta"><span>奇险幽深</span><span>建议穿徒步鞋</span><span>半日</span></div>
+        </div>
+      </article>
+
+      <!-- 以礼河 -->
+      <article class="card reveal">
+        <div class="banner">
+          <span class="no">06</span>
+          <svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <linearGradient id="g6" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#cfe4f2"/><stop offset="100%" stop-color="#eef6f2"/>
+              </linearGradient>
+            </defs>
+            <rect width="400" height="240" fill="url(#g6)"/>
+            <circle cx="322" cy="58" r="22" fill="#fff3d2"/>
+            <path d="M0 96 L86 46 L162 92 L238 40 L320 94 L400 62 L400 122 L0 122 Z" fill="#7f9aa8"/>
+            <path d="M0 122 L400 122 L400 240 L0 240 Z" fill="#5f9fc0"/>
+            <path d="M0 138 L400 138 L400 146 L0 146 Z" fill="#8ec2da" opacity=".7"/>
+            <g stroke="#e9f5fa" stroke-width="2.5" opacity=".6">
+              <line x1="40" y1="164" x2="150" y2="164"/>
+              <line x1="210" y1="186" x2="340" y2="186"/>
+              <line x1="90" y1="210" x2="230" y2="210"/>
+            </g>
+            <path d="M120 122 L104 240 L152 240 L136 122 Z" fill="#4b8bad" opacity=".55"/>
+            <path d="M0 122 L60 108 L110 126 L0 140 Z" fill="#3f7550"/>
+            <path d="M400 122 L340 106 L292 126 L400 142 Z" fill="#3f7550"/>
+            <g fill="#2e5c3f">
+              <circle cx="60" cy="102" r="14"/>
+              <circle cx="80" cy="108" r="11"/>
+              <circle cx="336" cy="100" r="13"/>
+              <circle cx="316" cy="108" r="10"/>
+            </g>
+            <g fill="#ffffff" opacity=".9">
+              <path d="M244 152 l16-8 l16 8 l-16 7 Z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="body">
+          <h3>以礼河大峡谷 · 毛家村水库</h3>
+          <div class="sub">碧水峡谷 · 环湖日落</div>
+          <p class="desc">以礼河在峡谷中奔流，两侧山体壁立，雾气扑面；毛家村水库水面开阔，环湖公路适合自驾或骑行。傍晚找一处岸边坐下，看太阳沉入山后，湖面由金色转为橘红再到淡粉——这是会泽最安静的收尾。</p>
+          <div class="meta"><span>环湖自驾</span><span>日落机位</span><span>虹鳟鱼</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= 特色美食 ================= -->
+<section id="food">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="kicker">Local Cuisine</div>
+      <h2>不吃这几样，算没到过会泽</h2>
+      <p>高原阳光、山地牧草与多民族饮食习惯，共同养出了会泽偏鲜、偏辣、重本味的餐桌风格。</p>
+    </div>
+
+    <div class="food-top reveal">
+      <div class="txt">
+        <div class="k">招牌 · 宴席大菜</div>
+        <h3>会泽羊八碗</h3>
+        <p>会泽山地放养的黑山羊，被本地厨师拆解成八道风味各异的菜，讲究的是同一只羊、八种做法、八种口感，是会泽人待客的最高规格。</p>
+        <ul>
+          <li><i></i><span>清汤羊肉——只用羊肉与山泉水慢炖，汤色清亮，鲜味全在汤里</span></li>
+          <li><i></i><span>粉蒸、凉片、红烧、爆炒羊肉——从软糯到干香，层层推进</span></li>
+          <li><i></i><span>羊杂、羊血、羊汤锅——从头到尾物尽其用，一点不浪费</span></li>
+        </ul>
+      </div>
+      <div class="pic">
+        <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <radialGradient id="p1" cx="50%" cy="42%" r="60%">
+              <stop offset="0%" stop-color="#8f5a24"/><stop offset="100%" stop-color="#3a2110"/>
+            </radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#p1)"/>
+          <ellipse cx="200" cy="196" rx="118" ry="40" fill="#2a1608" opacity=".75"/>
+          <circle cx="200" cy="168" r="74" fill="#f3e3c9"/>
+          <circle cx="200" cy="168" r="62" fill="#e6cfa8"/>
+          <circle cx="200" cy="168" r="50" fill="#c98a44"/>
+          <circle cx="200" cy="168" r="36" fill="#a8632c"/>
+          <g fill="#8c4a1f">
+            <ellipse cx="188" cy="156" rx="15" ry="10"/>
+            <ellipse cx="214" cy="170" rx="17" ry="11"/>
+            <ellipse cx="192" cy="186" rx="14" ry="9"/>
+            <ellipse cx="216" cy="150" rx="11" ry="7"/>
+          </g>
+          <g fill="#4f7d3a">
+            <ellipse cx="212" cy="182" rx="10" ry="5" transform="rotate(24 212 182)"/>
+            <ellipse cx="178" cy="172" rx="9" ry="4" transform="rotate(-32 178 172)"/>
+          </g>
+          <g fill="#d94f36">
+            <circle cx="206" cy="196" r="4"/>
+            <circle cx="222" cy="186" r="3"/>
+          </g>
+          <g stroke="#f6e7cd" stroke-width="4" stroke-linecap="round" opacity=".85">
+            <path d="M136 232 C160 216 176 226 182 214"/>
+            <path d="M264 232 C240 216 224 226 218 214"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <div class="food-grid">
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <path d="M3 11h18a9 9 0 0 1-9 9 9 9 0 0 1-9-9Z"/><path d="M8 7c0-2 2-2 2-4"/><path d="M13 7c0-2 2-2 2-4"/>
+          </svg>
+        </div>
+        <h3>稀豆粉</h3>
+        <span class="tag">早餐灵魂</span>
+        <p>豌豆磨浆慢熬成糊，滑而带豆香。浇上辣油、花椒油，撒一把葱花与花生，配油条或烤饵块泡进去。会泽人的一天，常从这一碗开始。</p>
+      </article>
+
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/>
+          </svg>
+        </div>
+        <h3>荞麦粑粑</h3>
+        <span class="tag">乌蒙苦荞</span>
+        <p>高原苦荞磨粉调糊，在鏊子上炕到两面焦黄，外皮微脆、内里绵软，带一丝回甘的苦香。可蘸蜂蜜、豆豉辣酱，或夹上咸菜当干粮。</p>
+      </article>
+
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <path d="M4 9h16l-1.6 9.2A2 2 0 0 1 16.4 20H7.6a2 2 0 0 1-2-1.8L4 9Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/>
+          </svg>
+        </div>
+        <h3>白雾凉粉</h3>
+        <span class="tag">娜姑风味</span>
+        <p>娜姑白雾村的豌豆凉粉，切条后浇酸辣汁，滑嫩爽口。走古道走出一身汗，来一碗最解乏。</p>
+      </article>
+
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <ellipse cx="12" cy="13" rx="7" ry="9"/><path d="M9 6l-1-3M15 6l1-3"/>
+          </svg>
+        </div>
+        <h3>洋芋西施</h3>
+        <span class="tag">会泽大洋芋</span>
+        <p>会泽洋芋个头大、淀粉足、沙而面。炭火烤到外皮起壳，掰开冒白气，抹上糊辣椒蘸水，简单却上瘾；也有切块炒、做成洋芋粉的吃法。</p>
+      </article>
+
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <path d="M3 14c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M5 9c2-2 4-2 6 0s4 2 6 0"/><path d="M8 19h8"/>
+          </svg>
+        </div>
+        <h3>虹鳟鱼全席</h3>
+        <span class="tag">冷水资源</span>
+        <p>以礼河的低温活水养出虹鳟，肉质紧实。生鱼片、清蒸、香煎、红烧齐上桌，一鱼多吃，是会泽的另一种宴客方式。</p>
+      </article>
+
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <rect x="6" y="4" width="12" height="16" rx="3"/><path d="M12 4V2M9 10h6M9 14h6"/>
+          </svg>
+        </div>
+        <h3>猪肉老八碗</h3>
+        <span class="tag">传统宴席</span>
+        <p>会泽汉族传统酒席的经典组合，八道菜以大碗上桌，粉蒸肉、酥肉、炖菜等在列，是婚丧嫁娶与年节里最有仪式感的一桌。</p>
+      </article>
+
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="13" r="8"/><path d="M12 5c1-2 3-3 5-3"/>
+          </svg>
+        </div>
+        <h3>盐水石榴</h3>
+        <span class="tag">国家地理标志</span>
+        <p>会泽盐水石榴是当地的地理标志农产品，籽粒晶莹如玛瑙，汁水足、甜中带微酸。中秋前后上市，一颗能吃到满手红汁。</p>
+      </article>
+
+      <article class="food reveal">
+        <div class="ico">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c2601f" stroke-width="1.8" stroke-linecap="round">
+            <path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11Z"/>
+          </svg>
+        </div>
+        <h3>乐业辣椒 · 灰豆腐</h3>
+        <span class="tag">下饭双绝</span>
+        <p>乐业产的辣椒香辣醇厚，做成糊辣椒蘸水是本地餐桌标配；乐业灰豆腐经草木灰水点制，煮汤、炒肉都带着独特的碱香。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 土产与非遗 ================= -->
+<section id="goods" class="alt">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="kicker">Products &amp; Heritage</div>
+      <h2>能带走的会泽</h2>
+      <p>海拔落差带来的立体气候，让这里的水果与杂粮格外有味道；而斑铜与洞经音乐，则是会泽留给时间的礼物。</p>
+    </div>
+    <div class="chips reveal">
+      <div class="chip"><i></i><span><b>盐水石榴</b><br><small>地理标志 · 中秋应季</small></span></div>
+      <div class="chip"><i></i><span><b>待补草莓</b><br><small>冬季鲜果 · 甜度高</small></span></div>
+      <div class="chip"><i></i><span><b>水城宝珠梨</b><br><small>老牌名果 · 汁多渣少</small></span></div>
+      <div class="chip"><i></i><span><b>乐业辣椒</b><br><small>香辣醇厚 · 蘸水之王</small></span></div>
+      <div class="chip"><i></i><span><b>乐业灰豆腐</b><br><small>草木灰点制 · 地方特色</small></span></div>
+      <div class="chip"><i></i><span><b>会泽洋芋</b><br><small>高山种植 · 沙面香糯</small></span></div>
+      <div class="chip"><i></i><span><b>苦荞 · 燕麦</b><br><small>乌蒙高寒杂粮</small></span></div>
+      <div class="chip"><i></i><span><b>会泽斑铜</b><br><small>国家级非遗技艺 · 手作铜器</small></span></div>
+      <div class="chip"><i></i><span><b>洞经音乐</b><br><small>省级非遗 · 古乐遗韵</small></span></div>
+      <div class="chip"><i></i><span><b>彝族海腔 · 小唱灯</b><br><small>民间歌乐与地方小戏</small></span></div>
+      <div class="chip"><i></i><span><b>民族节庆</b><br><small>火把节 · 耍花山节 · 耍山节</small></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 行程推荐 ================= -->
+<section id="plan">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="kicker">Itinerary</div>
+      <h2>三条路线，按时间挑一条走</h2>
+      <p>会泽景点彼此距离不近，建议以县城古城为大本营，自驾或包车前往周边。</p>
+    </div>
+    <div class="plans">
+
+      <article class="plan reveal">
+        <div class="days">ONE DAY</div>
+        <h3>古城 + 草山一日</h3>
+        <div class="step"><em>上午</em><p><b>会泽古城</b>：江西会馆看戏台与木雕，顺路逛万寿宫、福禄寺，再去三道巷的<b>唐继尧故居</b>。</p></div>
+        <div class="step"><em>中午</em><p>县城吃一顿<b>羊八碗</b>或老八碗，配一碗稀豆粉开端。</p></div>
+        <div class="step"><em>下午</em><p>驱车前往<b>大海草山</b>，草甸徒步、看牛羊，等一场云海日落。</p></div>
+        <div class="step"><em>晚上</em><p>回县城，古城夜市来一份烤洋芋收尾。</p></div>
+      </article>
+
+      <article class="plan reveal">
+        <div class="days">TWO DAYS</div>
+        <h3>古城 · 观鹤 · 古镇</h3>
+        <div class="step"><em>D1</em><p>上午逛<b>会泽古城</b>与会馆群，中午尝<b>稀豆粉 + 荞麦粑粑</b>；下午上<b>大海草山</b>，宿县城或大桥乡。</p></div>
+        <div class="step"><em>D2 清晨</em><p>天亮前抵达<b>念湖</b>，看晨雾中的黑颈鹤群（冬季最佳）。</p></div>
+        <div class="step"><em>D2 中午</em><p>转往<b>娜姑古镇白雾村</b>，走窄巷、看老宅，午餐<b>铜锅洋芋饭</b>。</p></div>
+        <div class="step"><em>D2 下午</em><p>返程，或加停<b>以礼河大峡谷 · 毛家村水库</b>看日落。</p></div>
+      </article>
+
+      <article class="plan reveal">
+        <div class="days">THREE DAYS</div>
+        <h3>深度乌蒙三日</h3>
+        <div class="step"><em>D1</em><p>古城深度：会馆建筑群、斑铜作坊、老巷市井，慢慢走一整天。</p></div>
+        <div class="step"><em>D2</em><p><b>大海草山</b>全日：日出、草甸徒步、午后云海，晚宿山里看星空。</p></div>
+        <div class="step"><em>D3</em><p><b>念湖</b>晨雾观鹤 → <b>娜姑白雾村</b> → <b>雨碌大地缝</b>探一线天，傍晚返程。</p></div>
+        <div class="step"><em>加餐</em><p>时间充裕可加<b>以礼河大峡谷</b>徒步与虹鳟鱼全席。</p></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= 出行贴士 ================= -->
+<section id="tips" class="alt">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="kicker">Travel Tips</div>
+      <h2>出发前先看这几条</h2>
+    </div>
+    <div class="tips">
+      <div class="tip reveal">
+        <div class="dot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c6b4f" stroke-width="1.9" stroke-linecap="round">
+            <path d="M4 15V7h11l5 8"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/>
+          </svg>
+        </div>
+        <div><h4>怎么去</h4><p>会泽属曲靖市，可从昆明或曲靖自驾前往（走高速约需数小时），也可乘长途班车抵达县城。县内景点分散，推荐自驾或包车。</p></div>
+      </div>
+      <div class="tip reveal">
+        <div class="dot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c6b4f" stroke-width="1.9" stroke-linecap="round">
+            <path d="M12 3l9 18H3Z"/>
+          </svg>
+        </div>
+        <div><h4>海拔与天气</h4><p>县城海拔约 2100 米，大海草山在 3000 米以上。山上风大、温差大，夏季也要带外套；高原紫外线强，防晒霜、帽子、墨镜必备。</p></div>
+      </div>
+      <div class="tip reveal">
+        <div class="dot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c6b4f" stroke-width="1.9" stroke-linecap="round">
+            <rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>
+          </svg>
+        </div>
+        <div><h4>最佳季节</h4><p>5—10 月草山最绿、气候凉爽，适合避暑；11 月—次年 3 月到念湖观鹤；秋季湖边水杉转红；冬季草山可滑雪。</p></div>
+      </div>
+      <div class="tip reveal">
+        <div class="dot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c6b4f" stroke-width="1.9" stroke-linecap="round">
+            <rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="4"/>
+          </svg>
+        </div>
+        <div><h4>拍照机位</h4><p>念湖日出前的晨雾与鹤群、大海草山的云海日落、古城会馆的飞檐剪影、白雾村窄巷的斜射光，都是出片率极高的场景。</p></div>
+      </div>
+      <div class="tip reveal">
+        <div class="dot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c6b4f" stroke-width="1.9" stroke-linecap="round">
+            <path d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>
+          </svg>
+        </div>
+        <div><h4>文明观鸟</h4><p>念湖一带是候鸟越冬地。请与鸟群保持距离，不投喂、不驱赶、不喧哗，无人机飞行需遵守保护区与当地管理规定。</p></div>
+      </div>
+      <div class="tip reveal">
+        <div class="dot">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2c6b4f" stroke-width="1.9" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h10"/>
+          </svg>
+        </div>
+        <div><h4>吃与带</h4><p>羊八碗份量足，两三人点一份即可；稀豆粉宜早餐。返程可带盐水石榴、乐业辣椒、苦荞制品，或一件会泽斑铜。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 页脚 ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <h4>会泽，值得专门来一趟</h4>
+        <p>从明清会馆的飞檐，到三千公尺草甸上的风，再到湖畔起舞的黑颈鹤——这座乌蒙山城的安静与丰厚，只有亲自站上去才知道。</p>
+      </div>
+      <div class="foot-links">
+        <a href="#about">走进会泽</a>
+        <a href="#spots">旅游景点</a>
+        <a href="#food">特色美食</a>
+        <a href="#goods">土产非遗</a>
+        <a href="#plan">行程推荐</a>
+        <a href="#tips">出行贴士</a>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <span>会泽文旅 · 旅游宣传页（内容整理自公开资料，出行前请以官方最新公告为准）</span>
+      <span>云南 · 曲靖 · 会泽</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+  var sections = links.map(function(a){
+    return document.querySelector(a.getAttribute('href'));
+  }).filter(Boolean);
+
+  // 平滑滚动（对不支持 scroll-behavior 的浏览器生效）
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var t = document.querySelector(a.getAttribute('href'));
+      if(!t) return;
+      e.preventDefault();
+      var top = t.getBoundingClientRect().top + window.pageYOffset - 58;
+      window.scrollTo({top: top, behavior: 'smooth'});
+      history.replaceState(null, '', a.getAttribute('href'));
+    });
+  });
+
+  // 滚动高亮当前栏目
+  function sync(){
+    var y = window.pageYOffset + 120;
+    var idx = -1;
+    sections.forEach(function(s, i){ if(s.offsetTop <= y) idx = i; });
+    links.forEach(function(a, i){ a.classList.toggle('on', i === idx && idx > -1); });
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function(){ sync(); ticking = false; });
+  }, {passive:true});
+  sync();
+
+  // 进入视口淡入
+  var items = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold: 0.12, rootMargin: '0px 0px -40px 0px'});
+    items.forEach(function(el, i){
+      el.style.transitionDelay = (i % 4) * 70 + 'ms';
+      io.observe(el);
+    });
+  } else {
+    items.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>

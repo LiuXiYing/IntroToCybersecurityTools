@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>猪猪侠 GG Bond · 超级棒棒糖英雄档案</title>
+<meta name="description" content="猪猪侠（GG Bond）主题站：角色档案、变身形态、系列作品时间线与经典台词。">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='54' r='34' fill='%23ff8fb1'/><circle cx='36' cy='46' r='5' fill='%23222'/><circle cx='64' cy='46' r='5' fill='%23222'/><ellipse cx='50' cy='62' rx='13' ry='10' fill='%23ffc24b'/><circle cx='38' cy='38' r='9' fill='%23ff6f91'/><circle cx='62' cy='38' r='9' fill='%23ff6f91'/></svg>">
+<style>
+  :root{
+    --pink:#ff6f91;
+    --pink-2:#ff8fb1;
+    --pink-soft:#ffe3ec;
+    --yellow:#ffc24b;
+    --yellow-soft:#fff2d1;
+    --orange:#ff8a4c;
+    --mint:#3fd0c9;
+    --blue:#5aa9ff;
+    --violet:#9b7bff;
+    --ink:#2b2033;
+    --ink-soft:#6b6172;
+    --paper:#fffaf5;
+    --card:#ffffff;
+    --line:#f0e3e8;
+    --shadow:0 18px 40px -18px rgba(180,90,120,.35);
+    --radius:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  .grad-text{background:linear-gradient(100deg,var(--pink),var(--orange) 45%,var(--yellow));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:60;
+    backdrop-filter:blur(14px);
+    background:rgba(255,250,245,.82);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.3px}
+  .brand svg{width:34px;height:34px;filter:drop-shadow(0 4px 8px rgba(255,111,145,.35))}
+  .brand b{font-size:17px}
+  .brand span{font-size:12px;color:var(--ink-soft);font-weight:600}
+  .nav-links{display:flex;gap:6px;align-items:center}
+  .nav-links a{
+    font-size:14px;font-weight:600;color:var(--ink-soft);
+    padding:8px 13px;border-radius:999px;transition:.25s;
+  }
+  .nav-links a:hover{background:var(--pink-soft);color:var(--pink)}
+  .nav-cta{
+    background:linear-gradient(120deg,var(--pink),var(--orange));
+    color:#fff!important;box-shadow:0 8px 18px -8px rgba(255,111,145,.9);
+  }
+  .nav-cta:hover{opacity:.92;background:linear-gradient(120deg,var(--pink),var(--orange))!important;color:#fff!important}
+  @media(max-width:760px){.nav-links a:not(.nav-cta){display:none}}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;padding:76px 0 90px;overflow:hidden}
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:-2;
+    background:
+      radial-gradient(60% 55% at 15% 8%,rgba(255,143,177,.55),transparent 60%),
+      radial-gradient(50% 50% at 88% 12%,rgba(255,194,75,.5),transparent 62%),
+      radial-gradient(60% 60% at 70% 95%,rgba(63,208,201,.32),transparent 65%),
+      linear-gradient(180deg,#fff6f0,#fffaf5);
+  }
+  .bubbles{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+  .bubbles i{position:absolute;font-style:normal;font-size:30px;opacity:.5;animation:float 9s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-22px) rotate(6deg)}}
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:30px}}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#fff;border:1px solid var(--line);
+    padding:7px 15px;border-radius:999px;font-size:13px;font-weight:700;color:var(--pink);
+    box-shadow:0 8px 20px -14px rgba(180,90,120,.6);margin-bottom:20px;
+  }
+  .pill .dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 4px rgba(63,208,201,.22)}
+  h1.title{font-size:clamp(42px,7vw,74px);line-height:1.02;font-weight:900;letter-spacing:-1.5px}
+  h1.title small{display:block;font-size:clamp(16px,2.4vw,22px);font-weight:700;color:var(--ink-soft);letter-spacing:3px;margin-top:14px}
+  .lede{margin:22px 0 30px;font-size:17px;color:var(--ink-soft);max-width:520px}
+  .btns{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:14px 26px;border-radius:999px;font-weight:800;font-size:15px;
+    border:none;cursor:pointer;transition:.25s;
+  }
+  .btn-main{background:linear-gradient(120deg,var(--pink),var(--orange));color:#fff;box-shadow:0 16px 30px -14px rgba(255,111,145,.95)}
+  .btn-main:hover{transform:translateY(-3px);box-shadow:0 22px 36px -14px rgba(255,111,145,.95)}
+  .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);box-shadow:0 10px 24px -18px rgba(0,0,0,.4)}
+  .btn-ghost:hover{border-color:var(--pink);color:var(--pink);transform:translateY(-3px)}
+
+  .hero-art{position:relative;display:flex;justify-content:center}
+  .pig-card{
+    width:min(340px,88vw);aspect-ratio:1/1;border-radius:34px;
+    background:linear-gradient(160deg,#fff,#fff3f7);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    display:flex;align-items:center;justify-content:center;
+    animation:bob 5s ease-in-out infinite;
+    position:relative;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  .pig-card svg{width:70%}
+  .tag{
+    position:absolute;background:#fff;border:1px solid var(--line);border-radius:14px;
+    padding:8px 13px;font-size:12.5px;font-weight:800;box-shadow:0 14px 26px -16px rgba(0,0,0,.4);
+  }
+  .tag.t1{top:6%;left:-4%;color:var(--pink);animation:bob 6s ease-in-out infinite}
+  .tag.t2{bottom:10%;right:-6%;color:var(--orange);animation:bob 7s ease-in-out infinite .6s}
+  .tag.t3{bottom:-2%;left:6%;color:var(--mint);animation:bob 6.5s ease-in-out infinite .3s}
+
+  /* ---------- Stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:54px}
+  @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;text-align:center;box-shadow:0 16px 30px -26px rgba(0,0,0,.5)}
+  .stat b{display:block;font-size:30px;font-weight:900;letter-spacing:-1px}
+  .stat span{font-size:13px;color:var(--ink-soft);font-weight:600}
+
+  /* ---------- Section ---------- */
+  section{padding:78px 0}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 46px}
+  .sec-head .kicker{font-size:13px;font-weight:800;letter-spacing:2.5px;color:var(--pink);text-transform:uppercase}
+  .sec-head h2{font-size:clamp(28px,4.4vw,40px);font-weight:900;letter-spacing:-1px;margin:10px 0 12px}
+  .sec-head p{color:var(--ink-soft);font-size:15.5px}
+
+  /* ---------- About ---------- */
+  .about{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+  @media(max-width:900px){.about{grid-template-columns:1fr}}
+  .about-text p{color:var(--ink-soft);margin-bottom:16px;font-size:16px}
+  .about-text p strong{color:var(--ink)}
+  .badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+  .badge{background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:13px;font-weight:700;color:var(--ink-soft)}
+  .badge b{color:var(--pink)}
+  .quote-card{
+    background:linear-gradient(150deg,#fff,#fff6ef);
+    border:1px solid var(--line);border-radius:var(--radius);padding:30px;
+    box-shadow:var(--shadow);position:relative;overflow:hidden;
+  }
+  .quote-card .mark{font-size:74px;line-height:.6;color:var(--pink-2);font-weight:900;font-family:Georgia,serif}
+  .quote-card blockquote{font-size:19px;font-weight:800;margin:8px 0 16px;letter-spacing:.4px}
+  .quote-card cite{font-size:13.5px;color:var(--ink-soft);font-style:normal;font-weight:700}
+
+  /* ---------- Characters ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  .char{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 22px;box-shadow:0 18px 34px -28px rgba(0,0,0,.55);
+    transition:.3s;position:relative;overflow:hidden;
+  }
+  .char::after{content:"";position:absolute;top:-40px;right:-40px;width:110px;height:110px;border-radius:50%;opacity:.14;background:var(--c,var(--pink))}
+  .char:hover{transform:translateY(-7px);box-shadow:0 26px 44px -24px rgba(180,90,120,.55);border-color:var(--c,var(--pink))}
+  .avatar{
+    width:62px;height:62px;border-radius:19px;display:flex;align-items:center;justify-content:center;
+    font-size:30px;margin-bottom:16px;background:var(--cbg,var(--pink-soft));
+  }
+  .char h3{font-size:19px;font-weight:900;margin-bottom:4px}
+  .char .role{font-size:12.5px;font-weight:800;color:var(--c,var(--pink));letter-spacing:.6px;margin-bottom:10px}
+  .char p{font-size:14.5px;color:var(--ink-soft)}
+  .char .meta{margin-top:14px;display:flex;flex-wrap:wrap;gap:7px}
+  .char .meta span{font-size:12px;font-weight:700;background:#f7f3f5;border-radius:8px;padding:4px 9px;color:var(--ink-soft)}
+
+  /* ---------- Powers ---------- */
+  .powers{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+  @media(max-width:900px){.powers{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:560px){.powers{grid-template-columns:repeat(2,1fr)}}
+  .power{
+    text-align:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 12px;
+    transition:.3s;box-shadow:0 16px 30px -28px rgba(0,0,0,.6);
+  }
+  .power:hover{transform:translateY(-6px) scale(1.02);border-color:var(--yellow)}
+  .power .ico{font-size:34px;display:block;margin-bottom:10px}
+  .power b{display:block;font-size:15px;font-weight:900}
+  .power small{font-size:12px;color:var(--ink-soft);font-weight:600}
+
+  /* ---------- Timeline ---------- */
+  .timeline{position:relative;max-width:760px;margin:0 auto;padding-left:34px}
+  .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:3px;border-radius:3px;background:linear-gradient(var(--pink),var(--yellow),var(--mint))}
+  .tl-item{position:relative;padding:0 0 30px 4px}
+  .tl-item::before{content:"";position:absolute;left:-32px;top:6px;width:15px;height:15px;border-radius:50%;background:#fff;border:4px solid var(--pink);box-shadow:0 0 0 4px var(--pink-soft)}
+  .tl-item .yr{font-size:13px;font-weight:900;color:var(--pink);letter-spacing:1px}
+  .tl-item h4{font-size:17px;font-weight:900;margin:3px 0 5px}
+  .tl-item p{font-size:14.5px;color:var(--ink-soft)}
+
+  /* ---------- Footer ---------- */
+  footer{background:#2b2033;color:#e9dfe6;padding:52px 0 34px;margin-top:20px}
+  .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+  footer .brand b{color:#fff}
+  footer .brand span{color:#b9aab6}
+  footer p{font-size:13px;color:#b9aab6;max-width:420px;margin-top:14px;line-height:1.75}
+  footer .flinks{display:flex;gap:18px;flex-wrap:wrap}
+  footer .flinks a{font-size:13.5px;color:#e9dfe6;font-weight:600;opacity:.85}
+  footer .flinks a:hover{opacity:1;color:var(--pink-2)}
+  .copyright{margin-top:32px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);font-size:12.5px;color:#8d8090;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.3,1)}
+  .reveal.in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="54" r="34" fill="#ff8fb1"/>
+        <circle cx="36" cy="38" r="10" fill="#ff6f91"/><circle cx="64" cy="38" r="10" fill="#ff6f91"/>
+        <circle cx="37" cy="46" r="5" fill="#2b2033"/><circle cx="63" cy="46" r="5" fill="#2b2033"/>
+        <ellipse cx="50" cy="62" rx="14" ry="11" fill="#ffc24b"/>
+        <circle cx="45" cy="61" r="2.6" fill="#2b2033"/><circle cx="55" cy="61" r="2.6" fill="#2b2033"/>
+      </svg>
+      <span style="display:flex;flex-direction:column;line-height:1.05">
+        <b>猪猪侠</b><span>GG BOND</span>
+      </span>
+    </a>
+    <nav class="nav-links">
+      <a href="#about">关于</a>
+      <a href="#chars">角色</a>
+      <a href="#power">变身</a>
+      <a href="#series">系列</a>
+      <a class="nav-cta" href="#chars">进入档案</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="bubbles" id="bubbles"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <span class="pill"><span class="dot"></span>从 2005 年跑到现在的小英雄</span>
+        <h1 class="title">
+          我是<span class="grad-text">猪猪侠</span>
+          <small>GG BOND · 超级棒棒糖英雄</small>
+        </h1>
+        <p class="lede">
+          一只出生在边境村镇、爱吃零食、有点自恋又有点懒的小猪，
+          却总在关键时刻挺身而出。名叫 <b>GG Bond</b>——「GG」来自粤语「猪」的发音。
+        </p>
+        <div class="btns">
+          <a class="btn btn-main" href="#chars">认识角色 →</a>
+          <a class="btn btn-ghost" href="#series">看看系列作品</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="pig-card">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <defs>
+              <linearGradient id="pg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffa6c1"/><stop offset="1" stop-color="#ff6f91"/>
+              </linearGradient>
+              <linearGradient id="pg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffd77a"/><stop offset="1" stop-color="#ffb52e"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="100" cy="196" rx="66" ry="10" fill="#ffd9e4"/>
+            <circle cx="66" cy="52" r="20" fill="url(#pg)"/>
+            <circle cx="134" cy="52" r="20" fill="url(#pg)"/>
+            <circle cx="100" cy="106" r="70" fill="url(#pg)"/>
+            <ellipse cx="100" cy="134" rx="34" ry="26" fill="url(#pg2)"/>
+            <circle cx="88" cy="130" r="5.6" fill="#7a4a12"/><circle cx="112" cy="130" r="5.6" fill="#7a4a12"/>
+            <circle cx="74" cy="88" r="15" fill="#fff"/><circle cx="126" cy="88" r="15" fill="#fff"/>
+            <circle cx="78" cy="90" r="8" fill="#2b2033"/><circle cx="122" cy="90" r="8" fill="#2b2033"/>
+            <circle cx="81" cy="87" r="3" fill="#fff"/><circle cx="125" cy="87" r="3" fill="#fff"/>
+            <ellipse cx="52" cy="112" rx="12" ry="8" fill="#ff9ab8" opacity=".85"/>
+            <ellipse cx="148" cy="112" rx="12" ry="8" fill="#ff9ab8" opacity=".85"/>
+          </svg>
+        </div>
+        <span class="tag t1">🍭 超级棒棒糖</span>
+        <span class="tag t2">🔥 降龙十巴掌</span>
+        <span class="tag t3">💪 变身英雄</span>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="stats reveal">
+        <div class="stat"><b class="grad-text">2005</b><span>首播年份</span></div>
+        <div class="stat"><b class="grad-text">17+</b><span>系列季数</span></div>
+        <div class="stat"><b class="grad-text">8</b><span>主角年龄（岁）</span></div>
+        <div class="stat"><b class="grad-text">3D</b><span>全三维制作</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">About the IP</div>
+        <h2>一只猪，二十年</h2>
+        <p>《猪猪侠》是由广东咏声动漫打造的大型全 3D 卡通系列片。自 2005 年创作至今，仍是国产动画里最长寿的 IP 之一。</p>
+      </div>
+      <div class="about">
+        <div class="about-text reveal">
+          <p>故事的主人公是一个出生于边境村镇、生活安逸的少年。他<strong>调皮、乐观、富有好奇心</strong>，最大的爱好是打抱不平和吃零食。</p>
+          <p>他的癖好很特别——<strong>零食能启发思维</strong>。每次遇到阻碍，他都会掏出一件零食，帮自己渡过难关。而最具代表性的道具，是那颗能让体力瞬间拉满的<strong>超级棒棒糖</strong>。</p>
+          <p>设定上，他也叫 <strong>GG Bond</strong>，口头禅是「<strong>我就是猪猪侠！</strong>」，还有那句带点自恋的「何必呢？何必逼我出手呢？」。</p>
+          <div class="badges">
+            <span class="badge">出品：<b>广东咏声动漫</b></span>
+            <span class="badge">类型：<b>冒险 / 励志 / 英雄 / 搞笑</b></span>
+            <span class="badge">语言：<b>简体中文</b></span>
+            <span class="badge">题材：<b>体育竞技 · 科技探索</b></span>
+          </div>
+        </div>
+        <div class="quote-card reveal">
+          <div class="mark">&#8220;</div>
+          <blockquote>我是 Bond，GG Bond。<br>我就是猪猪侠！</blockquote>
+          <cite>—— 猪猪侠经典自我介绍</cite>
+          <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+            <span class="badge">生日：10 月 5 日</span>
+            <span class="badge">星座：天秤座</span>
+            <span class="badge">武器：猪猪开天宝剑</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHARACTERS -->
+  <section id="chars" style="background:linear-gradient(180deg,#fffaf5,#fff5f8,#fffaf5)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">Character Files</div>
+        <h2>角色档案</h2>
+        <p>一支八岁小队，各有各的毛病，也各有各的绝活。</p>
+      </div>
+      <div class="grid" id="charGrid"></div>
+    </div>
+  </section>
+
+  <!-- POWERS -->
+  <section id="power">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">Transformations</div>
+        <h2>变身形态</h2>
+        <p>不同系列里有不同设定。进入战斗形态后，五灵之力各显神通。</p>
+      </div>
+      <div class="powers reveal">
+        <div class="power"><span class="ico">🐯</span><b>铁拳虎</b><small>猪猪侠 · 力量</small></div>
+        <div class="power"><span class="ico">🦅</span><b>火焰鹤</b><small>菲菲 · 速度</small></div>
+        <div class="power"><span class="ico">🦌</span><b>冰封鹿</b><small>小呆呆 · 控制</small></div>
+        <div class="power"><span class="ico">🐻</span><b>石甲熊</b><small>超人强 · 防御</small></div>
+        <div class="power"><span class="ico">🐒</span><b>神木猿</b><small>波比 · 支援</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERIES -->
+  <section id="series" style="background:linear-gradient(180deg,#fffaf5,#fff6f0)">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="kicker">Timeline</div>
+        <h2>系列作品·关键节点</h2>
+        <p>从魔法智慧球到未来城，再到超星五灵侠，故事一直在往前跑。</p>
+      </div>
+      <div class="timeline" id="timeline"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="brand">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <circle cx="50" cy="54" r="34" fill="#ff8fb1"/>
+            <circle cx="36" cy="38" r="10" fill="#ff6f91"/><circle cx="64" cy="38" r="10" fill="#ff6f91"/>
+            <circle cx="37" cy="46" r="5" fill="#2b2033"/><circle cx="63" cy="46" r="5" fill="#2b2033"/>
+            <ellipse cx="50" cy="62" rx="14" ry="11" fill="#ffc24b"/>
+          </svg>
+          <span style="display:flex;flex-direction:column;line-height:1.05"><b>猪猪侠</b><span>GG BOND</span></span>
+        </div>
+        <p>本站为猪猪侠（GG Bond）主题的信息展示页面，内容整理自公开百科与作品资料，仅用于展示与交流。《猪猪侠》相关版权归其权利方所有。</p>
+      </div>
+      <div class="flinks">
+        <a href="#about">关于</a>
+        <a href="#chars">角色</a>
+        <a href="#power">变身</a>
+        <a href="#series">系列</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <span>© 2026 猪猪侠主题站 · 由 WorkBuddy 生成</span>
+      <span>超级棒棒糖，随时补充体力 🍭</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* floating bubbles */
+  (function(){
+    const box = document.getElementById('bubbles');
+    const emojis = ['🍭','⭐','🐷','💫','🍬','✨','🥕','🏆','⚡','🎈'];
+    for(let i=0;i<14;i++){
+      const s = document.createElement('i');
+      s.textContent = emojis[i % emojis.length];
+      s.style.left = (Math.random()*96) + '%';
+      s.style.top = (Math.random()*92) + '%';
+      s.style.animationDelay = (Math.random()*6) + 's';
+      s.style.animationDuration = (7 + Math.random()*6) + 's';
+      s.style.fontSize = (18 + Math.random()*20) + 'px';
+      box.appendChild(s);
+    }
+  })();
+
+  /* characters */
+  const chars = [
+    {n:'猪猪侠', e:'🐷', r:'主角 · GG Bond', c:'#ff6f91', bg:'#ffe3ec',
+     d:'调皮乐观、好奇心爆棚的小英雄。爱吃零食，靠零食启发思维；关键时刻总能挺身而出。',
+     m:['年龄 8 岁','生日 10/5','口头禅：我就是猪猪侠！']},
+    {n:'菲菲', e:'🎀', r:'学霸少女', c:'#ff5c8a', bg:'#ffe0ea',
+     d:'学识渊博、表面少年老成的少女，团队里的人肉字典。力气大得能轻松捣毁一面墙。',
+     m:['年龄 8 岁','生日 2/8','变身：火焰鹤']},
+    {n:'小呆呆', e:'😴', r:'大智若愚', c:'#5aa9ff', bg:'#e3f0ff',
+     d:'平时迷糊散漫、反应迟钝，总闹笑话却浑然不觉；可关键时刻常常一语中的。',
+     m:['年龄 8 岁','生日 2/6','变身：冰封鹿']},
+    {n:'超人强', e:'💪', r:'男二号 · 死对头', c:'#ff8a4c', bg:'#ffeadb',
+     d:'个性强势、傲慢好强，敢作敢为偶尔鲁莽。曾经也是猪猪侠的朋友，后来成了最强劲的对手。',
+     m:['年龄 8 岁','生日 4/1','变身：石甲熊']},
+    {n:'波比', e:'🍳', r:'后勤天才', c:'#3fd0c9', bg:'#ddfaf8',
+     d:'超人强的挚友兼跟班，机智多谋油嘴滑舌，擅长拍马屁，也是个杀价高手和烹饪大师。',
+     m:['年龄 8 岁','生日 7/10','变身：神木猿']},
+    {n:'迷糊老师', e:'🔬', r:'老师 / 迷糊博士', c:'#9b7bff', bg:'#ece6ff',
+     d:'温和耐心，容易陷入自己的思考而忽略周围。爱研究怪兽资料，喜欢用教师腔调讲故事。',
+     m:['自称永远 25 岁','生日 12/12','发明超级棒棒糖']}
+  ];
+  document.getElementById('charGrid').innerHTML = chars.map(x => `
+    <article class="char reveal" style="--c:${x.c};--cbg:${x.bg}">
+      <div class="avatar">${x.e}</div>
+      <h3>${x.n}</h3>
+      <div class="role">${x.r}</div>
+      <p>${x.d}</p>
+      <div class="meta">${x.m.map(t=>`<span>${t}</span>`).join('')}</div>
+    </article>
+  `).join('');
+
+  /* timeline */
+  const tl = [
+    {y:'2005 起', t:'《猪猪侠》第一季', d:'系列开山之作，猪猪侠以魔法智慧球发明者的身份登场，肩负保护地球环境的使命。'},
+    {y:'早期', t:'体育竞技主线', d:'比赛、校园与竞技成为主线，迷糊老师用超级棒棒糖给猪猪侠补充体力，与超人强、波比频频交锋。'},
+    {y:'2008', t:'勇闯未来城', d:'时间机器把坐标调到了 2080 年，猪猪侠来到科技城，为保住母校而与强强科技展开一连串比拼。'},
+    {y:'中期', t:'五灵之力', d:'铁拳虎、火焰鹤、冰封鹿、石甲熊、神木猿……变身形态成体系，团队作战成为看点。'},
+    {y:'后期', t:'超星五灵侠 · 竞速小英雄', d:'IP 内核逐步融入友谊、成长与科技探索，开始向「全龄化」叙事转变。'},
+    {y:'至今', t:'十七部 +', d:'自 2005 年至今连续推出十七部以上，并有剧场版大电影，仍是国产长寿动画 IP 的代表之一。'}
+  ];
+  document.getElementById('timeline').innerHTML = tl.map(x => `
+    <div class="tl-item reveal">
+      <div class="yr">${x.y}</div>
+      <h4>${x.t}</h4>
+      <p>${x.d}</p>
+    </div>
+  `).join('');
+
+  /* reveal on scroll */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.transitionDelay = (i%6*60)+'ms'; io.observe(el); });
+</script>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>家乡的味道 · 北方美食图鉴</title>
+<script>document.documentElement.className += " js";</script>
+<style>
+:root{
+  --bg:#150d08;
+  --card:#241812;
+  --card-hi:#2e1f17;
+  --line:rgba(240,168,60,.18);
+  --amber:#f0a83c;
+  --amber-hi:#ffc45f;
+  --red:#d94f3d;
+  --cream:#f7ecdd;
+  --muted:#b8a08c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",
+              system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--bg);color:var(--cream);line-height:1.75;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:rgba(240,168,60,.35);color:#fff}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;min-height:80vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  padding:110px 24px 90px;overflow:hidden;isolation:isolate;
+}
+.hero::before{
+  content:"";position:absolute;inset:-25% -12%;z-index:-2;
+  background:
+    radial-gradient(46% 40% at 20% 22%,rgba(217,79,61,.42),transparent 62%),
+    radial-gradient(42% 38% at 80% 16%,rgba(240,168,60,.32),transparent 64%),
+    radial-gradient(60% 52% at 50% 98%,rgba(122,46,26,.55),transparent 70%),
+    linear-gradient(180deg,#1c100a 0%,#150d08 100%);
+  animation:breathe 14s ease-in-out infinite alternate;
+}
+@keyframes breathe{
+  from{transform:scale(1) translateY(0)}
+  to{transform:scale(1.06) translateY(-10px)}
+}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:-1;opacity:.55;
+  background-image:repeating-linear-gradient(115deg,rgba(247,236,221,.04) 0 1px,transparent 1px 11px);
+}
+.kicker{
+  font-size:.72rem;letter-spacing:.44em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:20px;
+}
+.hero h1{
+  font-size:clamp(2.5rem,7.4vw,4.8rem);font-weight:800;letter-spacing:.08em;
+  line-height:1.14;
+  background:linear-gradient(100deg,#fff3e2 6%,var(--amber-hi) 48%,var(--red) 98%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero .sub{
+  max-width:640px;margin:22px auto 0;color:var(--muted);
+  font-size:clamp(.94rem,1.6vw,1.06rem);
+}
+.hero-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:30px}
+.hero-chips span{
+  font-size:.8rem;letter-spacing:.14em;padding:7px 15px;border-radius:999px;
+  color:var(--cream);border:1px solid var(--line);
+  background:rgba(247,236,221,.03);
+}
+.scroll-hint{
+  margin-top:52px;color:var(--amber);text-decoration:none;font-size:.82rem;
+  letter-spacing:.2em;display:inline-flex;align-items:center;gap:9px;
+  border-bottom:1px solid transparent;transition:border-color .3s,color .3s;
+}
+.scroll-hint:hover{border-color:var(--amber);color:var(--amber-hi)}
+.scroll-hint .arrow{animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* ---------- Section ---------- */
+.section{max-width:1180px;margin:0 auto;padding:88px 24px}
+.section-head{text-align:center;margin-bottom:40px}
+.section-head h2{
+  font-size:clamp(1.6rem,3.4vw,2.3rem);letter-spacing:.06em;font-weight:700;
+  margin-bottom:12px;
+}
+.section-desc{color:var(--muted);font-size:.94rem}
+.section-desc strong{color:var(--amber-hi);font-size:1.05rem}
+
+/* ---------- Filters ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:38px}
+.chip{
+  font-family:inherit;font-size:.88rem;letter-spacing:.06em;cursor:pointer;
+  color:var(--muted);background:transparent;border:1px solid var(--line);
+  padding:9px 20px;border-radius:999px;
+  transition:color .28s,border-color .28s,background .28s,box-shadow .28s;
+}
+.chip:hover{color:var(--cream);border-color:rgba(240,168,60,.5)}
+.chip.is-active{
+  color:#1c0d06;font-weight:700;border-color:transparent;
+  background:linear-gradient(120deg,var(--amber),var(--red));
+  box-shadow:0 10px 24px -12px rgba(240,168,60,.85);
+}
+
+/* ---------- Cards ---------- */
+.grid{
+  display:grid;gap:20px;
+  grid-template-columns:repeat(auto-fit,minmax(258px,1fr));
+}
+.card{
+  position:relative;overflow:hidden;border-radius:18px;
+  padding:22px 20px 20px;
+  background:linear-gradient(180deg,var(--card-hi),var(--card));
+  border:1px solid var(--line);
+  transition-property:opacity,translate,transform,box-shadow,border-color;
+  transition-duration:.8s,.8s,.35s,.35s,.35s;
+  transition-timing-function:ease,cubic-bezier(.2,.8,.3,1),
+                             cubic-bezier(.2,.8,.3,1),ease,ease;
+  transition-delay:var(--d,0ms),var(--d,0ms),0ms,0ms,0ms;
+}
+.card::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:0;
+  background:radial-gradient(120% 78% at 50% 0%,rgba(240,168,60,.14),transparent 62%);
+  transition:opacity .35s ease;
+}
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(240,168,60,.45);
+  box-shadow:0 20px 42px -20px rgba(0,0,0,.92),0 0 0 1px rgba(240,168,60,.1);
+}
+.card:hover::before{opacity:1}
+.card.is-hidden{display:none}
+.js .reveal{opacity:0;translate:0 26px}
+.js .reveal.is-in{opacity:1;translate:0 0}
+
+.card-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.plate{
+  flex:0 0 auto;width:56px;height:56px;border-radius:16px;
+  display:grid;place-items:center;font-size:1.7rem;line-height:1;
+  background:radial-gradient(120% 120% at 28% 18%,rgba(240,168,60,.3),rgba(217,79,61,.16));
+  border:1px solid rgba(240,168,60,.28);
+}
+.card h3{font-size:1.08rem;font-weight:700;letter-spacing:.04em}
+.origin{
+  font-size:.78rem;color:var(--amber);letter-spacing:.16em;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.origin::before{
+  content:"";width:5px;height:5px;border-radius:50%;
+  background:var(--red);box-shadow:0 0 8px rgba(217,79,61,.9);
+}
+.desc{font-size:.9rem;color:var(--muted);margin-bottom:16px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{
+  font-size:.74rem;letter-spacing:.08em;color:#f3d7ae;
+  padding:4px 11px;border-radius:6px;
+  background:rgba(240,168,60,.1);border:1px solid rgba(240,168,60,.22);
+}
+
+/* ---------- Route ---------- */
+.route-section{
+  background:linear-gradient(180deg,transparent,rgba(46,31,23,.35),transparent);
+}
+.route{
+  display:grid;gap:18px;margin-top:34px;
+  grid-template-columns:repeat(auto-fit,minmax(212px,1fr));
+}
+.node{
+  position:relative;overflow:hidden;border-radius:16px;padding:24px 20px;
+  background:linear-gradient(180deg,rgba(46,31,23,.92),rgba(31,20,16,.92));
+  border:1px solid var(--line);
+}
+.node::after{
+  content:"";position:absolute;top:0;left:20px;right:20px;height:2px;
+  background:linear-gradient(90deg,var(--amber),transparent);
+}
+.node .tagline{font-size:.72rem;letter-spacing:.34em;color:var(--amber);margin-bottom:8px}
+.node h4{font-size:1.04rem;font-weight:700;letter-spacing:.06em;margin-bottom:8px}
+.node p{font-size:.87rem;color:var(--muted)}
+
+/* ---------- Footer ---------- */
+.site-footer{
+  text-align:center;padding:72px 24px 64px;
+  border-top:1px solid var(--line);
+}
+.footer-title{
+  font-size:clamp(1.1rem,2.6vw,1.5rem);letter-spacing:.14em;font-weight:700;
+  background:linear-gradient(100deg,var(--amber-hi),var(--red));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:14px;
+}
+.footer-note{font-size:.8rem;color:#7d6553;letter-spacing:.1em}
+
+.to-top{
+  position:fixed;right:22px;bottom:22px;width:46px;height:46px;z-index:20;
+  display:grid;place-items:center;cursor:pointer;font-size:1.1rem;
+  color:var(--amber);border-radius:50%;
+  background:rgba(36,24,18,.9);border:1px solid var(--line);
+  opacity:0;visibility:hidden;transform:translateY(10px);
+  transition:opacity .3s,visibility .3s,transform .3s,background .3s;
+}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{background:rgba(240,168,60,.2)}
+
+@media (max-width:520px){
+  .hero{min-height:70vh;padding:88px 20px 70px}
+  .section{padding:64px 18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition-duration:.01ms !important}
+  .js .reveal{opacity:1;translate:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="kicker">Northern China · Home Flavor</p>
+  <h1>家乡的味道</h1>
+  <p class="sub">从关东的黑土地，到关中平原的麦浪。一碗热汤面、一盘刚出锅的肉，都是北方人熬过寒冬的底气。</p>
+  <div class="hero-chips">
+    <span>面食当家</span>
+    <span>铁锅炖煮</span>
+    <span>咸鲜浓香</span>
+    <span>一口暖到脚</span>
+  </div>
+  <a class="scroll-hint" href="#menu">向下看看有哪些好吃的<span class="arrow">↓</span></a>
+</header>
+
+<main>
+  <section class="section" id="menu">
+    <div class="section-head">
+      <p class="kicker">Menu</p>
+      <h2>北方美食清单</h2>
+      <p class="section-desc">按类别筛选，当前共 <strong id="count">17</strong> 道家常味道。</p>
+    </div>
+
+    <div class="filters" id="filters">
+      <button class="chip is-active" data-filter="all">全部</button>
+      <button class="chip" data-filter="noodle">面食主食</button>
+      <button class="chip" data-filter="meat">硬菜炖煮</button>
+      <button class="chip" data-filter="snack">市井小吃</button>
+      <button class="chip" data-filter="soup">汤羹暖锅</button>
+    </div>
+
+    <div class="grid" id="grid">
+
+      <article class="card reveal" data-cat="noodle">
+        <div class="card-top">
+          <div class="plate">🍜</div>
+          <div>
+            <h3>老北京炸酱面</h3>
+            <p class="origin">北京</p>
+          </div>
+        </div>
+        <p class="desc">手擀面过凉水，干黄酱小火慢熬到肉丁出油，黄瓜丝、豆芽、青豆八样菜码摆齐，拌开就是整个夏天。</p>
+        <div class="tags"><span>酱香</span><span>咸鲜</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="noodle">
+        <div class="card-top">
+          <div class="plate">🍲</div>
+          <div>
+            <h3>山西刀削面</h3>
+            <p class="origin">山西 · 太原</p>
+          </div>
+        </div>
+        <p class="desc">一团面托在手上，弧形刀片削出柳叶形，中厚边薄，落锅翻滚。入口外滑内筋，越嚼越有麦香。</p>
+        <div class="tags"><span>筋道</span><span>麦香</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="noodle">
+        <div class="card-top">
+          <div class="plate">🌶️</div>
+          <div>
+            <h3>陕西油泼面</h3>
+            <p class="origin">陕西 · 西安</p>
+          </div>
+        </div>
+        <p class="desc">宽扯面铺满干辣子与蒜末，一勺滚油泼下去「呲啦」一声，辣香冲鼻，拌开就是最痛快的一顿。</p>
+        <div class="tags"><span>香辣</span><span>油润</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="noodle">
+        <div class="card-top">
+          <div class="plate">🍥</div>
+          <div>
+            <h3>河南烩面</h3>
+            <p class="origin">河南 · 郑州</p>
+          </div>
+        </div>
+        <p class="desc">羊肉高汤熬到奶白，抻面下锅，配千张、木耳与鹌鹑蛋。汤醇面亮，一碗下去从头暖到脚。</p>
+        <div class="tags"><span>汤醇</span><span>鲜香</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="noodle">
+        <div class="card-top">
+          <div class="plate">🥞</div>
+          <div>
+            <h3>山东煎饼</h3>
+            <p class="origin">山东 · 临沂</p>
+          </div>
+        </div>
+        <p class="desc">五谷糊子在鏊子上摊薄如纸，卷一根大葱、抹一层甜面酱，越嚼越香，是最扛饿的干粮。</p>
+        <div class="tags"><span>粗粮</span><span>咸香</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="meat">
+        <div class="card-top">
+          <div class="plate">🍖</div>
+          <div>
+            <h3>锅包肉</h3>
+            <p class="origin">黑龙江 · 哈尔滨</p>
+          </div>
+        </div>
+        <p class="desc">里脊挂土豆淀粉糊两遍油炸，浇上滚烫糖醋汁。外酥里嫩，咬开「咔嚓」一声还带着汁。</p>
+        <div class="tags"><span>酸甜</span><span>酥脆</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="meat">
+        <div class="card-top">
+          <div class="plate">🍄</div>
+          <div>
+            <h3>小鸡炖蘑菇</h3>
+            <p class="origin">吉林 · 长白山</p>
+          </div>
+        </div>
+        <p class="desc">散养笨鸡配野生榛蘑，铁锅慢炖两个小时，粉条吸饱了汤汁，是东北待客的头一道硬菜。</p>
+        <div class="tags"><span>咸鲜</span><span>浓香</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="meat">
+        <div class="card-top">
+          <div class="plate">🦆</div>
+          <div>
+            <h3>北京烤鸭</h3>
+            <p class="origin">北京</p>
+          </div>
+        </div>
+        <p class="desc">果木明火烤到皮酥如琉璃，片成薄片，用荷叶饼卷甜面酱、葱丝与黄瓜条，油香里带一丝清甜。</p>
+        <div class="tags"><span>皮酥</span><span>油香</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="meat">
+        <div class="card-top">
+          <div class="plate">🥘</div>
+          <div>
+            <h3>猪肉炖粉条</h3>
+            <p class="origin">东北</p>
+          </div>
+        </div>
+        <p class="desc">带皮五花肉炖到颤巍巍，宽粉条滑溜筋道，一锅端上桌，热气腾腾就是整个冬天的暖气。</p>
+        <div class="tags"><span>咸香</span><span>软糯</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="snack">
+        <div class="card-top">
+          <div class="plate">🥟</div>
+          <div>
+            <h3>天津狗不理包子</h3>
+            <p class="origin">天津</p>
+          </div>
+        </div>
+        <p class="desc">半发面皮，十八个褶，猪肉馅打水上劲。蒸出来皮薄馅大，咬开一兜鲜汤，得先吸再吃。</p>
+        <div class="tags"><span>鲜香</span><span>多汁</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="snack">
+        <div class="card-top">
+          <div class="plate">🫓</div>
+          <div>
+            <h3>腊汁肉夹馍</h3>
+            <p class="origin">陕西 · 西安</p>
+          </div>
+        </div>
+        <p class="desc">白吉馍烤出虎背钢圈菊花心，腊汁肉剁碎浇一勺老卤，肥而不腻，馍酥肉烂，汁水渗进馍里。</p>
+        <div class="tags"><span>咸鲜</span><span>焦香</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="snack">
+        <div class="card-top">
+          <div class="plate">🍜</div>
+          <div>
+            <h3>兰州牛肉面</h3>
+            <p class="origin">甘肃 · 兰州</p>
+          </div>
+        </div>
+        <p class="desc">一清二白三红四绿五黄：清汤、萝卜、辣油、香菜蒜苗、黄亮面条。毛细到韭叶，随你挑。</p>
+        <div class="tags"><span>清汤</span><span>鲜辣</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="snack">
+        <div class="card-top">
+          <div class="plate">🌭</div>
+          <div>
+            <h3>哈尔滨红肠</h3>
+            <p class="origin">黑龙江 · 哈尔滨</p>
+          </div>
+        </div>
+        <p class="desc">果木熏制，蒜香与烟熏味混在一起。切片直接吃，或者跟土豆片同炒，都是下酒的好搭档。</p>
+        <div class="tags"><span>烟熏</span><span>蒜香</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="snack">
+        <div class="card-top">
+          <div class="plate">🍡</div>
+          <div>
+            <h3>冰糖葫芦</h3>
+            <p class="origin">北京 · 天津</p>
+          </div>
+        </div>
+        <p class="desc">山楂去核穿串，滚一层熬到琥珀色的冰糖，糖壳脆得能听见响，酸甜在嘴里一起炸开。</p>
+        <div class="tags"><span>酸甜</span><span>脆壳</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="soup">
+        <div class="card-top">
+          <div class="plate">🐑</div>
+          <div>
+            <h3>铜锅涮羊肉</h3>
+            <p class="origin">北京</p>
+          </div>
+        </div>
+        <p class="desc">炭火铜锅清汤打底，手切羊肉七上八下，蘸麻酱、韭菜花、酱豆腐调的小料，鲜得干净利落。</p>
+        <div class="tags"><span>清鲜</span><span>麻酱</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="soup">
+        <div class="card-top">
+          <div class="plate">🥣</div>
+          <div>
+            <h3>胡辣汤</h3>
+            <p class="origin">河南 · 周口</p>
+          </div>
+        </div>
+        <p class="desc">胡椒打头的浓稠汤底，牛肉丁、面筋、黄花菜一起炖。配一根油条，喝完从胃一路暖到脚。</p>
+        <div class="tags"><span>辛辣</span><span>浓稠</span></div>
+      </article>
+
+      <article class="card reveal" data-cat="soup">
+        <div class="card-top">
+          <div class="plate">🍲</div>
+          <div>
+            <h3>羊杂汤</h3>
+            <p class="origin">内蒙古 · 宁夏</p>
+          </div>
+        </div>
+        <p class="desc">羊骨熬到汤白，心肝肚肺切细丝，撒一把香菜、淋一勺辣油，就着一个刚出炉的馍最舒坦。</p>
+        <div class="tags"><span>鲜浓</span><span>微辣</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section class="section route-section">
+    <div class="section-head">
+      <p class="kicker">Route</p>
+      <h2>从关东走到关中</h2>
+      <p class="section-desc">同一个北方，四种截然不同的口味性格。</p>
+    </div>
+    <div class="route">
+      <div class="node">
+        <p class="tagline">NORTHEAST</p>
+        <h4>关东 · 东北</h4>
+        <p>铁锅炖、锅包肉、红肠。分量扎实、味道直给，天冷就爱这一口热气。</p>
+      </div>
+      <div class="node">
+        <p class="tagline">NORTH CHINA</p>
+        <h4>华北 · 京津冀</h4>
+        <p>烤鸭、炸酱面、狗不理。讲究火候与酱香，街头与席面都拿得出手。</p>
+      </div>
+      <div class="node">
+        <p class="tagline">CENTRAL PLAIN</p>
+        <h4>中原 · 豫鲁</h4>
+        <p>烩面、胡辣汤、煎饼。一汤一面，就能撑起一整个清晨。</p>
+      </div>
+      <div class="node">
+        <p class="tagline">NORTHWEST</p>
+        <h4>西北 · 陕甘宁</h4>
+        <p>油泼面、肉夹馍、牛肉面。面食的花样，在这片土地上被做到了极致。</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <p class="footer-title">一口家乡味，半生在外人</p>
+  <p class="footer-note">北方美食图鉴 · 单文件网页 · 口味描述仅供参考</p>
+</footer>
+
+<button id="toTop" class="to-top" aria-label="回到顶部">↑</button>
+
+<script>
+(function () {
+  var chips   = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var cards   = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  var countEl = document.getElementById('count');
+
+  /* 按类别筛选 */
+  function applyFilter(filter) {
+    var shown = 0;
+    cards.forEach(function (card) {
+      var hit = filter === 'all' || card.getAttribute('data-cat') === filter;
+      card.classList.toggle('is-hidden', !hit);
+      if (hit) {
+        shown++;
+        card.classList.remove('is-in');
+        void card.offsetWidth;      /* 强制回流，让淡入动画重新播放 */
+        card.classList.add('is-in');
+      }
+    });
+    if (countEl) countEl.textContent = shown;
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.classList.remove('is-active'); });
+      chip.classList.add('is-active');
+      applyFilter(chip.getAttribute('data-filter'));
+    });
+  });
+
+  /* 滚动淡入 */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    cards.forEach(function (card, i) {
+      card.style.setProperty('--d', (i % 4) * 70 + 'ms');
+      io.observe(card);
+    });
+  } else {
+    cards.forEach(function (card) { card.classList.add('is-in'); });
+  }
+
+  /* 回到顶部 */
+  var toTop = document.getElementById('toTop');
+  if (toTop) {
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    window.addEventListener('scroll', function () {
+      toTop.classList.toggle('show', window.scrollY > 600);
+    }, { passive: true });
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>朱生豪 · 莎士比亚戏剧翻译第一人</title>
+<style>
+  :root{
+    --ink:#1f1c18;
+    --ink-soft:#4a443c;
+    --paper:#f7f4ee;
+    --paper-2:#fffdf9;
+    --line:#e2dbcd;
+    --gold:#a8823c;
+    --gold-light:#c9a961;
+    --crimson:#8c2f26;
+    --shadow:0 1px 2px rgba(31,28,24,.04),0 8px 28px rgba(31,28,24,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Songti SC","STSong","SimSun",Georgia,"Times New Roman",serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(168,130,60,.05), transparent 42%),
+      radial-gradient(circle at 88% 82%, rgba(140,47,38,.035), transparent 45%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px 90px;}
+
+  /* ---------- 页眉 ---------- */
+  header{
+    position:relative;
+    padding:86px 0 60px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    margin-bottom:56px;
+  }
+  header::before,header::after{
+    content:"";position:absolute;left:50%;transform:translateX(-50%);
+    width:1px;height:34px;background:linear-gradient(var(--gold),transparent);
+  }
+  header::before{top:34px;}
+  header::after{bottom:0;background:linear-gradient(transparent,var(--gold));height:26px;}
+  .eyebrow{
+    font-size:12px;letter-spacing:.42em;text-indent:.42em;
+    color:var(--gold);margin-bottom:22px;
+    font-family:Georgia,serif;
+  }
+  h1{
+    font-size:clamp(46px,8vw,78px);
+    letter-spacing:.16em;text-indent:.16em;
+    font-weight:700;line-height:1.18;
+    margin-bottom:14px;
+  }
+  .roman{
+    font-family:Georgia,serif;
+    font-size:13px;letter-spacing:.34em;text-indent:.34em;
+    color:var(--ink-soft);text-transform:uppercase;margin-bottom:30px;
+  }
+  .lifespan{
+    display:inline-flex;align-items:center;gap:18px;
+    font-size:15px;letter-spacing:.1em;color:var(--ink-soft);
+  }
+  .lifespan .sep{width:52px;height:1px;background:var(--gold-light);}
+  .tagline{
+    margin-top:30px;font-size:17px;color:var(--ink-soft);
+    letter-spacing:.06em;font-style:italic;
+  }
+
+  /* ---------- 通用标题 ---------- */
+  h2{
+    font-size:21px;letter-spacing:.2em;text-indent:.2em;
+    font-weight:700;margin-bottom:26px;
+    display:flex;align-items:center;gap:16px;
+  }
+  h2::before{
+    content:"";width:5px;height:5px;background:var(--crimson);
+    transform:rotate(45deg);flex:none;
+  }
+  h2::after{content:"";flex:1;height:1px;background:var(--line);}
+  section{margin-bottom:66px;}
+
+  /* ---------- 简介 ---------- */
+  .intro{
+    display:grid;grid-template-columns:64px 1fr;gap:6px 30px;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-left:3px solid var(--gold);
+    padding:38px 42px;
+    box-shadow:var(--shadow);
+  }
+  .intro .mark{
+    font-family:Georgia,serif;font-size:52px;color:var(--gold-light);
+    line-height:1;grid-row:span 2;
+  }
+  .intro p{font-size:16.5px;text-align:justify;}
+  .intro p+p{margin-top:14px;}
+
+  /* ---------- 生平时间线 ---------- */
+  .timeline{position:relative;padding-left:34px;}
+  .timeline::before{
+    content:"";position:absolute;left:7px;top:6px;bottom:6px;width:1px;
+    background:linear-gradient(var(--gold-light),var(--line) 88%,transparent);
+  }
+  .t-item{position:relative;padding-bottom:30px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{
+    content:"";position:absolute;left:-31px;top:11px;
+    width:9px;height:9px;border-radius:50%;
+    background:var(--paper);border:2px solid var(--gold);
+  }
+  .t-item.key::before{background:var(--crimson);border-color:var(--crimson);
+    box-shadow:0 0 0 4px rgba(140,47,38,.12);}
+  .t-year{
+    font-family:Georgia,serif;font-size:15px;font-weight:700;
+    color:var(--gold);letter-spacing:.08em;
+  }
+  .t-item.key .t-year{color:var(--crimson);}
+  .t-text{font-size:15.5px;color:var(--ink-soft);margin-top:2px;text-align:justify;}
+
+  /* ---------- 成就卡 ---------- */
+  .cards{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:18px;
+  }
+  .card{
+    background:var(--paper-2);border:1px solid var(--line);
+    padding:26px 24px;box-shadow:var(--shadow);
+    transition:transform .28s ease,border-color .28s ease;
+  }
+  .card:hover{transform:translateY(-4px);border-color:var(--gold-light);}
+  .card .num{
+    font-family:Georgia,serif;font-size:38px;font-weight:700;
+    color:var(--crimson);line-height:1;letter-spacing:-.01em;
+  }
+  .card .num small{font-size:15px;color:var(--ink-soft);font-weight:400;margin-left:4px;}
+  .card .cap{font-size:14px;color:var(--ink-soft);margin-top:10px;letter-spacing:.05em;}
+
+  /* ---------- 作品 ---------- */
+  .works{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+  .work{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:20px 22px;background:var(--paper-2);
+    border:1px solid var(--line);
+  }
+  .work .dot{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);margin-top:11px;flex:none;}
+  .work b{font-size:16px;letter-spacing:.04em;display:block;margin-bottom:3px;}
+  .work span{font-size:13.5px;color:var(--ink-soft);}
+
+  /* ---------- 语录 ---------- */
+  .quote{
+    background:var(--ink);color:#f2ece1;
+    padding:62px 56px;text-align:center;position:relative;
+    box-shadow:var(--shadow);
+  }
+  .quote::before{
+    content:"“";font-family:Georgia,serif;font-size:130px;
+    color:var(--gold-light);opacity:.42;position:absolute;
+    top:4px;left:34px;line-height:1;
+  }
+  .quote blockquote{
+    font-size:clamp(18px,2.6vw,24px);line-height:2;letter-spacing:.08em;
+    position:relative;z-index:1;max-width:720px;margin:0 auto;
+  }
+  .quote cite{
+    display:block;margin-top:24px;font-size:13px;letter-spacing:.24em;
+    color:var(--gold-light);font-style:normal;
+  }
+
+  /* ---------- 评价 ---------- */
+  .praise{display:grid;gap:14px;}
+  .praise-item{
+    display:grid;grid-template-columns:132px 1fr;gap:22px;
+    align-items:baseline;padding:18px 0;border-bottom:1px dashed var(--line);
+    font-size:15.5px;color:var(--ink-soft);
+  }
+  .praise-item:last-child{border-bottom:none;}
+  .praise-item .who{
+    font-size:15px;color:var(--crimson);font-weight:700;letter-spacing:.08em;
+    text-align:right;
+  }
+
+  /* ---------- 页脚 ---------- */
+  footer{
+    margin-top:20px;padding-top:34px;border-top:1px solid var(--line);
+    text-align:center;font-size:12.5px;color:var(--ink-soft);
+    letter-spacing:.18em;line-height:2.2;
+  }
+  footer .seal{
+    display:inline-block;margin-bottom:16px;
+    width:42px;height:42px;line-height:38px;
+    border:1.5px solid var(--crimson);color:var(--crimson);
+    font-size:17px;letter-spacing:0;border-radius:3px;
+    font-weight:700;
+  }
+
+  @media(max-width:600px){
+    .wrap{padding:0 18px 64px;}
+    header{padding:64px 0 44px;}
+    .intro{grid-template-columns:1fr;padding:28px 24px;}
+    .intro .mark{grid-row:auto;font-size:40px;}
+    .quote{padding:44px 24px;}
+    .quote::before{font-size:86px;top:-6px;left:14px;}
+    .praise-item{grid-template-columns:1fr;gap:4px;}
+    .praise-item .who{text-align:left;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">THE GREAT TRANSLATOR</div>
+    <h1>朱生豪</h1>
+    <div class="roman">Zhu Shenghao · 1912 — 1944</div>
+    <div class="lifespan">
+      <span>浙江·嘉兴</span>
+      <span class="sep"></span>
+      <span>莎士比亚戏剧翻译第一人</span>
+    </div>
+    <p class="tagline">“要把译作献给全世界，也要把莎剧的全部译给中国。”</p>
+  </header>
+
+  <section>
+    <h2>人物简介</h2>
+    <div class="intro">
+      <div class="mark">Z</div>
+      <div>
+        <p>朱生豪，原名朱文森，字生豪，浙江嘉兴人，中国现代著名翻译家、诗人。他是中国系统翻译莎士比亚戏剧的第一人，也是迄今译作流传最广、影响最深的莎剧译者。</p>
+        <p>在战乱与贫病交加的短促一生中，他以惊人的毅力与才情，独自译出莎士比亚三十一部戏剧，占莎翁全部剧作近九成。其译文典雅流畅、音韵铿锵，把伊丽莎白时代的诗剧语言，转化为中国读者能够朗朗上口的中文，被誉为“莎剧汉译的巅峰”。</p>
+      </div>
+      <div></div>
+      <div>
+        <p>他一生仅三十一岁，用十年光阴完成了近乎一座文学丰碑的工作，直至生命最后一刻仍未停笔。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>生平轨迹</h2>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-year">1912</div>
+        <div class="t-text">2 月 2 日生于浙江嘉兴一个没落的商人家庭，幼年家境贫寒，读书勤奋。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1929</div>
+        <div class="t-text">以优异成绩考入杭州之江大学（今浙江大学之江校区），主修中国文学，兼修英文，师从词学家夏承焘，二人被誉为“之江诗友”。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1933</div>
+        <div class="t-text">大学毕业，先后任教于之江大学附属中学、上海世界书局，担任英文编辑，开始接触并翻译外国文学。</div>
+      </div>
+      <div class="t-item key">
+        <div class="t-year">1935</div>
+        <div class="t-text">开始着手翻译莎士比亚全集，并与宋清如相恋。次年，两人在杭州结为夫妻，宋清如此后成为他译本最重要的抄写者与整理者。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1937</div>
+        <div class="t-text">抗日战争爆发，他辗转于嘉兴、上海等地避难，多年积累的译稿、资料两度在炮火与流亡中散失，几度重译，仍不辍笔。</div>
+      </div>
+      <div class="t-item key">
+        <div class="t-year">1936 — 1944</div>
+        <div class="t-text">贫病交加之中坚持翻译，先后完成《哈姆雷特》《李尔王》《奥赛罗》《威尼斯商人》《仲夏夜之梦》等三十余部莎剧。为维持生活，长期抱病工作，抄写、校订全凭手写。</div>
+      </div>
+      <div class="t-item key">
+        <div class="t-year">1944</div>
+        <div class="t-text">12 月 26 日，因肺病在嘉兴去世，年仅 31 岁。临终前仍在翻译《亨利五世》，未竟全功。</div>
+      </div>
+      <div class="t-item">
+        <div class="t-year">1947</div>
+        <div class="t-text">其译稿由宋清如等整理，世界书局出版《莎士比亚戏剧全集》，此后数十年间多次重印，成为流传最广的莎剧中译本。</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>翻译成就</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="num">31<small>部</small></div>
+        <div class="cap">独立译成莎士比亚戏剧，约占莎翁全部剧作的九成</div>
+      </div>
+      <div class="card">
+        <div class="num">10<small>年</small></div>
+        <div class="cap">自 1935 年起，以十年之功完成这一浩大工程</div>
+      </div>
+      <div class="card">
+        <div class="num">31<small>岁</small></div>
+        <div class="cap">生命长度，译笔却影响了此后近百年的中国读者</div>
+      </div>
+      <div class="card">
+        <div class="num">1<small>人</small></div>
+        <div class="cap">几乎以个人之力，完成莎剧的系统汉译</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>代表译作</h2>
+    <div class="works">
+      <div class="work"><span class="dot"></span><div><b>《哈姆雷特》</b><span>生存还是毁灭，这是一个值得考虑的问题</span></div></div>
+      <div class="work"><span class="dot"></span><div><b>《李尔王》</b><span>悲剧巅峰之作，译文苍凉雄浑</span></div></div>
+      <div class="work"><span class="dot"></span><div><b>《奥赛罗》</b><span>嫉妒与毁灭的人性悲剧</span></div></div>
+      <div class="work"><span class="dot"></span><div><b>《麦克白》</b><span>野心与命运的交响</span></div></div>
+      <div class="work"><span class="dot"></span><div><b>《威尼斯商人》</b><span>喜剧代表作，语言机锋百出</span></div></div>
+      <div class="work"><span class="dot"></span><div><b>《仲夏夜之梦》</b><span>浪漫奇幻，文辞轻灵绮丽</span></div></div>
+      <div class="work"><span class="dot"></span><div><b>《罗密欧与朱丽叶》</b><span>青春的炽热与悲伤</span></div></div>
+      <div class="work"><span class="dot"></span><div><b>《皆大欢喜》</b><span>田园牧歌中的智慧与幽默</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="quote">
+      <blockquote>
+        生存还是毁灭，这是一个值得考虑的问题；<br>
+        默然忍受命运的暴虐的毒箭，<br>
+        或是挺身反抗人世的无涯的苦难，通过斗争把它们扫清。
+      </blockquote>
+      <cite>—— 莎士比亚《哈姆雷特》· 朱生豪 译</cite>
+    </div>
+  </section>
+
+  <section>
+    <h2>后世评价</h2>
+    <div class="praise">
+      <div class="praise-item">
+        <div class="who">夏承焘</div>
+        <div>称其才思敏捷、诗心独具，师生唱和之作，被誉为“之江诗友”。</div>
+      </div>
+      <div class="praise-item">
+        <div class="who">学界共识</div>
+        <div>其译本语言典雅、节奏鲜明，兼顾“信”与“达”，被视为莎剧汉译中最富文学性的版本。</div>
+      </div>
+      <div class="praise-item">
+        <div class="who">读者流传</div>
+        <div>数十年间，人们读到的《哈姆雷特》《李尔王》，大多出自朱生豪之手，其译笔已成为中文世界理解莎士比亚的主要入口。</div>
+      </div>
+      <div class="praise-item">
+        <div class="who">时代意义</div>
+        <div>他以一人之身、一己之力，在民族危亡的年代为中国打开了一扇通往世界经典的窗。</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="seal">朱</div>
+    <div>朱生豪 · 1912 — 1944</div>
+    <div>以译笔为舟，渡莎剧入中国</div>
+  </footer>
+
+</div>
+</body>
+</html>

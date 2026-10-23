@@ -1,0 +1,204 @@
+version: 1
+
+# 全班 48 人，以下为教师已收到的 45 人账号映射及 1 个教师测试账号，按学号排序。
+# 教师测试账号沿用 DataStructure 的记录：2025011233 刘西莹 / StudentYXNU。
+# 尚未提交 GitHub 账号，确认后再追加：
+# 2026010006 李林轩
+# 2026010012 王念通
+# 2026010021 陈思宇
+# 2026010015 黄思凡已交 6semsme6，但 GitHub 查询返回 404，待核对。
+# GitHub 账号匹配不区分大小写；学号用字符串保存。
+# 方舟账号中的特殊连字符已规范为 ASCII 连字符：fz-2026。
+students:
+  "2024204005":
+    name: 李鹏兵
+    github: sky0blue
+    active: true
+  "2026010001":
+    name: 谢全康
+    github: xiequankang
+    active: true
+  "2026010003":
+    name: 黄晨鑫
+    github: piqppq
+    active: true
+  "2026010004":
+    name: 江翔
+    github: chthoilxy
+    active: true
+  "2026010005":
+    name: 吴双
+    github: lxy294
+    active: true
+  "2026010007":
+    name: 何健
+    github: 2008hj
+    active: true
+  "2026010008":
+    name: 张寅
+    github: Arong615
+    active: true
+  "2026010009":
+    name: 王仕君
+    github: LIV1982
+    active: true
+  "2026010010":
+    name: 谢贤
+    github: xx740
+    active: true
+  "2026010011":
+    name: 徐开进
+    github: xkj53719
+    active: true
+  "2026010013":
+    name: 胡勇强
+    github: huyongqianghyq
+    active: true
+  "2026010014":
+    name: 李丰韧
+    github: LiFengRen64
+    active: true
+  "2026010015":
+    name: 黄思凡
+    github: 6sesame6
+    active: true
+  "2026010016":
+    name: 苏宇轩
+    github: syxcooi
+    active: true
+  "2026010017":
+    name: 排扎用
+    github: PZY200802
+    active: true
+  "2026010018":
+    name: 王朝靖
+    github: WCJ-A11Y
+    active: true
+  "2026010019":
+    name: 杨梓涵
+    github: zmjjk666
+    active: true
+  "2026010020":
+    name: 茅晓文浩
+    github: MXWH123
+    active: true
+  "2026010022":
+    name: 彭奥
+    github: pengao114
+    active: true
+  "2026010024":
+    name: 王予炫
+    github: WYX111-tech
+    active: true
+  "2026010025":
+    name: 郭思信
+    github: guosixin
+    active: true
+  "2026010026":
+    name: 李瑞豪
+    github: lrh0605
+    active: true
+  "2026010027":
+    name: 王钰杰
+    github: S-lion
+    active: true
+  "2026010028":
+    name: 佘登云
+    github: sdy0123
+    active: true
+  "2026010029":
+    name: 王晶晶
+    github: wangjingjing614
+    active: true
+  "2026010030":
+    name: 刘阔名
+    github: liukuoming
+    active: true
+  "2026010031":
+    name: 周德帅
+    github: ZDS0720
+    active: true
+  "2026010032":
+    name: 周安正
+    github: zhouanzheng
+    active: true
+  "2026010033":
+    name: 刘正康
+    github: lzk18987495889
+    active: true
+  "2026010034":
+    name: 曹开钰
+    github: Caokaiyu7901
+    active: true
+  "2026010035":
+    name: 浦绍鑫
+    github: psx-2026
+    active: true
+  "2026010036":
+    name: 刘安琦
+    github: x7jaq
+    active: true
+  "2026010037":
+    name: 王思涵
+    github: wsh-2026
+    active: true
+  "2026010038":
+    name: 杨枭
+    github: yang3556
+    active: true
+  "2026010039":
+    name: 赵思豪
+    github: LUKY521
+    active: true
+  "2026010040":
+    name: 段隋
+    github: Eternal-ai-oss
+    active: true
+  "2026010041":
+    name: 张萌
+    github: zhangmeng006
+    active: true
+  "2026010042":
+    name: 俞翔
+    github: yx400
+    active: true
+  "2026010043":
+    name: 孔祥西
+    github: kongxiangxi325
+    active: true
+  "2026010045":
+    name: 李文崧
+    github: lws0209
+    active: true
+  "2026010046":
+    name: 张凯山
+    github: zks-gift
+    active: true
+  "2026010047":
+    name: 蔡瑜琳
+    github: Serein946
+    active: true
+  "2026010048":
+    name: 李淅悦
+    github: aurora-lxy6
+    active: true
+  "2026010049":
+    name: 黄江锋
+    github: jiang-feng660
+    active: true
+  "2026010050":
+    name: 方舟
+    github: fz-2026
+    active: true
+  "2026010012":
+    name: 王念通
+    github: wnt409
+    active: true
+  "2026010006":
+    name: 李林轩
+    github: lilinxuan8414
+    active: true
+  "2026010021":
+    name: 陈思宇
+    github: kamicat4
+    active: true

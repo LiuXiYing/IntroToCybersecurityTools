@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提瓦特旅行者手册 · Genshin Impact</title>
+<style>
+  :root{
+    --teal:#2f6f8f;
+    --teal-deep:#1b4157;
+    --gold:#d8a13a;
+    --gold-soft:#f0d9a8;
+    --paper:#f6f1e6;
+    --ink:#20313d;
+    --ink-soft:#5a6d7a;
+    --line:#dfd3bd;
+    --card:#fffdf8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 8%, rgba(216,161,58,.10), transparent 42%),
+      radial-gradient(circle at 88% 4%, rgba(47,111,143,.10), transparent 45%);
+  }
+
+  /* ---------- 顶部导航 ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(27,65,87,.94);
+    backdrop-filter:blur(8px);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:.85rem 6vw;
+    border-bottom:2px solid var(--gold);
+  }
+  .brand{display:flex;align-items:center;gap:.6rem;color:var(--gold-soft);font-weight:700;letter-spacing:.12em;font-size:1.05rem;}
+  .brand svg{width:30px;height:30px;}
+  nav.links{display:flex;gap:1.4rem;flex-wrap:wrap;}
+  nav.links a{color:#cfe1ea;text-decoration:none;font-size:.9rem;letter-spacing:.06em;padding:.2rem 0;border-bottom:2px solid transparent;transition:.25s;}
+  nav.links a:hover{color:var(--gold-soft);border-bottom-color:var(--gold);}
+
+  /* ---------- 页头 ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:linear-gradient(160deg,#1b4157 0%,#2f6f8f 55%,#3f90b0 100%);
+    color:#eef6f9;
+    padding:5.5rem 6vw 5rem;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:radial-gradient(circle at 78% 22%, rgba(240,217,168,.28), transparent 30%),
+                     radial-gradient(circle at 20% 82%, rgba(240,217,168,.14), transparent 34%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:900px;}
+  .eyebrow{
+    display:inline-block;font-size:.78rem;letter-spacing:.34em;
+    color:var(--gold-soft);border:1px solid rgba(240,217,168,.45);
+    padding:.28rem .9rem;border-radius:2px;margin-bottom:1.3rem;
+  }
+  .hero h1{
+    font-size:clamp(2rem,5.2vw,3.4rem);line-height:1.2;
+    font-weight:800;letter-spacing:.02em;margin-bottom:1rem;
+  }
+  .hero h1 em{color:var(--gold-soft);font-style:normal;}
+  .hero p.lead{font-size:1.05rem;color:#d5e6ee;max-width:640px;}
+  .hero-stats{display:flex;gap:2.6rem;flex-wrap:wrap;margin-top:2.4rem;}
+  .hero-stats div b{display:block;font-size:1.7rem;color:var(--gold-soft);font-weight:800;}
+  .hero-stats div span{font-size:.82rem;letter-spacing:.1em;color:#bcd4de;}
+
+  /* ---------- 通用区块 ---------- */
+  section{padding:4.2rem 6vw;max-width:1180px;margin:0 auto;}
+  .sec-head{margin-bottom:2.2rem;}
+  .sec-head .tag{color:var(--teal);font-size:.78rem;letter-spacing:.3em;font-weight:700;}
+  .sec-head h2{font-size:clamp(1.5rem,3vw,2.1rem);margin-top:.4rem;font-weight:800;color:var(--teal-deep);}
+  .sec-head h2::after{content:"";display:block;width:56px;height:3px;background:var(--gold);margin-top:.7rem;border-radius:2px;}
+  .sec-head p.sub{color:var(--ink-soft);margin-top:.7rem;max-width:720px;}
+
+  /* ---------- 七国卡片 ---------- */
+  .nations{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:1.2rem;}
+  .nation{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    padding:1.5rem 1.4rem;position:relative;overflow:hidden;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .nation:hover{transform:translateY(-5px);box-shadow:0 14px 30px rgba(27,65,87,.14);}
+  .nation .glyph{
+    width:46px;height:46px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:.9rem;
+  }
+  .nation h3{font-size:1.12rem;color:var(--teal-deep);margin-bottom:.15rem;}
+  .nation .elem-line{font-size:.8rem;color:var(--gold);letter-spacing:.06em;margin-bottom:.7rem;font-weight:600;}
+  .nation p{font-size:.9rem;color:var(--ink-soft);}
+  .nation .archon{margin-top:.8rem;font-size:.78rem;color:var(--teal);border-top:1px dashed var(--line);padding-top:.6rem;}
+
+  /* ---------- 元素反应 ---------- */
+  .reactions{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1rem;}
+  .rx{
+    background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);
+    border-radius:8px;padding:1.1rem 1.2rem;
+  }
+  .rx h4{font-size:1rem;color:var(--teal-deep);margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem;}
+  .rx .dot{width:11px;height:11px;border-radius:50%;display:inline-block;flex:none;}
+  .rx p{font-size:.85rem;color:var(--ink-soft);}
+
+  /* ---------- 角色卡 ---------- */
+  .chars{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;}
+  .char{
+    background:var(--card);border:1px solid var(--line);border-radius:10px;
+    overflow:hidden;display:flex;flex-direction:column;
+    transition:transform .25s, box-shadow .25s;
+  }
+  .char:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(27,65,87,.15);}
+  .char .banner{height:104px;position:relative;display:flex;align-items:flex-end;padding:.7rem 1rem;color:#fff;}
+  .char .banner .star{position:absolute;top:.7rem;right:.9rem;font-size:.78rem;letter-spacing:.06em;background:rgba(0,0,0,.28);padding:.1rem .5rem;border-radius:20px;}
+  .char .banner .name{font-size:1.28rem;font-weight:800;text-shadow:0 2px 6px rgba(0,0,0,.35);}
+  .char .body{padding:1rem 1.15rem 1.25rem;flex:1;display:flex;flex-direction:column;}
+  .char .body .role{font-size:.76rem;letter-spacing:.14em;color:var(--gold);font-weight:700;text-transform:uppercase;}
+  .char .body .desc{font-size:.88rem;color:var(--ink-soft);margin-top:.5rem;flex:1;}
+  .char .body .meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.9rem;}
+  .chip{font-size:.72rem;background:#eef4f7;color:var(--teal);border:1px solid #d5e5ec;padding:.16rem .6rem;border-radius:20px;}
+
+  /* ---------- 玩法 ---------- */
+  .features{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;}
+  .feat{background:linear-gradient(180deg,#fffdf8,#f3ece0);border:1px solid var(--line);border-radius:10px;padding:1.4rem;}
+  .feat .ico{font-size:1.5rem;margin-bottom:.6rem;}
+  .feat h4{color:var(--teal-deep);font-size:1.02rem;margin-bottom:.4rem;}
+  .feat p{font-size:.88rem;color:var(--ink-soft);}
+
+  /* ---------- 抽卡说明 ---------- */
+  .gacha{background:var(--teal-deep);color:#e8f1f5;border-radius:14px;padding:2.6rem 6vw;max-width:1180px;margin:0 auto 1rem;}
+  .gacha h2{color:#fff;font-size:1.6rem;margin-bottom:.6rem;}
+  .gacha h2 span{color:var(--gold-soft);}
+  .gacha .rows{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.2rem;margin-top:1.6rem;}
+  .gacha .row{background:rgba(255,255,255,.06);border:1px solid rgba(240,217,168,.22);border-radius:10px;padding:1.1rem 1.2rem;}
+  .gacha .row b{color:var(--gold-soft);display:block;font-size:1.25rem;margin-bottom:.2rem;}
+  .gacha .row span{font-size:.85rem;color:#c6dbe4;}
+  .bar{height:8px;border-radius:6px;background:rgba(255,255,255,.13);margin-top:.8rem;overflow:hidden;}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),#f0d9a8);border-radius:6px;}
+
+  /* ---------- 页脚 ---------- */
+  footer{background:#142d3d;color:#9fb6c2;text-align:center;padding:2.4rem 6vw;font-size:.82rem;line-height:1.9;}
+  footer b{color:var(--gold-soft);}
+  footer .disc{max-width:760px;margin:.8rem auto 0;font-size:.76rem;color:#7e97a4;}
+
+  /* ---------- 小屏 ---------- */
+  @media(max-width:640px){
+    .hero{padding:3.6rem 6vw 3.4rem;}
+    .hero-stats{gap:1.6rem;}
+    nav.links{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#f0d9a8" stroke-width="1.6">
+      <path d="M12 2l2.5 6.2L21 9.3l-5 4.4 1.6 6.3L12 16.7 6.4 20l1.6-6.3-5-4.4 6.5-1.1z"/>
+    </svg>
+    提瓦特旅行者手册
+  </div>
+  <nav class="links">
+    <a href="#nations">七国</a>
+    <a href="#elements">元素反应</a>
+    <a href="#characters">角色</a>
+    <a href="#gameplay">玩法</a>
+    <a href="#gacha">祈愿</a>
+  </nav>
+</header>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">GENSHIN&nbsp;IMPACT · 提瓦特大陆</span>
+    <h1>循着风的轨迹，<em>寻找失散的兄妹</em></h1>
+    <p class="lead">
+      《原神》是由米哈游开发的开放世界动作角色扮演游戏。玩家扮演「旅行者」，穿越由七位神明分别统治的七个国度，
+      掌握十种元素之力，解开「天理」与深渊背后的谜团。以下是一份面向旅行者的提瓦特速览手册。
+    </p>
+    <div class="hero-stats">
+      <div><b>7</b><span>个国度</span></div>
+      <div><b>7</b><span>种元素</span></div>
+      <div><b>2020</b><span>正式上线</span></div>
+      <div><b>多平台</b><span>PC / 移动 / 主机</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= 七国 ================= -->
+<section id="nations">
+  <div class="sec-head">
+    <div class="tag">TEYVAT NATIONS</div>
+    <h2>七个国度</h2>
+    <p class="sub">提瓦特大陆上共有七个人类聚居的国度，各由一位「尘世七执政」治理，并对应一种元素与一份理想。</p>
+  </div>
+
+  <div class="nations">
+    <div class="nation">
+      <div class="glyph" style="background:linear-gradient(135deg,#2fae87,#7fe0c0)">风</div>
+      <h3>蒙德</h3>
+      <div class="elem-line">风元素 · 自由</div>
+      <p>以「自由之都」著称的高原城邦，城中有巨大的风神像与西风大教堂，城外是开阔的果酒湖平原与草原。</p>
+      <div class="archon">执政：风神巴巴托斯（温迪）</div>
+    </div>
+
+    <div class="nation">
+      <div class="glyph" style="background:linear-gradient(135deg,#c9a227,#f4dd86)">岩</div>
+      <h3>璃月</h3>
+      <div class="elem-line">岩元素 · 契约</div>
+      <p>商贾云集、契约至上的古国。层岩巨渊、荻花洲与巍峨的群玉阁构成兼具山海气势的风景。</p>
+      <div class="archon">执政：岩神摩拉克斯（钟离）</div>
+    </div>
+
+    <div class="nation">
+      <div class="glyph" style="background:linear-gradient(135deg,#7d5bd0,#c9b3f5)">雷</div>
+      <h3>稻妻</h3>
+      <div class="elem-line">雷元素 · 永恒</div>
+      <p>由幕府统治的群岛之国，樱花、鸟居与雷电交织。曾长期实行锁国令，追求「永恒」的静止。</p>
+      <div class="archon">执政：雷神巴尔泽布（雷电将军）</div>
+    </div>
+
+    <div class="nation">
+      <div class="glyph" style="background:linear-gradient(135deg,#4a9d5b,#a8e6b3)">草</div>
+      <h3>须弥</h3>
+      <div class="elem-line">草元素 · 智慧</div>
+      <p>学术之城，教令院坐落于巨树之上，雨林与沙漠并存，知识既是力量也是禁忌。</p>
+      <div class="archon">执政：草神布耶尔（纳西妲）</div>
+    </div>
+
+    <div class="nation">
+      <div class="glyph" style="background:linear-gradient(135deg,#2f7fd0,#9ecbf5)">水</div>
+      <h3>枫丹</h3>
+      <div class="elem-line">水元素 · 正义</div>
+      <p>工业发达的科技之邦，蒸汽、机械与审判庭是其标志。戏剧性的庭审与歌剧院构成独特风貌。</p>
+      <div class="archon">执政：水神芙卡洛斯（芙宁娜）</div>
+    </div>
+
+    <div class="nation">
+      <div class="glyph" style="background:linear-gradient(135deg,#d0552f,#f5a98a)">火</div>
+      <h3>纳塔</h3>
+      <div class="elem-line">火元素 · 战争</div>
+      <p>由六大部落组成的岩浆与火山之地，崇尚力量与竞技，高原与部落图腾构成粗犷美学。</p>
+      <div class="archon">执政：火神玛薇卡</div>
+    </div>
+
+    <div class="nation">
+      <div class="glyph" style="background:linear-gradient(135deg,#3f4a63,#9fb0d0)">冰</div>
+      <h3>至冬</h3>
+      <div class="elem-line">冰元素 · 无神之爱</div>
+      <p>寒冷北国，女皇统治下组织「愚人众」的势力总部。科技与军力强大，理念激进。</p>
+      <div class="archon">执政：冰之女皇</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 元素反应 ================= -->
+<section id="elements">
+  <div class="sec-head">
+    <div class="tag">ELEMENTAL REACTIONS</div>
+    <h2>元素与元素反应</h2>
+    <p class="sub">不同元素叠加会产生额外效果，这是《原神》战斗系统的核心。合理利用反应能大幅提升输出与生存能力。</p>
+  </div>
+
+  <div class="reactions">
+    <div class="rx"><h4><span class="dot" style="background:#e05b3a"></span>蒸发</h4><p>火 + 水。根据附着顺序提升伤害倍率（约 1.5～2 倍），是高频高伤反应。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#9b6bd6"></span>融化</h4><p>火 + 冰。同样提升伤害倍率，常配合冰系角色打出爆发。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#c08ae0"></span>超载</h4><p>火 + 雷。产生爆炸并击退敌人，对岩系护盾有特效，适合破防。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#7c5fd0"></span>超导</h4><p>雷 + 冰。造成范围伤害并降低敌人物理抗性，配合物理输出角色。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#4aa8e0"></span>感电</h4><p>雷 + 水。持续范围伤害，被击中的水/雷附着单位会连锁受损。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#4aa8e0"></span>冻结</h4><p>水 + 冰。冻结敌人使其无法行动，可衔接碎冰进一步提高伤害。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#5bbf7a"></span>绽放</h4><p>草 + 水。生成草原核，一定时间后爆炸；草 + 雷则触发超绽放。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#6fbf5b"></span>燃烧</h4><p>草 + 火。造成持续火元素伤害，适合压制成群敌人。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#7fb8d0"></span>扩散</h4><p>风 + 火/水/雷/冰。将元素扩散到周围并附加大范围伤害，风系角色的主场。</p></div>
+    <div class="rx"><h4><span class="dot" style="background:#c9a227"></span>结晶</h4><p>岩 + 火/水/雷/冰。产生可拾取的元素结晶护盾，提升队伍生存。</p></div>
+  </div>
+</section>
+
+<!-- ================= 角色 ================= -->
+<section id="characters">
+  <div class="sec-head">
+    <div class="tag">CHARACTERS</div>
+    <h2>知名角色一览</h2>
+    <p class="sub">提瓦特汇聚了来自各国、掌握不同元素的众多角色。以下为部分代表性人物及其定位。</p>
+  </div>
+
+  <div class="chars">
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#2f6f8f,#5fb0d0)"><span class="star">★★★★★</span><span class="name">旅行者</span></div>
+      <div class="body">
+        <div class="role">Main Character</div>
+        <p class="desc">从异世界坠落的主角，可切换多种元素，贯穿整个提瓦特故事的线索人物。</p>
+        <div class="meta"><span class="chip">多元素</span><span class="chip">单手剑</span></div>
+      </div>
+    </div>
+
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#3f8f6e,#7fe0c0)"><span class="star">★★★★★</span><span class="name">温迪</span></div>
+      <div class="body">
+        <div class="role">Anemo · 风</div>
+        <p class="desc">自称吟游诗人的风神，擅长风元素扩散与聚怪，是团队核心辅助之一。</p>
+        <div class="meta"><span class="chip">辅助</span><span class="chip">弓</span><span class="chip">蒙德</span></div>
+      </div>
+    </div>
+
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#a8862a,#f4dd86)"><span class="star">★★★★★</span><span class="name">钟离</span></div>
+      <div class="body">
+        <div class="role">Geo · 岩</div>
+        <p class="desc">岩王帝君，提供强力护盾与全元素抗性削减，被称为「战争之神」的顶级辅助。</p>
+        <div class="meta"><span class="chip">护盾</span><span class="chip">长枪</span><span class="chip">璃月</span></div>
+      </div>
+    </div>
+
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#6b4bc0,#c9b3f5)"><span class="star">★★★★★</span><span class="name">雷电将军</span></div>
+      <div class="body">
+        <div class="role">Electro · 雷</div>
+        <p class="desc">追求永恒的电之神，兼具强力主C输出与全队充能辅助能力。</p>
+        <div class="meta"><span class="chip">主C</span><span class="chip">长枪</span><span class="chip">稻妻</span></div>
+      </div>
+    </div>
+
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#3f8a52,#a8e6b3)"><span class="star">★★★★★</span><span class="name">纳西妲</span></div>
+      <div class="body">
+        <div class="role">Dendro · 草</div>
+        <p class="desc">小吉祥草王，草元素体系的奠基者，擅长触发绽放、超绽放等草系反应。</p>
+        <div class="meta"><span class="chip">辅助</span><span class="chip">法器</span><span class="chip">须弥</span></div>
+      </div>
+    </div>
+
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#2f6fb0,#9ecbf5)"><span class="star">★★★★★</span><span class="name">芙宁娜</span></div>
+      <div class="body">
+        <div class="role">Hydro · 水</div>
+        <p class="desc">枫丹的水之神，依靠生命值变化增益全队伤害，是水元素体系的关键辅助。</p>
+        <div class="meta"><span class="chip">增伤</span><span class="chip">单手剑</span><span class="chip">枫丹</span></div>
+      </div>
+    </div>
+
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#d0552f,#f5a98a)"><span class="star">★★★★★</span><span class="name">玛薇卡</span></div>
+      <div class="body">
+        <div class="role">Pyro · 火</div>
+        <p class="desc">纳塔的火神与竞技引领者，围绕夜魂值机制带来高机动与高爆发输出。</p>
+        <div class="meta"><span class="chip">主C</span><span class="chip">双手剑</span><span class="chip">纳塔</span></div>
+      </div>
+    </div>
+
+    <div class="char">
+      <div class="banner" style="background:linear-gradient(135deg,#9b3f3f,#e08a8a)"><span class="star">★★★★★</span><span class="name">胡桃</span></div>
+      <div class="body">
+        <div class="role">Pyro · 火</div>
+        <p class="desc">往生堂的堂主，依靠消耗生命值转化为伤害，是蒸发队中的经典火系主C。</p>
+        <div class="meta"><span class="chip">主C</span><span class="chip">长枪</span><span class="chip">璃月</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 玩法 ================= -->
+<section id="gameplay">
+  <div class="sec-head">
+    <div class="tag">GAMEPLAY</div>
+    <h2>核心玩法</h2>
+    <p class="sub">除了主线剧情，开放世界中的探索、养成与挑战共同构成了长期的游戏体验。</p>
+  </div>
+
+  <div class="features">
+    <div class="feat"><div class="ico">🗺️</div><h4>开放世界探索</h4><p>在无缝大地图中攀爬、滑翔、游泳，寻找宝箱、仙灵与传送锚点，解锁传送与神像。</p></div>
+    <div class="feat"><div class="ico">⚔️</div><h4>四人队伍战斗</h4><p>实时切换四名角色，灵活运用元素技能与爆发，通过元素反应打出高额伤害。</p></div>
+    <div class="feat"><div class="ico">📖</div><h4>主线与传说任务</h4><p>跟随旅行者穿越七国剧情，完成各角色的传说任务，了解世界观与人物故事。</p></div>
+    <div class="feat"><div class="ico">🏰</div><h4>秘境与深境螺旋</h4><p>挑战限时秘境获取圣遗物与素材；深境螺旋提供周期性高难对战与奖励。</p></div>
+    <div class="feat"><div class="ico">🎣</div><h4>尘歌壶与生活玩法</h4><p>建造属于自己的洞天家园，进行钓鱼、采集、烹饪等活动，丰富角色养成。</p></div>
+    <div class="feat"><div class="ico">🤝</div><h4>多人联机</h4><p>最多四人组队共同探索、挑战副本，或互相到访对方的尘歌壶闲逛。</p></div>
+  </div>
+</section>
+
+<!-- ================= 祈愿 ================= -->
+<div id="gacha" class="gacha">
+  <h2>祈愿机制 <span>Wish / Gacha</span></h2>
+  <p>获取新角色与武器的主要途径。限定角色祈愿与武器祈愿共享软保底与硬保底规则，合理规划抽卡是长期养成的关键。</p>
+  <div class="rows">
+    <div class="row">
+      <b>5★ 角色</b><span>综合概率约 0.6%</span>
+      <div class="bar"><i style="width:6%"></i></div>
+    </div>
+    <div class="row">
+      <b>4★ 角色 / 武器</b><span>综合概率约 5.1%</span>
+      <div class="bar"><i style="width:51%"></i></div>
+    </div>
+    <div class="row">
+      <b>90 抽</b><span>角色池硬保底上限</span>
+      <div class="bar"><i style="width:100%"></i></div>
+    </div>
+    <div class="row">
+      <b>74 抽起</b><span>软保底概率大幅提升</span>
+      <div class="bar"><i style="width:82%"></i></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div><b>提瓦特旅行者手册</b> · 一个《原神》主题的展示页面</div>
+  <div class="disc">
+    本页面为个人学习与展示用途的非官方作品。《原神》及其相关角色、地名、元素设定等知识产权归米哈游（miHoYo / HoYoverse）所有。
+    如需准确数据，请以游戏内说明与官方公告为准。
+  </div>
+</footer>
+
+</body>
+</html>
