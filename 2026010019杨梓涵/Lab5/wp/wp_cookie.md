@@ -16,7 +16,7 @@
 
 ## 解题过程
 
-打开靶场地址，页面提示只有 admin 才能拿到 flag。我按 `F12` 打开 DevTools，在 Application → Cookies 里看到本题域下有一个 Cookie：`admin=0`，说明服务器是拿这个值来判断我是不是管理员的。我把值改成 `admin=1` 后刷新，页面直接显示出了 flag。为了留下可复制的请求证据，我又在终端用 `curl -b "admin=1"` 重放了一次，响应正文里就是 flag。整个过程没有登录、没有密码，只改了一个客户端带来的字段。
+我先用 `curl -v` 访问靶场地址，响应里有两处关键信息：`Set-Cookie: admin=0`，以及正文提示 "hello ctfhub, only admin can get flag"，说明服务器是靠客户端带来的 `admin` 这个 Cookie 值判断我是不是管理员的。于是我加了 `-H "Cookie: admin=1"` 把值改成 1 重放请求，这次响应状态码 `200 OK`，正文直接给出了 flag。为了再确认一遍浏览器里的行为，我按 `F12` 打开 DevTools 的 Application → Cookies，能看到本题域下的 `admin` Cookie 并把它改成 1，刷新后同样显示 flag。整个过程没有登录、没有密码，只改了一个客户端带来的字段。
 
 ## 关键请求/响应
 
@@ -24,6 +24,7 @@
 GET /index.php HTTP/1.1
 Host: challenge-d3d8e415537b3ed3.sandbox.ctfhub.com:10800
 Cookie: admin=1
+User-Agent: curl/8.20.0
 
 HTTP/1.1 200 OK
 Set-Cookie: admin=0

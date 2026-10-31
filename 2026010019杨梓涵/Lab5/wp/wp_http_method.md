@@ -16,18 +16,19 @@
 
 ## 解题过程
 
-用浏览器打开靶场地址时，页面提示我不允许使用 GET 方法访问，并要求改用题目指定的方法（页面写的是 `CTFHUB`）。浏览器地址栏和普通链接只能发 GET/POST，所以我把请求发到 Burp，在 Repeater 里把请求行的 `GET /index.php HTTP/1.1` 改成 `CTFHUB /index.php HTTP/1.1`，点击 Send 后响应体里直接返回了 flag。为了留一份可以直接复制的证据，我又在 Kali 终端用 `curl -X CTFHUB` 重放了一次，输出和 Burp 一致。最后把 flag 提交到题目页面确认通过。
+用浏览器打开靶场地址时，页面提示我不允许使用 GET 方法访问，并要求改用题目指定的方法（页面写的是 `CTFHUB`）。浏览器地址栏和普通链接只能发 GET/POST；Burp Repeater 也能改请求行，但这道题用 curl 一条命令就能完成，更直接，所以我在 Kali 终端用 `curl -v -X CTFHUB` 复现：`-X` 把请求行的方法替换成 `CTFHUB`，`-v` 可以看到完整请求行和响应。输出里请求行变成了 `CTFHUB /index.php HTTP/1.1`，服务器返回 `HTTP/1.1 200 OK`，响应体就是 flag。最后把 flag 提交到题目页面确认通过。
 
 ## 关键请求/响应
 
 ```http
 CTFHUB /index.php HTTP/1.1
 Host: challenge-dc2587c4e8dd6816.sandbox.ctfhub.com:10800
+User-Agent: curl/8.20.0
 
 HTTP/1.1 200 OK
 Content-Type: text/html; charset=utf-8
 
-ctfhub{2e6e247d6cfa745962385697}
+good job! ctfhub{2e6e247d6cfa745962385697}
 ```
 
 ## 原理与复盘

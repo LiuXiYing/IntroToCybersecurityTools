@@ -16,16 +16,17 @@
 
 ## 解题过程
 
-用浏览器访问靶场地址时，地址栏瞬间变成了 `/index.html`，页面只有一个普通的欢迎页，看不到任何和 flag 有关的内容，这说明服务器在第一跳就把我重定向走了。为了看原始响应，我在 Kali 终端执行 `curl -i`，输出第一行是 `HTTP/1.1 302 Found`，响应头里有 `Location: /index.html`，而 302 的响应体里直接写着 flag。也就是说 flag 藏在了被浏览器自动丢弃的那次响应里。截图时我把 curl 的状态行、Location 和响应体里的 flag 放在同一屏。
+用浏览器访问靶场地址时，地址栏瞬间变成了 `index.html`，页面只有一个普通的欢迎页，看不到任何和 flag 有关的内容，这说明服务器在第一跳就把我重定向走了。为了看原始响应，我在 Kali 终端执行 `curl -v`，输出第一行是 `HTTP/1.1 302 Moved Temporarily`，响应头里有 `Location: index.html`，而 302 的响应体里直接写着 flag。也就是说 flag 藏在了被浏览器自动丢弃的那次响应里。截图时我把 curl 的状态行、Location 和响应体里的 flag 放在同一屏。
 
 ## 关键请求/响应
 
 ```http
 GET /index.php HTTP/1.1
 Host: challenge-790268719484605d.sandbox.ctfhub.com:10800
+User-Agent: curl/8.20.0
 
-HTTP/1.1 302 Found
-Location: /index.html
+HTTP/1.1 302 Moved Temporarily
+Location: index.html
 Content-Type: text/html; charset=utf-8
 
 ctfhub{faf849952a047053a027ef8f}
