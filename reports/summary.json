@@ -44,9 +44,9 @@
     },
     "Lab7": {
       "deadline": "2026-11-14T00:00:00+08:00",
-      "finalized": 20,
+      "finalized": 22,
       "mode": "legacy",
-      "receipts": 20,
+      "receipts": 22,
       "scored": 0
     },
     "Lab8": {
@@ -66,6 +66,6 @@
   },
   "course_id": "intro-to-cybersecurity-tools",
   "errors": 0,
-  "generated_at": "2026-11-11T13:57:50.973967+00:00",
+  "generated_at": "2026-11-12T01:57:56.692549+00:00",
   "schema_version": 1
 }
