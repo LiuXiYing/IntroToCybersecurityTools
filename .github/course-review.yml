@@ -2,6 +2,7 @@ version: 1
 
 course:
   name: 学科综合讲座
+  id: intro-to-cybersecurity-tools
   timezone: Asia/Shanghai
   title_template: "[{student_id}{student_name}]{assignment_id}作业提交"
   submission_path_template: "{student_id}{student_name}/{assignment_id}"
@@ -10,17 +11,48 @@ course:
 features:
   auto_merge: true
   comment_review: true
-  close_late_pr: true
+  close_late_pr: false
   ai_review: true
   ai_feedback: true
   ocr_review: false
   vision_review: true
   metrics: true
+  grading: true
 
 defaults:
   min_nonempty_lines: 10
   allow_extra_files: false
   late_close_after_days: 7
+
+# 迟交不再阻止合并，只影响成绩上限（详见 course-pr-reviewer README）。
+# 制度上线前已发布的作业标注 legacy：不扣分、不虚构分数；新作业标注 tiered。
+grading:
+  storage:
+    branch: grades
+    schema_version: 1
+    write_receipts: true
+    # 合并后不在审核任务里重建报表：一次重建要读几百份收据，会吃掉
+    # GITHUB_TOKEN 的每小时额度。交给每日 grade-reconcile 或手工 grade export。
+    export_on_finalize: false
+  policy_version: 2026-fall-v1
+  defaults:
+    max_points: "10.00"
+    legacy:
+      record_completion: true
+      fixed_points: null
+    tiered:
+      grace:
+        enabled: true
+        hours: 48
+        require_substantive_snapshot: true
+      bands:
+        - { max_late_hours: 0, cap_percent: 100 }
+        - { max_late_hours: 48, cap_percent: 90 }
+        - { max_late_hours: 168, cap_percent: 75 }
+        - { max_late_hours: 336, cap_percent: 60 }
+        - { max_late_hours: 672, cap_percent: 40 }
+        - { max_late_hours: null, cap_percent: 20 }
+      after_final_accept: reject_merge
 
 ai:
   providers:
@@ -71,6 +103,8 @@ assignments:
   Lab1:
     enabled: true
     deadline: "2026-10-17T00:00:00+08:00"
+    grading:
+      mode: legacy
     min_nonempty_lines: 10
     allow_extra_files: false
     report_template: homework/Lab1/Lab1.md
@@ -94,6 +128,8 @@ assignments:
   Lab2:
     enabled: true
     deadline: "2026-10-20T00:00:00+08:00"
+    grading:
+      mode: legacy
     # 报告行数由 template_metrics 检查，不给 index.html 另设行数门槛。
     min_nonempty_lines: 0
     allow_extra_files: false
@@ -130,6 +166,8 @@ assignments:
   Lab3:
     enabled: true
     deadline: "2026-10-24T00:00:00+08:00"
+    grading:
+      mode: legacy
     min_nonempty_lines: 10
     allow_extra_files: false
     report_template: homework/Lab3/Lab3.md
@@ -163,6 +201,8 @@ assignments:
   Lab4:
     enabled: true
     deadline: "2026-10-26T00:00:00+08:00"
+    grading:
+      mode: legacy
     # 行数与字符数量由 template_metrics 检查，与 Lab2、Lab3 相同口径
     min_nonempty_lines: 0
     allow_extra_files: false
@@ -204,6 +244,8 @@ assignments:
   Lab5:
     enabled: true
     deadline: "2026-10-31T00:00:00+08:00"
+    grading:
+      mode: legacy
     # 行数与字符数量由 template_metrics 检查，与 Lab2、Lab3、Lab4 相同口径
     min_nonempty_lines: 0
     # WP 中允许多放过程截图；required_files 仍必须齐全，额外图片不检查。
@@ -258,6 +300,8 @@ assignments:
   Lab6:
     enabled: true
     deadline: "2026-11-07T00:00:00+08:00"
+    grading:
+      mode: legacy
     # 行数与字符数量由 template_metrics 检查，与 Lab2—Lab5 相同口径
     min_nonempty_lines: 0
     # 讲义要求不提交 notes.db、__pycache__ 等运行产物；万一残留不因额外文件判不合格
@@ -304,3 +348,92 @@ assignments:
       - lab6_dns.png 应能看出 mysite.test（或学生自定域名）与 127.0.0.1 的对应关系，hosts 文件内容、ping 输出、浏览器地址栏中的 mysite.test:8000 任意一种出现即可；不要求三者同时出现在同一张图中。
       - 四张截图应来自学生本人操作，能看到自己跑出来的站点或终端输出；出现手机拍屏反光、摩尔纹、明显倾斜或关键文字无法辨认时判为不合格。普通截图缩放、窗口遮挡、界面语言不同不影响完成。
       - 截图中出现 123456 之类示例密码或用户名列表均属正常，不因此判不合格；出现公网域名或公网访问地址时按不合格处理。
+  Lab7:
+    enabled: true
+    deadline: "2026-11-14T00:00:00+08:00"
+    grading:
+      mode: legacy
+    min_nonempty_lines: 0
+    allow_extra_files: false
+    report_template: homework/Lab7/Lab7.md
+    required_files:
+      - Lab7.md
+      - lab7_basics.c
+      - imgs/lab7_run.png
+      - imgs/lab7_debug.png
+    template_metrics:
+      enabled: true
+      report_file: Lab7.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/lab7_run.png
+      - imgs/lab7_debug.png
+    review_points:
+      - >-
+        本次只提交 Lab7.md、lab7_basics.c、imgs/lab7_run.png、imgs/lab7_debug.png 四个文件。lab7_basics.c 是必交的本人最终 C 源码；不提交 TEACHING.md、CLion 项目、CMakeLists.txt、构建产物、日志或额外图片。模板行数与字符数量检查只针对 Lab7.md，不应用于 C 源码。
+      - >-
+        Lab7.md 保留模板中的说明、代码示例、表格和图片引用，只替换指定填写位置。第四节包括 4.1 四项基本信息；4.2 本人四行程序输出和三项变量/数组记录；4.3 四项调试记录；4.4 三道简答题。填写位置不能留空或保留占位提示。姓名和 10 位学号须与登记身份一致，模板代码中的示例学号不作为本人填写内容。
+      - >-
+        六项任务为 Hello World 输出、直接输出本人学号、定义并输出 int 变量、定义十个数字组成的学号数组、手写十条固定下标输出语句、CLion 断点与单步调试。输出记录应含问候语、直接输出的学号、整数变量值及数组逐位拼接的学号；两处学号和数组数据应对应本人学号，变量名、整数初始值和输出标签可以不同。不要求将完整学号存入单个 int，也不要求循环。
+      - >-
+        调试记录应说明断点语句、整数初始化完成后的高亮语句和变量值、数组首末元素值以及一条 printf 单步前后的高亮语句；接受简短或口语化说明及合理界面差异，不要求固定行号。不要求自定义函数、Step Into/Out、地址、指针、Watches、Memory View、字节序、Kali、命令行编译、CMake 语法、GDB 或汇编。文本审核不因无法看到截图内容而判缺少图片证据，不要求实际运行学生程序。
+      - >-
+        lab7_basics.c 应为本人实际运行和调试的完整 C 程序，包含 main、Hello World 输出、本人学号文字输出、int 变量及其输出、由本人学号十位数字组成的 int 数组，以及十条依次使用固定下标 0 至 9 的输出语句。不得用循环或直接输出完整学号文字代替逐个数组元素输出；变量名称、整数初始值、标签和合理空格可以不同。源码应与报告及截图对应，不能只提交教师示例数据。学生可在项目中使用 main.c，复制提交时命名为 lab7_basics.c；不要求改变 CLion 构建配置。
+    vision_review_points:
+      - >-
+        lab7_run.png 应能辨认 CLion 中的 C 源码和完整四行程序输出：Hello World、本人学号、一个 int 变量值、数组逐位输出的本人学号。源码区域应能辨认十条 printf 按固定下标 0 至 9 依次读取数组元素，不使用循环，不用直接打印完整学号文字代替数组输出。允许输出标签、空格、变量名及整数初始值不同；两处学号及数组数字应与本人登记学号对应。截图中的源码文件叫 main.c 或 lab7_basics.c 均可；提交文件名须为 lab7_basics.c。
+      - >-
+        lab7_debug.png 应能辨认 CLion 的暂停位置、Variables 中初始化完成后的整数变量值及展开的十个学号数组元素。断点命中或 Step Over 后的暂停均可；不要求固定行号和整数值，不要求地址、指针、内存视图或寄存器。仅有断点标记而无暂停状态，或只有普通运行输出，不算完成调试。
+      - >-
+        两张截图来自本人 Windows CLion 实际操作，内容清晰可辨认即可，不要求固定主题、布局、缩放或界面语言，不使用手机拍屏或网上截图冒充。调试时未换行的数字可能延迟显示，不要求单步后控制台立即出现每一位数字，也不要求调试截图中同时出现完整运行输出。
+  Lab8:
+    enabled: true
+    deadline: "2026-11-21T00:00:00+08:00"
+    grading:
+      mode: tiered
+      max_points: "10.00"
+    min_nonempty_lines: 0
+    allow_extra_files: false
+    report_template: homework/Lab8/Lab8.md
+    required_files:
+      - Lab8.md
+      - lab8_basics.c
+      - imgs/lab8_run.png
+      - imgs/lab8_function.png
+      - imgs/lab8_pointer.png
+      - imgs/lab8_memory.png
+    template_metrics:
+      enabled: true
+      report_file: Lab8.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/lab8_run.png
+      - imgs/lab8_function.png
+      - imgs/lab8_pointer.png
+      - imgs/lab8_memory.png
+    review_points:
+      - >-
+        本次提交 Lab8.md、lab8_basics.c 和四张指定 PNG，共六个文件。源码为必交，不要求 CLion 项目、CMakeLists.txt、构建产物、日志或其他图片。模板行数和字符数量检查仅针对 Lab8.md，不应用于 C 源码。
+      - >-
+        Lab8.md 保留说明、示例、表格和图片引用，仅替换指定填写位置。报告包括 8.2 四项基本信息、8.3 五项判断与循环记录、8.4 三项函数记录、8.5 三项指针记录、8.6 六项内存视图记录、8.7 本人最终六行输出。不得留空或保留占位提示；基本信息中的姓名与 10 位学号须与登记身份一致，示例代码中的教师学号不作为本人作答内容。
+      - >-
+        lab8_basics.c 应为完整 C 程序，按顺序包含整数 if/else 判断、for 循环输出本人十位学号、接收两个 int 并返回其和的函数及调用、指向普通 int 变量的指针和通过解引用修改该整数的语句。传入加法函数的是学号首末两位的值。最终 number 初值为 7，条件阈值为 5，通过指针写入 26；允许等价变量名、标签和合理空格。文字学号与数组须对应本人身份，源码与报告及截图应一致，不能仅提交未经个人化的教师示例。
+      - >-
+        判断记录覆盖初值 7、3、5；循环记录包含前两次下标与元素值以及最后一轮和结束原因；函数记录体现参数、result 与返回后的 sum；指针记录区分变量值与地址，说明解引用写入使原整数变为 26、指针仍指向该整数。接受简短或口语化解释及合理调试暂停位置差异，不要求固定行号、固定地址或独立编写复杂程序。
+      - >-
+        内存视图为必做作业。8.6 须记录截图时的暂停语句、number 起始地址、从低地址到高地址的四个十六进制字节、该整数的十六进制表示、转成十进制的计算与结果、与变量窗口的核对。默认写入 26，对应小端字节 1a 00 00 00、整数 0x0000001a、十进制 26；接受十六进制大小写、合理前导零或等价计算形式，不要求将地址转成十进制。地址按本人实际运行记录，截图与记录应对应。
+      - >-
+        本次在 Windows CLion 中完成，只涉及普通 int 指针，不要求指针数组运算、指针参数、字符串处理、Kali、gcc 命令、CMake 语法、GDB、汇编或寄存器。文本审核不因无法看到截图内容而判缺少视觉证据，也不要求实际运行学生程序。
+    vision_review_points:
+      - >-
+        lab8_run.png 应能辨认 CLion 源码区域及最终六行输出：本人学号、条件成立的分支、循环输出的本人学号、首末位之和、指针修改前整数与解引用值为 7、修改后两者为 26。允许等价标签及合理格式差异，不要求整份源码全部出现在截图中。
+      - >-
+        lab8_function.png 应能辨认暂停在加法函数内，显示两个整数参数与已计算完成的局部结果；参数应对应本人学号首末位，结果为其和。接受等价函数名或变量名，不要求固定源码行号。只有调用前后运行输出不能代替函数内部调试证据。
+      - >-
+        lab8_pointer.png 应能辨认解引用写入完成后的暂停状态，以及 number、&number、p、*p 或等价表达式的实际值；number 与 *p 为 26，p 与 &number 表示同一地址。Variables 与 Watches 组合展示均可，不要求固定地址或指针自身地址 &p。
+      - >-
+        lab8_memory.png 应能辨认 CLion Memory View 中 number 的起始地址、从该地址开始的连续四字节 1a 00 00 00，以及 Variables 或 Watches 中的整数值 26。字节可以跨显示行，允许不同列宽、主题和十六进制大小写；地址与报告应对应。仅有普通运行输出或 Variables 而无内存字节视图不算完成。
+      - >-
+        四张截图来自本人 Windows CLion 实际操作，允许不同主题、布局、缩放和界面语言，关键内容可辨认即可；项目内源码名 main.c 与提交副本名 lab8_basics.c 不同属正常。不使用手机拍屏或网上截图冒充；循环未换行输出延迟刷新不构成未完成。
