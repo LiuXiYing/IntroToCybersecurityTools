@@ -1,0 +1,41 @@
+{
+  "assignment_id": "Lab8",
+  "course_id": "intro-to-cybersecurity-tools",
+  "created_at": "2026-11-19T12:02:59.004291+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-19T12:00:13+00:00",
+  "files": [
+    {
+      "blob_sha": "69efc5b64db630ab7c3adac2a9178f14d7871992",
+      "path": "2026010019杨梓涵/Lab8/Lab8.md"
+    },
+    {
+      "blob_sha": "2808a0195f9e395dcf595a27e7eb55eef5a15542",
+      "path": "2026010019杨梓涵/Lab8/imgs/lab8_function.png"
+    },
+    {
+      "blob_sha": "315950d62917799e0246e1be6567c5c85ec10a9a",
+      "path": "2026010019杨梓涵/Lab8/imgs/lab8_memory.png"
+    },
+    {
+      "blob_sha": "507216dd273710795133751c8efd830f67876d2f",
+      "path": "2026010019杨梓涵/Lab8/imgs/lab8_pointer.png"
+    },
+    {
+      "blob_sha": "77ca91a258d39b869456768be4624cf87878d5f3",
+      "path": "2026010019杨梓涵/Lab8/imgs/lab8_run.png"
+    },
+    {
+      "blob_sha": "071a0038a755e46d2f3efb0fd64147d8f0f6f517",
+      "path": "2026010019杨梓涵/Lab8/lab8_basics.c"
+    }
+  ],
+  "github_login": "zmjjk666",
+  "head_sha": "03c768d5f9fd3973b9bfc752b9f0830e435cda01",
+  "pr_number": 390,
+  "schema_version": 1,
+  "source_workflow_run_id": 44519884026,
+  "student_id": "2026010019",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
