@@ -7,6 +7,13 @@
       "receipts": 47,
       "scored": 0
     },
+    "Lab10": {
+      "deadline": "2026-12-05T00:00:00+08:00",
+      "finalized": 0,
+      "mode": "tiered",
+      "receipts": 0,
+      "scored": 0
+    },
     "Lab2": {
       "deadline": "2026-10-20T00:00:00+08:00",
       "finalized": 46,
@@ -37,28 +44,35 @@
     },
     "Lab6": {
       "deadline": "2026-11-07T00:00:00+08:00",
-      "finalized": 44,
+      "finalized": 45,
       "mode": "legacy",
-      "receipts": 44,
+      "receipts": 45,
       "scored": 0
     },
     "Lab7": {
       "deadline": "2026-11-14T00:00:00+08:00",
-      "finalized": 43,
+      "finalized": 45,
       "mode": "legacy",
-      "receipts": 43,
+      "receipts": 45,
       "scored": 0
     },
     "Lab8": {
       "deadline": "2026-11-21T00:00:00+08:00",
-      "finalized": 23,
+      "finalized": 36,
       "mode": "tiered",
-      "receipts": 23,
-      "scored": 23
+      "receipts": 37,
+      "scored": 36
+    },
+    "Lab9": {
+      "deadline": "2026-11-28T00:00:00+08:00",
+      "finalized": 0,
+      "mode": "tiered",
+      "receipts": 0,
+      "scored": 0
     }
   },
   "course_id": "intro-to-cybersecurity-tools",
   "errors": 0,
-  "generated_at": "2026-11-19T01:56:41.768696+00:00",
+  "generated_at": "2026-11-20T01:50:21.286807+00:00",
   "schema_version": 1
 }
