@@ -1,0 +1,41 @@
+{
+  "assignment_id": "Lab9",
+  "course_id": "intro-to-cybersecurity-tools",
+  "created_at": "2026-11-21T16:20:06.717065+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-21T16:18:49+00:00",
+  "files": [
+    {
+      "blob_sha": "7e22039f3b02ba22b7873088fca8c2f99c21e7e8",
+      "path": "2026010049黄江锋/Lab9/Lab9.md"
+    },
+    {
+      "blob_sha": "e8e56e143541dc05121f5e88685763a4d4320421",
+      "path": "2026010049黄江锋/Lab9/imgs/lab9_call_stack.png"
+    },
+    {
+      "blob_sha": "f52dc61dc46011af4c6584c09887fa6e5089c2c0",
+      "path": "2026010049黄江锋/Lab9/imgs/lab9_disas.png"
+    },
+    {
+      "blob_sha": "fb7c53ccacfd89b26679b4d1c4fcc713bb32b155",
+      "path": "2026010049黄江锋/Lab9/imgs/lab9_gdb.png"
+    },
+    {
+      "blob_sha": "b4c86440f9ac487fa8dee1fa9999651bc929b3d9",
+      "path": "2026010049黄江锋/Lab9/imgs/lab9_regs.png"
+    },
+    {
+      "blob_sha": "12a63fc7bfcfa3aad85fb448d06f1dee97361807",
+      "path": "2026010049黄江锋/Lab9/imgs/lab9_return.png"
+    }
+  ],
+  "github_login": "jiang-feng660",
+  "head_sha": "19b523abd97bd57f691f2dfdeb62b35302f1405b",
+  "pr_number": 417,
+  "schema_version": 1,
+  "source_workflow_run_id": 44923905801,
+  "student_id": "2026010049",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
