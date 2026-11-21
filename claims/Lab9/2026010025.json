@@ -1,0 +1,41 @@
+{
+  "assignment_id": "Lab9",
+  "course_id": "intro-to-cybersecurity-tools",
+  "created_at": "2026-11-21T04:40:20.062037+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-21T04:37:41+00:00",
+  "files": [
+    {
+      "blob_sha": "2d9b5d689370c1bacea96a781e04892eb01f4fbb",
+      "path": "2026010025郭思信/Lab9/Lab9.md"
+    },
+    {
+      "blob_sha": "65994d6f2a20143fcde9642d24e1e9cfe32ccbef",
+      "path": "2026010025郭思信/Lab9/imgs/lab9_call_stack.png"
+    },
+    {
+      "blob_sha": "ff09f9e09cf8e23f8aaf53db67870ef7d6131d83",
+      "path": "2026010025郭思信/Lab9/imgs/lab9_disas.png"
+    },
+    {
+      "blob_sha": "15fbd06f1e5b214dc884667595795ca14fc608be",
+      "path": "2026010025郭思信/Lab9/imgs/lab9_gdb.png"
+    },
+    {
+      "blob_sha": "c26e246d5e773afaf09b857df9eae0ed253d970f",
+      "path": "2026010025郭思信/Lab9/imgs/lab9_regs.png"
+    },
+    {
+      "blob_sha": "5a74f82face61e565a3b21bcdfaa27c7d5563010",
+      "path": "2026010025郭思信/Lab9/imgs/lab9_return.png"
+    }
+  ],
+  "github_login": "guosixin",
+  "head_sha": "8e95cc31850f8e45f2816c0962a834ac2448b195",
+  "pr_number": 413,
+  "schema_version": 1,
+  "source_workflow_run_id": 44867054365,
+  "student_id": "2026010025",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
