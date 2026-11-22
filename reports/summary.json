@@ -65,14 +65,14 @@
     },
     "Lab9": {
       "deadline": "2026-11-28T00:00:00+08:00",
-      "finalized": 3,
+      "finalized": 8,
       "mode": "tiered",
-      "receipts": 3,
-      "scored": 3
+      "receipts": 8,
+      "scored": 8
     }
   },
   "course_id": "intro-to-cybersecurity-tools",
   "errors": 0,
-  "generated_at": "2026-11-21T01:38:26.926994+00:00",
+  "generated_at": "2026-11-22T00:26:31.301988+00:00",
   "schema_version": 1
 }
