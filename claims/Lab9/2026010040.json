@@ -1,0 +1,41 @@
+{
+  "assignment_id": "Lab9",
+  "course_id": "intro-to-cybersecurity-tools",
+  "created_at": "2026-11-22T06:15:27.829809+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-22T06:12:51+00:00",
+  "files": [
+    {
+      "blob_sha": "ccb572773127de3ae0b29d4a9f6a33eda98f1260",
+      "path": "2026010040段隋/Lab9/Lab9.md"
+    },
+    {
+      "blob_sha": "d4a8a44026d8ef35a0f102128610bf8edae778a1",
+      "path": "2026010040段隋/Lab9/imgs/lab9_call_stack.png"
+    },
+    {
+      "blob_sha": "3063539a87146bf57bf819f90329ba51185f0874",
+      "path": "2026010040段隋/Lab9/imgs/lab9_disas.png"
+    },
+    {
+      "blob_sha": "8da02d65c5b772cce5bdf911d072f3e762dd3eba",
+      "path": "2026010040段隋/Lab9/imgs/lab9_gdb.png"
+    },
+    {
+      "blob_sha": "6d2704e09896a0abe0bdac1ac20cd501fdd837f8",
+      "path": "2026010040段隋/Lab9/imgs/lab9_regs.png"
+    },
+    {
+      "blob_sha": "5adbd4ac79bb483645e83506ef2552bcd19e15bf",
+      "path": "2026010040段隋/Lab9/imgs/lab9_return.png"
+    }
+  ],
+  "github_login": "Eternal-ai-oss",
+  "head_sha": "3123b4bbdd919cd4ec631911708249e3200cdbf8",
+  "pr_number": 419,
+  "schema_version": 1,
+  "source_workflow_run_id": 44992728413,
+  "student_id": "2026010040",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
