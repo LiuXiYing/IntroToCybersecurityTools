@@ -1,0 +1,41 @@
+{
+  "assignment_id": "Lab9",
+  "course_id": "intro-to-cybersecurity-tools",
+  "created_at": "2026-11-27T07:21:58.741334+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-27T07:19:31+00:00",
+  "files": [
+    {
+      "blob_sha": "38c074e322bb49f79146d66061b9a6fd7bd8eee7",
+      "path": "2026010046张凯山/Lab9/Lab9.md"
+    },
+    {
+      "blob_sha": "8f069e089131af61ef092c571d6623aa694be5d6",
+      "path": "2026010046张凯山/Lab9/imgs/lab9_call_stack.png"
+    },
+    {
+      "blob_sha": "e997b3ce11db32308fed9a65ca93dc2bd090802c",
+      "path": "2026010046张凯山/Lab9/imgs/lab9_disas.png"
+    },
+    {
+      "blob_sha": "e4b332891197f0d9110f6136a596a93d93880a06",
+      "path": "2026010046张凯山/Lab9/imgs/lab9_gdb.png"
+    },
+    {
+      "blob_sha": "35e917b34a1726c97bf469972b4b5781eb017428",
+      "path": "2026010046张凯山/Lab9/imgs/lab9_regs.png"
+    },
+    {
+      "blob_sha": "b46c6ba846569d30f34a6710a547ec8b7becc201",
+      "path": "2026010046张凯山/Lab9/imgs/lab9_return.png"
+    }
+  ],
+  "github_login": "zks-gift",
+  "head_sha": "badfaa7339df4a760d675638db651f32b9645787",
+  "pr_number": 391,
+  "schema_version": 1,
+  "source_workflow_run_id": 45957696783,
+  "student_id": "2026010046",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
