@@ -201,7 +201,7 @@ step
 预期：
 
 ```text
-same_text (left=0x7fffffffe0a9 "Hi", right=0x7fffffffe0a6 "Hi") at string_demo.c:5
+same_text (left=0x7fffffffdd39 "Hi", right=0x7fffffffdd36 "Hi") at string_demo.c:5
 5	    int result = strcmp(left, right);
 ```
 
@@ -213,7 +213,7 @@ same_text (left=0x7fffffffe0a9 "Hi", right=0x7fffffffe0a6 "Hi") at string_demo.c
 print left
 ```
 
-预期：`$3 = 0x7fffffffe0a9 "Hi"`
+预期：`$3 = 0x7fffffffdd39 "Hi"`
 
 作用：left 保存第一个数组首字符的地址。
 
@@ -223,7 +223,7 @@ print left
 print right
 ```
 
-预期：`$4 = 0x7fffffffe0a6 "Hi"`
+预期：`$4 = 0x7fffffffdd36 "Hi"`
 
 作用：right 保存第二个数组首字符的地址。比较两次输出，同样的文字可以位于不同地址。
 
@@ -256,7 +256,7 @@ finish
 预期：
 
 ```text
-Run till exit from #0  same_text (left=0x7fffffffe0a9 "Hi", right=0x7fffffffe0a6 "Hi")
+Run till exit from #0  same_text (left=0x7fffffffdd39 "Hi", right=0x7fffffffdd36 "Hi")
     at string_demo.c:6
 0x00005555555551aa in main () at string_demo.c:12
 12	    int same = same_text(input, expected);
@@ -301,7 +301,7 @@ print same
 x/s input
 ```
 
-预期：`0x7fffffffe0a9:	"Hi"`
+预期：`0x7fffffffdd39:	"Hi"`
 
 作用：`x` 表示查看内存，`s` 表示按字符串显示，即从这个地址开始读，读到结束符为止。
 
@@ -311,7 +311,7 @@ x/s input
 x/3bx input
 ```
 
-预期：`0x7fffffffe0a9:	0x48	0x69	0x00`
+预期：`0x7fffffffdd39:	0x48	0x69	0x00`
 
 作用：`3` 是读三个单元，`b` 是每个单元一字节，`x` 用十六进制显示。`0x48`、`0x69` 正是 `H`、`i` 的编码，`0x00` 是结束符。
 
@@ -671,7 +671,7 @@ print &expected[0]
 
 2. 两个参数用 `x/s` 读出来都是 Hi。根据本人的寄存器截图，写出 rdi 与 rsi 各自对应的数组首地址，并指出分别是哪条指令把地址放进参数寄存器的。
 
-   > 本人解释：按本人 `lab9_regs.png`，`rdi` 等于 `&input[0]`（本次运行为 `0x7fffffffe0a9`），`rsi` 等于 `&expected[0]`（本次运行为 `0x7fffffffe0a6`）；两者 `x/s` 都显示 `"Hi"`，但地址不同，说明是两个各自独立的数组。地址先由第 8 条 `lea rdx,[rbp-0xa]` 算出 expected 起点、第 9 条 `lea rax,[rbp-0x7]` 算出 input 起点，再由第 10 条 `mov rsi,rdx` 把 expected 的地址放入第二参数寄存器 rsi、第 11 条 `mov rdi,rax` 把 input 的地址放入第一参数寄存器 rdi；进入 `same_text` 后形参 left 从 rdi 取、right 从 rsi 取。
+   > 本人解释：按本人 `lab9_regs.png`，`rdi` 等于 `&input[0]`（本次运行为 `0x7fffffffdd39`），`rsi` 等于 `&expected[0]`（本次运行为 `0x7fffffffdd36`）；两者 `x/s` 都显示 `"Hi"`，但地址不同，说明是两个各自独立的数组。地址先由第 8 条 `lea rdx,[rbp-0xa]` 算出 expected 起点、第 9 条 `lea rax,[rbp-0x7]` 算出 input 起点，再由第 10 条 `mov rsi,rdx` 把 expected 的地址放入第二参数寄存器 rsi、第 11 条 `mov rdi,rax` 把 input 的地址放入第一参数寄存器 rdi；进入 `same_text` 后形参 left 从 rdi 取、right 从 rsi 取。
 
 3. 在 2.6 的 `si` 之后，栈顶的 8 字节按整数读出来是多少？它和 `x/2i $rip` 先前显示的哪一行对应？结合 `bt` 解释从谁返回到谁，以及 ret 怎样找到下一条指令。
 
@@ -679,7 +679,7 @@ print &expected[0]
 
 4. 两串相同时，为什么 `strcmp` 返回 0，而回到 main 时 eax 是 1？结合返回截图指出写入 same 的指令、写入宽度和写入后的四个字节。再对照两轮记录，解释哪一轮的 je 跳走了。
 
-   > 本人解释：`strcmp` 的约定是两串内容相同返回 0，所以 `result = 0` 表示"相同"；`same_text` 的 `return result == 0;` 把这个比较结果转成布尔值 1（真），通过 eax 交回 main，因此返回时 eax 是 1，0 在这里是"相等"而不是"失败"。回到 main 后第 13 条 `mov DWORD PTR [rbp-0x4],eax` 以 DWORD（4 字节）写入局部变量 `same`，`same = 1` 在 `x/4bx &same` 中是从低到高的 `01 00 00 00`。第 14 条 `cmp DWORD PTR [rbp-0x4],0x0`：第一轮 `1 − 0 = 1`，ZF=0，第 15 条 `je` 不跳，顺序执行 +56 输出 same；第二轮把 expected 改成 "Ho" 后 eax=0、`same=0`，`0 − 0 = 0` 使 ZF=1，`je` 跳到 +73 输出 different。所以跳走的是两串不同的第二轮。
+   > 本人解释：`strcmp` 的约定是两串内容相同返回 0，所以 `result = 0` 表示"相同"；`same_text` 的 `return result == 0;` 把这个比较结果转成布尔值 1（真），通过 eax 交回 main，因此返回时 eax 是 1，0 在这里是"相等"而不是"失败"。回到 main 后第 13 条 `mov DWORD PTR [rbp-0x4],eax` 以 DWORD（4 字节）写入局部变量 `same`，`same = 1` 在 `x/4bx &same` 中是从低到高的 `01 00 00 00`（本次 `&same = 0x7fffffffdd3c`，见 `lab9_return.png`）。第 14 条 `cmp DWORD PTR [rbp-0x4],0x0`：第一轮 `1 − 0 = 1`，ZF=0，第 15 条 `je` 不跳，顺序执行 +56 输出 same；第二轮把 expected 改成 "Ho" 后 eax=0、`same=0`，`0 − 0 = 0` 使 ZF=1，`je` 跳到 +73 输出 different。所以跳走的是两串不同的第二轮。
 
 ## 三、阅读 bomb.c 的主流程
 
