@@ -1,0 +1,33 @@
+{
+  "assignment_id": "Lab10",
+  "course_id": "intro-to-cybersecurity-tools",
+  "created_at": "2026-11-28T06:16:04.972438+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-28T06:12:21+00:00",
+  "files": [
+    {
+      "blob_sha": "a6901c12c7844c35d49031f44f85c6cdd3980248",
+      "path": "2026010009王仕君/Lab10/Lab10.md"
+    },
+    {
+      "blob_sha": "acd65891e26c2b8304fb0a7819b1c4861acd02ce",
+      "path": "2026010009王仕君/Lab10/imgs/lab10_branch.png"
+    },
+    {
+      "blob_sha": "a2d7db050fa65f14726ed648f57532ed7b07de98",
+      "path": "2026010009王仕君/Lab10/imgs/lab10_breakpoint.png"
+    },
+    {
+      "blob_sha": "02b056b68801763ad64bf9f165d4d0f87641f254",
+      "path": "2026010009王仕君/Lab10/imgs/lab10_phase1.png"
+    }
+  ],
+  "github_login": "LIV1982",
+  "head_sha": "7a5beaa47124f722969e416ebf22d82a61000b49",
+  "pr_number": 455,
+  "schema_version": 1,
+  "source_workflow_run_id": 46115544177,
+  "student_id": "2026010009",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
