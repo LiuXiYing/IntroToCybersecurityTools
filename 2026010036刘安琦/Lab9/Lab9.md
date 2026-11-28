@@ -679,8 +679,8 @@ print &expected[0]
 2. 两个参数用 `x/s` 读出来都是 Hi。根据本人的寄存器截图，写出 rdi 与 rsi 各自对应的数组首地址，并指出分别是哪条指令把地址放进参数寄存器的。
 
    > 本人解释：`x/s` 只显示从地址起读到结束符的文字，两次都是 `"Hi"` 并不表示两个参数指向同一处内存。按本人寄存器截图与 `print &input[0]`、`print &expected[0]` 的对照：
-   > - **rdi = `&input[0]` = `rbp−0x7`**（手册示意 `0x0ff9`，1.4 的源码级调试示例中为 `0x7fffffffe0a9`），对应形参 `left`。
-   > - **rsi = `&expected[0]` = `rbp−0xa`**（手册示意 `0x0ff6`，1.4 示例中为 `0x7fffffffe0a6`），对应形参 `right`；它比 rdi 低 3 个字节，正好是一个 `"Hi"` 加结束符的长度。
+   > - **rdi = `&input[0]` = `rbp−0x7`**（手册示意 `0x0ff9`，本人 `lab9_regs.png` 中为 `0x7fffffffe919`），对应形参 `left`。
+   > - **rsi = `&expected[0]` = `rbp−0xa`**（手册示意 `0x0ff6`，本人 `lab9_regs.png` 中为 `0x7fffffffe916`），对应形参 `right`；它比 rdi 低 3 个字节，正好是一个 `"Hi"` 加结束符的长度。
    > 把地址放进参数寄存器的是四条指令：第 8 条 `lea rdx,[rbp-0xa]`（`+28`）算出 expected 首地址，第 9 条 `lea rax,[rbp-0x7]`（`+32`）算出 input 首地址；第 10 条 **`mov rsi,rdx`**（`+36`）把 expected 地址写进第二参数寄存器 rsi，第 11 条 **`mov rdi,rax`**（`+39`）把 input 地址写进第一参数寄存器 rdi。`lea` 取的是方括号表达式的地址本身，`mov` 右侧没有方括号，复制的也是地址数值，两者都不搬动栈上的字符。可见"第几个参数"取决于最后写进哪个参数寄存器，而不是 lea 的先后：`same_text(input, expected)` 中 input 是第一个参数，所以进 rdi。`strcmp` 比较的是两个地址所指的内容，不是比较地址是否相等，因此内容相同、地址不同时仍返回 0。
 
 3. 在 2.6 的 `si` 之后，栈顶的 8 字节按整数读出来是多少？它和 `x/2i $rip` 先前显示的哪一行对应？结合 `bt` 解释从谁返回到谁，以及 ret 怎样找到下一条指令。
